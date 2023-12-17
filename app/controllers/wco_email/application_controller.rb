@@ -7,6 +7,7 @@ class WcoEmail::ApplicationController < ActionController::Base
 
   def home
     authorize! :index, ::Wco::EmailConversation
+    render layout: 'wco_email/application2'
   end
 
   ##
