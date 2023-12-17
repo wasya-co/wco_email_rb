@@ -12,7 +12,7 @@ group :development, :test do
   gem 'rails-controller-testing', "~> 1.0.5"
 
   ## Nothing gets pulled via gemspec ?!
-  # gem 'ish_models', '~> 3.1.0.4'
+  gem 'ish_models', '~> 3.1.0.13'
   # gem 'cancancan', "~> 3.5.0"
   # gem 'devise',    "~> 4.9.3"
 

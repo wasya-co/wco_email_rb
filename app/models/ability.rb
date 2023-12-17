@@ -2,7 +2,7 @@
 
 require 'cancancan'
 
-class WcoEmail::Ability
+class Ability
   include ::CanCan::Ability
 
   def initialize(user)

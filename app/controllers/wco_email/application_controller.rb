@@ -4,9 +4,11 @@ require 'ish_models'
 class WcoEmail::ApplicationController < ActionController::Base
 
   check_authorization
+  before_action :current_profile
 
   def home
-    authorize! :index, ::Wco::EmailConversation
+    authorize! :index, WcoEmail::Conversation
+
     render layout: 'wco_email/application2'
   end
 
@@ -14,10 +16,6 @@ class WcoEmail::ApplicationController < ActionController::Base
   ## private
   ##
   private
-
-  def current_ability
-    @current_ability ||= ::WcoEmail::Ability.new(current_user)
-  end
 
   def current_profile
     @current_profile ||= Wco::Profile.find_by( email: current_user.email )

@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Wco::EmailConversationsController, :type => :controller do
+describe WcoEmail::EmailConversationsController, :type => :controller do
 
   render_views
   routes { WcoEmail::Engine.routes }
 
   describe 'routes' do
     it 'does' do
-      expect(get: '/email_conversations').to              route_to(controller: 'wco/email_conversations', action: 'index')
-      expect(get: '/email_conversations/in/inbox').to     route_to(controller: 'wco/email_conversations', action: 'index', tagname: 'inbox')
-      expect(get: '/email_conversations/not-in/inbox').to route_to(controller: 'wco/email_conversations', action: 'index', tagname_not: 'inbox')
+      expect(get: '/email_conversations').to              route_to(controller: 'wco_email/email_conversations', action: 'index')
+      expect(get: '/email_conversations/in/inbox').to     route_to(controller: 'wco_email/email_conversations', action: 'index', tagname: 'inbox')
+      expect(get: '/email_conversations/not-in/inbox').to route_to(controller: 'wco_email/email_conversations', action: 'index', tagname_not: 'inbox')
     end
   end
 
@@ -21,8 +21,8 @@ describe Wco::EmailConversationsController, :type => :controller do
       p = Wco::Profile.create!( email: user.email )
       sign_in user
 
-      WcoEmail::Tag.all.destroy_all
-      @inbox = WcoEmail::Tag.create({ slug: 'inbox' })
+      Wco::Tag.all.destroy_all
+      @inbox = Wco::Tag.create({ slug: 'inbox' })
     end
 
     it 'does' do
@@ -31,7 +31,7 @@ describe Wco::EmailConversationsController, :type => :controller do
     end
 
     it 'in tagname' do
-      conv = Wco::EmailConversation.create( subject: 'test subj 1', tags: [ @inbox ] )
+      conv = WcoEmail::Conversation.create( subject: 'test subj 1', tags: [ @inbox ] )
 
       get :index, params: { tagname: 'inbox' }
 

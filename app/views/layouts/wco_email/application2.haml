@@ -38,8 +38,8 @@
       = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
 
-    = stylesheet_link_tag "ish_manager/application", media: "all"
-    = javascript_include_tag "ish_manager/application"
+    -# = stylesheet_link_tag "ish_manager/application", media: "all"
+    -# = javascript_include_tag "ish_manager/application"
 
     -# %script{crossorigin: "", src: "https://unpkg.com/react@18/umd/react.development.js"}
     -# %script{crossorigin: "", src: "https://unpkg.com/react-dom@18/umd/react-dom.development.js"}
@@ -50,9 +50,12 @@
     = csrf_meta_tags
   %body{ class: [ params[:controller].gsub("wco_email/",""), "#{params[:controller].gsub("wco_email/","")}-#{params[:action]}", params[:action], "application-fullwidth" ] }
 
-    = render "ish_manager/application/main_header_#{@current_profile.role_name}"
-    = render 'ish_manager/application/alerts_notices' if notice || alert
+    -# = render "wco/application/main_header"
+    = render "wco_email/application/main_header"
+
+
+    = render 'wco/application/alerts_notices' if notice || alert
     %span.absolute.collapse-expand#mainW
     = yield
-    = render 'ish_manager/application/main_footer'
+    = render 'wco/application/main_footer'
     = render 'analytics' if Rails.env.production?

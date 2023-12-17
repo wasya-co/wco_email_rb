@@ -1,9 +1,6 @@
 
-module Wco
-end
-
-module WcoEmail
-end
+module Wco; end
+module WcoEmail; end
 
 class WcoEmail::Engine < ::Rails::Engine
   isolate_namespace WcoEmail

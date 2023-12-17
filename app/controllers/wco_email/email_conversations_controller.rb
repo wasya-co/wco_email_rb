@@ -1,5 +1,5 @@
 
-class Wco::EmailConversationsController < WcoEmail::ApplicationController
+class WcoEmail::EmailConversationsController < WcoEmail::ApplicationController
 
   # before_action :set_lists, except: [ :index ]
 
@@ -7,8 +7,8 @@ class Wco::EmailConversationsController < WcoEmail::ApplicationController
     # puts! current_user, 'current_user'
     # puts! current_profile, 'current_profile'
 
-    authorize! :index, ::Wco::EmailConversation
-    @email_conversations = ::Wco::EmailConversation.all
+    authorize! :index, WcoEmail::Conversation
+    @email_conversations = WcoEmail::Conversation.all
 
     # @new_tag = WpTag.new
     # @emailtags = WpTag.emailtags
@@ -21,8 +21,8 @@ class Wco::EmailConversationsController < WcoEmail::ApplicationController
     # end
 
     if params[:tagname]
-      tag = WcoEmail::Tag.find_by slug: params[:tagname]
-      @email_conversations = @email_conversations.in_tag tag
+      tag = Wco::Tag.find_by slug: params[:tagname]
+      @email_conversations = @email_conversations.where( :tag_ids.in => [ tag.id ] )
     end
 
     return # herehere
@@ -53,8 +53,8 @@ class Wco::EmailConversationsController < WcoEmail::ApplicationController
 
 
   def show
-    authorize! :email_conversations_show, WcoEmail::Ability
-    @email_conversation = ::Wco::EmailConversation.find( params[:id] )
+    authorize! :email_conversations_show, Ability
+    @email_conversation = ::WcoEmail::EmailConversation.find( params[:id] )
     @email_messages     = @email_conversation.email_messages.order_by( date: :asc )
     @email_conversation.update_attributes({ state: Conv::STATE_READ })
   end
