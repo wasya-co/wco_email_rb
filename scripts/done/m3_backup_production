@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -ex
+
+## install
+# wget http://ufpr.dl.sourceforge.net/project/s3tools/s3cmd/1.6.1/s3cmd-1.6.1.tar.gz
+# ...
+# yum install python-setuptools
+# sudo python setup.py install
+# s3cmd --configure
+#
+# crontab -l
+# crontab -e
+# 1 1 * * * /opt/projects/smt_rails/scripts/production_mongodb_to_s3_backup.sh
+
+## config
+MONGO_HOST="10.0.1.16"
+MONGO_DATABASE="ish_production" # not used - I backup ish_production, bjjc_prod at the same time
+MONGO_PORT="27017"
+MONGODUMP_PATH="/opt/mongodb/mongodump" 
+TIMESTAMP=`date +%Y%m%d`
+YEAR=`date +%Y`
+S3_BUCKET_NAME="ish-backups"
+filename="${TIMESTAMP}_${MONGO_DATABASE}.tar.gz"
+
+## Do
+cd /home/ubuntu/backups/
+rm -rf dump
+
+$MONGODUMP_PATH -h $MONGO_HOST:$MONGO_PORT
+tar cvzf "${filename}" dump
+s3cmd put "${filename}" s3://$S3_BUCKET_NAME/$YEAR/mongo/$filename
+
+## cleanup
+rm -rf ${filename}
+rm -rf dump
+
+echo "ok backup ${MONGO_DATABASE}"
+
+
+
