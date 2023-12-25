@@ -18,12 +18,14 @@ Gem::Specification.new do |spec|
   ##
   ## Edit the template, not the gemspec!
   ##
-  spec.add_dependency "rails",     "~> 6.1.7"
-  spec.add_dependency "haml",      "~> 6.3.0"
-  spec.add_dependency 'sass-rails', '~> 5.0'
+  spec.add_dependency "rails",      "~> 6.1.7"
+  spec.add_dependency "haml",       "~> 6.3.0"
 
-  spec.add_dependency 'devise',    "~> 4.9.3"
-  spec.add_dependency "cancancan", "~> 3.5.0"
+  # spec.add_dependency 'sass-rails', "~> 5.0"
+  # spec.add_dependency 'webpacker', "~> 5.4.4"
+
+  spec.add_dependency 'devise',     "~> 4.9.3"
+  spec.add_dependency "cancancan",  "~> 3.5.0"
 
   spec.add_dependency 'ish_models', "~> 3.1.0"
 

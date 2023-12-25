@@ -1,15 +1,15 @@
 
-require 'ish_models'
+# require 'ish_models'
 
-class WcoEmail::ApplicationController < ActionController::Base
+class Wco::ApplicationController < ActionController::Base
 
   check_authorization
   before_action :current_profile
 
+  layout 'wco/application'
+
   def home
     authorize! :index, WcoEmail::Conversation
-
-    render layout: 'wco_email/application2'
   end
 
   ##

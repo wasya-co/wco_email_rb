@@ -1,6 +1,6 @@
 
 WcoEmail::Engine.routes.draw do
-  root to: '/wco_email/application#home'
+  root to: '/wco/application#home'
 
   get 'analytics', to: 'application#analytics'
   get 'tinymce',   to: 'application#tinymce', as: :application_tinymce
@@ -17,6 +17,8 @@ WcoEmail::Engine.routes.draw do
   resources :email_contexts
   resources :email_filters
   resources :email_templates
+
+  resources :galleries
 
   resources :lead_action_templates
   resources :lead_actions

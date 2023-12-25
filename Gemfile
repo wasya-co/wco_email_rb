@@ -10,11 +10,16 @@ group :development, :test do
   gem 'rspec-rails', "~> 6.1.0"
   gem 'rails-controller-testing', "~> 1.0.5"
 
+  gem 'sass-rails', "~> 5.0"
+
   gem 'ish_models',  github: 'wasya-co/ish_models',     branch: '3.1.0'
 
   gem 'omniauth', '~> 2.1.1'
   gem "omniauth-keycloak",              "~> 1.5.1"
   gem "omniauth-rails_csrf_protection", "~> 1.0.1"
+
+  gem 'kaminari-mongoid'
+  gem 'kaminari-actionview'
 
 end
 

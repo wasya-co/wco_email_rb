@@ -28,8 +28,6 @@ PATH
       mongoid-paperclip (~> 0.1.0)
       mongoid_paranoia (~> 0.6.0)
       rails (~> 6.1.7)
-      sass-rails (~> 5.0)
-      webpacker
 
 GEM
   remote: https://rubygems.org/
@@ -156,6 +154,9 @@ GEM
       faraday (~> 2.0)
       faraday-follow_redirects
     jwt (2.7.1)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     kaminari-mongoid (1.0.2)
       kaminari-core (~> 1.0)
@@ -239,8 +240,6 @@ GEM
     rack (2.2.8)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
-    rack-proxy (0.7.7)
-      rack
     rack-test (2.1.0)
       rack (>= 1.3)
     rails (6.1.7.6)
@@ -313,7 +312,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    semantic_range (3.0.0)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -340,11 +338,6 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
-    webpacker (5.4.4)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -356,11 +349,14 @@ PLATFORMS
 DEPENDENCIES
   byebug
   ish_models!
+  kaminari-actionview
+  kaminari-mongoid
   omniauth (~> 2.1.1)
   omniauth-keycloak (~> 1.5.1)
   omniauth-rails_csrf_protection (~> 1.0.1)
   rails-controller-testing (~> 1.0.5)
   rspec-rails (~> 6.1.0)
+  sass-rails (~> 5.0)
   wco_email!
 
 BUNDLED WITH

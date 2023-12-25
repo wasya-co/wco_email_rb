@@ -1,5 +1,5 @@
 
-class WcoEmail::SessionsController < ApplicationController
+class WcoEmail::SessionsController < Wco::ApplicationController
 
   skip_before_action :verify_authenticity_token, only: :create
 

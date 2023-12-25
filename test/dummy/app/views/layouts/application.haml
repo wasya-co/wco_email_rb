@@ -6,12 +6,13 @@
     %meta{content: "width=device-width,initial-scale=1", name: "viewport"}
     = csrf_meta_tags
     = csp_meta_tag
+    = javascript_include_tag 'application'
     = stylesheet_link_tag 'application', media: 'all'
   %body
     Wco Email Dummy. Main app: #{link_to 'email', '/email'}
     %hr
 
-    = render 'alerts_notices'
+    = render '/wco/application/alerts_notices'
 
     %hr
     = yield

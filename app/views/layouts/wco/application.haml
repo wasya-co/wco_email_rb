@@ -37,7 +37,7 @@
       = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
 
-    -# = javascript_include_tag "wco_email/application"
+    = javascript_include_tag "wco_email/application"
     = stylesheet_link_tag    "wco_email/application", media: "all"
 
     -# %script{crossorigin: "", src: "https://unpkg.com/react@18/umd/react.development.js"}
@@ -49,12 +49,13 @@
     = csrf_meta_tags
   %body{ class: [ params[:controller].gsub("wco_email/",""), "#{params[:controller].gsub("wco_email/","")}-#{params[:action]}", params[:action], "application-fullwidth" ] }
 
-    -# = render "wco/application/main_header"
-    = render "wco_email/application/main_header"
+    = render       "/wco/application/main_header"
+    = render "/wco_email/application/main_header"
+    = render '/wco/application/alerts_notices' if notice || alert
+    %hr
 
-
-    = render 'wco/application/alerts_notices' if notice || alert
     %span.absolute.collapse-expand#mainW
     = yield
-    = render 'wco/application/main_footer'
+
+    = render '/wco/application/main_footer'
     = render 'analytics' if Rails.env.production?

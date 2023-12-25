@@ -1,7 +1,5 @@
 
-class Wco::PublishersController < WcoEmail::ApplicationController
-
-  layout '/wco_email/application2'
+class Wco::PublishersController < Wco::ApplicationController
 
   def index
     authorize! :index, Wco::Publisher

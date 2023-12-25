@@ -1,5 +1,5 @@
 
-class WcoEmail::EmailConversationsController < WcoEmail::ApplicationController
+class WcoEmail::EmailConversationsController < Wco::ApplicationController
 
   # before_action :set_lists, except: [ :index ]
 

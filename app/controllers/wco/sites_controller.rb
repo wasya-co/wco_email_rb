@@ -1,7 +1,5 @@
 
-class Wco::SitesController < WcoEmail::ApplicationController
-
-  layout '/wco_email/application2'
+class Wco::SitesController < Wco::ApplicationController
 
   def create
     @site = Wco::Site.new params[:site].permit!
@@ -10,6 +8,17 @@ class Wco::SitesController < WcoEmail::ApplicationController
       flash_notice "created site"
     else
       flash_alert "Cannot create site: #{@site.errors.messages}"
+    end
+    redirect_to action: 'index'
+  end
+
+  def destroy
+    @site = Wco::Site.find params[:id]
+    authorize! :destroy, @site
+    if @site.destroy
+      flash_notice 'ok'
+    else
+      flash_alert 'No luck.'
     end
     redirect_to action: 'index'
   end
