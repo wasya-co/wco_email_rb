@@ -6,7 +6,7 @@
 
 - n_thumbs ||= 12
 
-.galleries--index
+.galleries--index.maxwidth
   .max-width
     = render '/wco/galleries/menu', count: galleries.count
   %hr
@@ -34,7 +34,7 @@
                     = link_to image_tag(photo.photo.url(:thumb), :alt => g.name), gallery_path(g.slug)
 
       - if galleries.respond_to? :total_pages
-        = paginate galleries, :param_name => :galleries_page, :views_prefix => 'ish_manager'
+        = paginate galleries, :param_name => :galleries_page, :views_prefix => 'wco'
 
     - else
       %h5 No Galleries

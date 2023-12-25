@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   ##
   spec.add_dependency "rails",      "~> 6.1.7"
   spec.add_dependency "haml",       "~> 6.3.0"
+  spec.add_dependency "httparty"
 
   # spec.add_dependency 'sass-rails', "~> 5.0"
   # spec.add_dependency 'webpacker', "~> 5.4.4"
@@ -34,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'mongoid-autoinc',   '~> 6.0.3'
   spec.add_dependency 'mongoid-paperclip', '~> 0.1.0'
   spec.add_dependency 'kaminari-mongoid',  '~> 1.0.1'
+  spec.add_dependency 'kaminari-actionview'
 
 
 

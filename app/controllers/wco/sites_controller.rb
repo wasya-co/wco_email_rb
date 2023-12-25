@@ -23,6 +23,11 @@ class Wco::SitesController < Wco::ApplicationController
     redirect_to action: 'index'
   end
 
+  def edit
+    @site = Wco::Site.find params[:id]
+    authorize! :edit, @site
+  end
+
   def index
     authorize! :index, Wco::Site
     @sites = Wco::Site.all
@@ -31,7 +36,17 @@ class Wco::SitesController < Wco::ApplicationController
   def new
     authorize! :new, Wco::Site
     @new_site = Wco::Site.new
+  end
 
+  def update
+    @site = Wco::Site.find params[:id]
+    authorize! :update, @site
+    if @site.update params[:site].permit!
+      flash_notice "updated site"
+    else
+      flash_alert "Cannot update site: #{@site.errors.messages}"
+    end
+    redirect_to action: 'index'
   end
 
 end
