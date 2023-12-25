@@ -28,6 +28,7 @@ WcoEmail::Engine.routes.draw do
   resources :profiles
   resources :publishers
 
+  resources :sites
   resources :scheduled_email_actions
 
   resources :tags

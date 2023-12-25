@@ -1,0 +1,11 @@
+
+.sites--form
+  = form_for site do |f|
+    .field
+      = f.label :origin
+      = f.text_field :origin
+    .field
+      = f.label :post_path
+      = f.text_field :post_path
+    .actions
+      = f.submit

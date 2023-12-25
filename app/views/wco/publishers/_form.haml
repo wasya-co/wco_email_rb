@@ -1,0 +1,12 @@
+
+.publishers--form
+  = form_for publisher do |f|
+    .field
+      Daily
+    .field
+      From
+    .field
+      = f.label :to_site
+      = f.select :to_site, options_for_select( @sites_list, selected: publisher.to_site ), class: 'select2'
+    .actions
+      = f.submit

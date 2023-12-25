@@ -3,7 +3,7 @@
 
   %i.fa.fa-compress.collapse-expand#collapseHeaderMain
     Wco Suite
-  .container
+  .maxwidth
 
     %i.fa.fa-compress.collapse-expand#collapseHeaderEmail
       Wco Email & CRM
@@ -64,6 +64,8 @@
           = link_to 'Unsubs', unsubscribes_path
           = link_to 'Analytics', analytics_path
       %ul
+        %li
+          = link_to 'Sites', sites_path
         %li
           = link_to 'Publishers', publishers_path
     .c

@@ -1,0 +1,9 @@
+
+.publishers-index.maxwidth
+  %h5
+    Publishers
+    = link_to '[+]', new_publisher_path
+
+  %ul
+    - @publishers.each do |p|
+      %li= p.inspect
