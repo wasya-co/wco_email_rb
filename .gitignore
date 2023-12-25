@@ -24,6 +24,7 @@ config/initializers/00_s3.rb
 /storage/*
 !/storage/.keep
 
+/test/dummy/config/initializers/00_s3.rb
 
 /tmp/*
 !/tmp/.keep
