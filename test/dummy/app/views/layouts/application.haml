@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %title Wco Email Dummy
+    %meta{content: "width=device-width,initial-scale=1", name: "viewport"}
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all'
+  %body
+    Wco Email Dummy. Main app: #{link_to 'email', '/email'}
+    %hr
+
+    = render 'alerts_notices'
+
+    %hr
+    = yield
+    %hr
+
+    - if current_user
+      = current_user.email
+      = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }
+    - else
+      = button_to 'Login', "/users/auth/keycloakopenid", method: :post

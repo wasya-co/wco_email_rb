@@ -7,9 +7,11 @@
 
     %i.fa.fa-compress.collapse-expand#collapseHeaderEmail
       Wco Email & CRM
-    .a
+    .flex-row
       %ul
-        %li= link_to 'Tags', tags_path
+
+        %li= link_to 'Inbox', email_conversations_in_path(WcoEmail::INBOX)
+        %li= link_to 'Trash', email_conversations_in_path(WcoEmail::TRASH)
         -# %li
         -#   = link_to "#{WpTag::INBOX} (#{Office::EmailConversation.in_emailtag(WpTag::INBOX).length})", email_conversations_in_path(WpTag::INBOX), class: 'chip'
         -#   = link_to '[+]', new_email_context_path
@@ -17,8 +19,6 @@
           = link_to "Tmpls (#{WcoEmail::MessageTemplate.all.length})", email_templates_path
           = link_to '[+]', new_email_template_path
         %li
-          -# @TODO: herehere, re-add
-          -# = link_to "Companies (#{Wco::Leadset.kept.length})", leadsets_path
           = link_to "Companies (#{Wco::Leadset.all.length})", leadsets_path
           .inline-search
             = form_tag leadsets_path, method: :get do
@@ -32,11 +32,8 @@
           = link_to "Filters (#{WcoEmail::EmailFilter.active.length})", email_filters_path
           = link_to '[+]', new_email_filter_path
         %li
-          -# @TODO: herehere, re-add
-          -# = link_to "Ctxs (#{Ctx.notsent.length})", email_contexts_path({ sent: false })
-          = link_to "Ctxs (#{Ctx.all.length})", email_contexts_path({ sent: false })
+          = link_to "Ctxs (#{WcoEmail::Context.all.length})", email_contexts_path({ sent: false })
           = link_to '[+]', new_email_context_path
-          %br
           = link_to 'summary', email_contexts_summary_path( format: :html )
           = link_to '[csv]', email_contexts_summary_path( format: :csv )
 
@@ -49,7 +46,7 @@
               = text_field_tag :q
           = link_to '[+]', new_lead_path
         %li
-          = link_to "Schs (#{Sch.active.length})", scheduled_email_actions_path
+          = link_to "Schs (#{WcoEmail::ScheduledEmailAction.active.length})", scheduled_email_actions_path
           = link_to '[+]', new_scheduled_email_action_path
 
       %ul
@@ -66,4 +63,7 @@
         %li
           = link_to 'Unsubs', unsubscribes_path
           = link_to 'Analytics', analytics_path
+      %ul
+        %li
+          = link_to 'Publishers', publishers_path
     .c

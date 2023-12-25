@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title #{@page_title} | PiousboxCMS
+    %title #{@page_title} | Wco Email 2
     %link{ :rel => 'icon', :href => "/favicon_#{ENV['RAILS_ENV']}.gif" }
     %meta{ :name => :viewport, :content => 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2' }
     %meta{ :charset => 'UTF-8' }
@@ -11,7 +11,6 @@
 
     %script{ :src => "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" }
     = stylesheet_link_tag "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
-
 
     = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", :media => 'all'
     = stylesheet_link_tag "//fonts.googleapis.com/icon?family=Material+Icons"
@@ -38,8 +37,8 @@
       = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
 
-    -# = stylesheet_link_tag "ish_manager/application", media: "all"
-    -# = javascript_include_tag "ish_manager/application"
+    -# = javascript_include_tag "wco_email/application"
+    = stylesheet_link_tag    "wco_email/application", media: "all"
 
     -# %script{crossorigin: "", src: "https://unpkg.com/react@18/umd/react.development.js"}
     -# %script{crossorigin: "", src: "https://unpkg.com/react-dom@18/umd/react-dom.development.js"}

@@ -4,9 +4,6 @@ class WcoEmail::EmailConversationsController < WcoEmail::ApplicationController
   # before_action :set_lists, except: [ :index ]
 
   def index
-    # puts! current_user, 'current_user'
-    # puts! current_profile, 'current_profile'
-
     authorize! :index, WcoEmail::Conversation
     @email_conversations = WcoEmail::Conversation.all
 

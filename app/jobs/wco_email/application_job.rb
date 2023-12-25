@@ -1,4 +1,3 @@
-module WcoEmail
-  class ApplicationJob < ActiveJob::Base
-  end
+
+class WcoEmail::ApplicationJob < ActiveJob::Base
 end

@@ -1,0 +1,20 @@
+.row.max-width
+  .col-sm-12
+    - if notice&.class == String
+      .notice
+        = notice
+        .close [x]
+    - if notice&.class == Array
+      - notice.each do |i|
+        .notice
+          = i
+          .close [x]
+    - if alert&.class == String
+      .alert
+        = alert
+        .close [x]
+    - if alert&.class == Array
+      - alert.each do |i|
+        .alert
+          = i
+          .close [x]

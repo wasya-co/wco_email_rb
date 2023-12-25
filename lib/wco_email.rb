@@ -8,9 +8,11 @@ require "wco_email/engine"
 def logger; Rails.logger; end
 
 require 'ish_models'
-
-module Wco; end
-module WcoEmail; end
+# module Wco; end
+module WcoEmail
+  INBOX = 'inbox'
+  TRASH = 'trash'
+end
 
 def puts! a, b=''
   puts "+++ +++ #{b}:"

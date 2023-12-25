@@ -1,0 +1,16 @@
+
+.main-footer {
+  border-top: 1px solid red;
+}
+
+.main-header {
+  border-bottom: 1px solid red;
+
+  li {
+    display: flex;
+
+    input[name='q'] {
+      width: 20px;
+    }
+  }
+}
