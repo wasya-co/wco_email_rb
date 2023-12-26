@@ -32,6 +32,7 @@ WcoEmail::Engine.routes.draw do
   resources :profiles
   post 'publishers/:id/do-run', to: 'publishers#do_run', as: :do_run_publisher
   resources :publishers
+  resources :photos
 
   resources :sites
   resources :scheduled_email_actions

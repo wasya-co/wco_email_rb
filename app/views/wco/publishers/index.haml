@@ -7,7 +7,10 @@
   %table.bordered
     %tr
       %th &nbsp;
-      %th name
+      %th
+        name
+        %br
+        site
       %th
         context_eval
         %br
@@ -19,7 +22,10 @@
             = button_to '[x]', publisher_path(item), method: :delete, data: { confirm: 'Are you sure?' }
             = link_to '[~]', edit_publisher_path(item)
             = button_to '[run]', do_run_publisher_path( item ), data: { confirm: 'Are you sure?' }
-        %td= item.name
+        %td
+          = item.name
+          %hr
+          = item.to_site.origin
         %td
           %pre.monospace
             = item.context_eval

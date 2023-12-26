@@ -108,3 +108,22 @@ curl --include \
       }
     ]
   }'
+
+
+
+
+curl --include \
+  --request POST \
+  --user admin:$pi_passwd \
+  --header 'Content-type: application/hal+json' \
+  http://wco.local:8088/node?_format=hal_json \
+  --data-binary '{
+    "_links": {
+      "type":{"href":"http://wco.local:8088/rest/type/node/article"}
+    },
+    "title":[{"value":"Test Tree #1" }],
+    "body":[{"value": "<h1>Hello, world!</h1><img src='http://ish-drupal-prod.s3.amazonaws.com/public/2023-09/200x200%20piousbox%20favicon.png?VersionId=6QVFTwCGApZMbrkmP_MlEhaCB2_5J1DG' alt='' />", "format": "full_html" }],
+    "type":[{"target_id":"article"}],
+    "field_image_thumb_url":[{"value": "http://ish-drupal-prod.s3.amazonaws.com/public/2023-09/200x200%20piousbox%20favicon.png?VersionId=6QVFTwCGApZMbrkmP_MlEhaCB2_5J1DG" }],
+    "status": [{"value": 1}]
+  }'
