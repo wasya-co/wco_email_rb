@@ -18,7 +18,9 @@ WcoEmail::Engine.routes.draw do
   resources :email_filters
   resources :email_templates
 
-  resources :galleries
+  resources :galleries do
+    post 'multiadd', :to => 'photos#j_create', :as => :multiadd
+  end
 
   resources :lead_action_templates
   resources :lead_actions

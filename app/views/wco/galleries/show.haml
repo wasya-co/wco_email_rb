@@ -1,5 +1,5 @@
 -#
--# ish_manager / galleries / show
+-# wco / galleries / show
 -#
 
 .galleries-show.padded
@@ -7,11 +7,11 @@
     .col-md-6
       = render 'title', :gallery => @gallery
     .col-md-6
-      = render 'ish_manager/photos/multinew', :gallery => @gallery
+      = render 'wco/photos/multinew', :gallery => @gallery
 
   .row-deleted
     %p.collapse-expand#rowDeleted Deleted
-    = render 'ish_manager/photos/index_thumbs', photos: @deleted_photos
+    = render 'wco/photos/index_thumbs', photos: @deleted_photos
 
   .row-mini
     %p.collapse-expand#rowMinis Mini's
@@ -29,7 +29,7 @@
             %a.mvLeft &lt;
             %a.mvRight &gt;
             .item{ data: { id: photo.id.to_s } }
-              = render 'ish_manager/photos/meta_manager', photo: photo
+              = render 'wco/photos/meta_manager', photo: photo
               = image_tag photo.photo.url( :thumb )
       = button_tag 'Save ordering', class: 'save-ordering'
 
@@ -39,5 +39,5 @@
       - @photos.each do |photo|
         .item
           %a{id: "large_#{photo.id}" }
-          = render 'ish_manager/photos/meta_manager', photo: photo
+          = render 'wco/photos/meta_manager', photo: photo
           .wrapper{ style: "background-image: url('#{photo.photo.url( :large )}')" }
