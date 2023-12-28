@@ -1,13 +1,18 @@
 
+require 'aws-sdk-s3'
+require 'mail'
+require 'sidekiq'
+
 ##
 ## 2023-02-26 _vp_ Let's go
 ## 2023-03-07 _vp_ Continue
+## 2023-12-28 _vp_ Continue
 ##
 ## class_name EIJ
 ##
 class WcoEmail::MessageIntakeJob
-
-  queue_as :wco_email
+  include Sidekiq::Job
+  sidekiq_options queue: 'wco_email_rb'
 
 =begin
 
@@ -24,16 +29,15 @@ class WcoEmail::MessageIntakeJob
 
 =end
   def perform id
-      stub = ::Office::EmailMessageStub.find id
-      if !Rails.env.test?
-        puts "Performing EmailMessageIntakeJob for object_key #{stub.object_key}"
-      end
-      if stub.state != ::Office::EmailMessageStub::STATE_PENDING
+      stub = WcoEmail::MessageStub.find id
+      puts "+++ +++ Performing WcoEmail::MessageIntakeJob for object_key #{stub.object_key}"
+
+      if stub.status != WcoEmail::MessageStub::STATUS_PENDING
         raise "This stub has already been processed: #{stub.id.to_s}."
         return
       end
 
-      client = Aws::S3::Client.new({
+      client ||= Aws::S3::Client.new({
         region:            ::S3_CREDENTIALS[:region_ses],
         access_key_id:     ::S3_CREDENTIALS[:access_key_id_ses],
         secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
@@ -44,32 +48,31 @@ class WcoEmail::MessageIntakeJob
       message_id         = the_mail.header['message-id']&.decoded
       message_id       ||= "#{the_mail.date.iso8601}::#{the_mail.from}"
       in_reply_to_id     = the_mail.header['in-reply-to']&.to_s
-      email_inbox_tag_id = WpTag.emailtag(WpTag::INBOX).id
       the_mail.to        = [ 'NO-RECIPIENT' ] if !the_mail.to
-      subject            = ::Msg.strip_emoji( the_mail.subject || '(wco-no-subject)' )
+      subject            = WcoEmail::Message.strip_emoji( the_mail.subject || '(wco-no-subject)' )
 
 
       ## Conversation
       if in_reply_to_id
-        in_reply_to_msg = ::Office::EmailMessage.where({ message_id: in_reply_to_id }).first
+        in_reply_to_msg = WcoEmail::Message.where({ message_id: in_reply_to_id }).first
         if !in_reply_to_msg
-          conv = ::Office::EmailConversation.find_or_create_by({
+          conv = WcoEmail::Conversation.find_or_create_by({
             subject: subject,
           })
-          in_reply_to_msg = ::Office::EmailMessage.find_or_create_by({
+          in_reply_to_msg = WcoEmail::Message.find_or_create_by({
             message_id: in_reply_to_id,
             email_conversation_id: conv.id,
           })
         end
         conv = in_reply_to_msg.email_conversation
       else
-        conv = ::Office::EmailConversation.find_or_create_by({
+        conv = WcoEmail::Conversation.find_or_create_by({
           subject: subject,
         })
       end
 
-      @message   = ::Office::EmailMessage.where( message_id: message_id ).first
-      @message ||= ::Office::EmailMessage.create({
+      @message   = WcoEmail::Message.where( message_id: message_id ).first
+      @message ||= WcoEmail::Message.create({
         # raw: raw,
         email_conversation_id: conv.id,
 
@@ -125,30 +128,34 @@ class WcoEmail::MessageIntakeJob
 
       ## Leadset, Lead
       domain  = @message.from.split('@')[1] rescue 'unknown.domain'
-      leadset = Leadset.find_or_create_by( company_url: domain )
-      lead    = Lead.find_or_create_by( email: @message.from, m3_leadset_id: leadset.id )
+      leadset = Wco::Leadset.find_or_create_by( company_url: domain )
+      lead    = Wco::Lead.find_or_create_by( email: @message.from, leadset: leadset )
+      conv.leads.push lead
+      conv.save
+      lead.conversations.push conv
+      lead.save
       the_mail.cc&.each do |cc|
         domain  = cc.split('@')[1] rescue 'unknown.domain'
-        leadset = Leadset.find_or_create_by( company_url: domain )
-        Lead.find_or_create_by( email: cc, m3_leadset_id: leadset.id )
+        leadset = Wco::Leadset.find_or_create_by( company_url: domain )
+        Wco::Lead.find_or_create_by( email: cc, m3_leadset_id: leadset.id )
       end
 
-      # @message.update_attributes({ email_conversation_id: conv.id })
       conv.update_attributes({
-        state:       Conv::STATE_UNREAD,
+        status:      WcoEmail::Conversation::STATUS_UNREAD,
         latest_at:   the_mail.date || Time.now.to_datetime,
         from_emails: ( conv.from_emails + the_mail.from ).uniq,
-        preview: @message.body_sanitized[0...200],
+        preview:     @message.body_sanitized[0...200],
       })
-      conv.add_tag( ::WpTag::INBOX )
-      conv_lead_tie = Office::EmailConversationLead.find_or_create_by({
-        lead_id: lead.id,
-        email_conversation_id: conv.id,
-      })
+
+      inbox_tag = Wco::Tag.find_by({ slug: Wco::Tag::INBOX })
+      conv.tags.push inbox_tag
+      conv.save
+      inbox_tag.conversations.push conv
+      inbox_tag.save
 
 
       ## Actions & Filters
-      email_filters = Office::EmailFilter.active
+      email_filters = WcoEmail::EmailFilter.active
       email_filters.each do |filter|
         if ( filter.from_regex.blank? ||     @message.from.match(                 filter.from_regex    ) ) &&
           ( filter.from_exact.blank? ||     @message.from.downcase.include?(     filter.from_exact&.downcase ) ) &&
@@ -164,12 +171,12 @@ class WcoEmail::MessageIntakeJob
         end
       end
 
-      stub.update_attributes({ state: ::Office::EmailMessageStub::STATE_PROCESSED })
+      # stub.update_attributes({ status: WcoEmail::MessageStub::STATUS_PROCESSED })
 
       ## Notification
-      conv = Conv.find( conv.id )
-      if conv.in_emailtag? WpTag::INBOX
-        out = ::Ishapi::ApplicationMailer.forwarder_notify( @message.id.to_s )
+      conv = WcoEmail::Conversation.find( conv.id )
+      if conv.tags.include? inbox_tag
+        out = WcoEmail::ApplicationMailer.forwarder_notify( @message.id.to_s )
         Rails.env.production? ? out.deliver_later : out.deliver_now
       end
 

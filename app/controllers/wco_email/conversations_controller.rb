@@ -1,5 +1,5 @@
 
-class WcoEmail::EmailConversationsController < Wco::ApplicationController
+class WcoEmail::ConversationsController < Wco::ApplicationController
 
   # before_action :set_lists, except: [ :index ]
 
@@ -53,9 +53,10 @@ class WcoEmail::EmailConversationsController < Wco::ApplicationController
 
   def show
     authorize! :email_conversations_show, Ability
-    @email_conversation = ::WcoEmail::EmailConversation.find( params[:id] )
-    @email_messages     = @email_conversation.email_messages.order_by( date: :asc )
-    @email_conversation.update_attributes({ state: Conv::STATE_READ })
+    @conversation = ::WcoEmail::Conversation.find( params[:id] )
+    @messages     = @conversation.messages.order_by( date: :asc )
+    @conversation.update_attributes({ status: Conv::STATUS_READ })
   end
 
 end
+

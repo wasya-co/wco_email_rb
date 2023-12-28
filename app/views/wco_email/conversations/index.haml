@@ -1,0 +1,8 @@
+
+.conversations-index.maxwidth
+  %ul
+    - @email_conversations.each do |conv|
+      %li
+        = link_to conv.subject, email_conversation_path(conv)
+        (#{conv.messages.length})
+

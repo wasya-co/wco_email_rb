@@ -6,10 +6,11 @@ WcoEmail::Engine.routes.draw do
   get 'analytics', to: 'application#analytics'
   get 'tinymce',   to: 'application#tinymce', as: :application_tinymce
 
-  get 'email_conversations',                     to: '/wco_email/email_conversations#index'
-  get 'email_conversations/in/:tagname',         to: '/wco_email/email_conversations#index', as: :email_conversations_in
-  get 'email_conversations/not-in/:tagname_not', to: '/wco_email/email_conversations#index', as: :email_conversations_in_not
-  # resources :email_canversations
+  get 'email_conversations',                     to: '/wco_email/conversations#index', as: :email_conversations
+  get 'email_conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :email_conversations_in
+  get 'email_conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :email_conversations_in_not
+  get 'email_conversations/:id',                 to: '/wco_email/conversations#show',  as: :email_conversation
+  # resources :email_conversations
 
   resources :email_actions
   resources :email_campaigns

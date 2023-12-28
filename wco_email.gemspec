@@ -38,5 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'kaminari-actionview'
 
   spec.add_dependency 'aws-sdk-s3'
+  spec.add_dependency 'mail', "~> 2.8.1"
 
 end

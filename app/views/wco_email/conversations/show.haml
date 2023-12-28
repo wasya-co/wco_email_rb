@@ -1,0 +1,11 @@
+
+.conversations-show.maxwidth
+  %h5
+    = @conversation.subject
+    (#{@conversation.messages.length})
+
+  %ul
+    - @conversation.messages.each do |msg|
+      %li
+        .descr= raw msg.part_html_sanitized
+        -# = msg.inspect

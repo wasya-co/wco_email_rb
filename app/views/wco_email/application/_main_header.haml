@@ -6,8 +6,8 @@
   .flex-row
     %ul
 
-      %li= link_to 'Inbox', email_conversations_in_path(WcoEmail::INBOX)
-      %li= link_to 'Trash', email_conversations_in_path(WcoEmail::TRASH)
+      %li= link_to 'Inbox', email_conversations_in_path(Wco::Tag::INBOX)
+      %li= link_to 'Trash', email_conversations_in_path(Wco::Tag::TRASH)
       -# %li
       -#   = link_to "#{WpTag::INBOX} (#{Office::EmailConversation.in_emailtag(WpTag::INBOX).length})", email_conversations_in_path(WpTag::INBOX), class: 'chip'
       -#   = link_to '[+]', new_email_context_path

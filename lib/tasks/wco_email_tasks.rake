@@ -1,12 +1,8 @@
+
 require 'aws-sdk-s3'
+require 'mail'
 
-client = Aws::S3::Client.new({
-  region:            ::S3_CREDENTIALS[:region_ses],
-  access_key_id:     ::S3_CREDENTIALS[:access_key_id_ses],
-  secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
-})
-
-def do_process message
+def do_process message, client
   the_mail       = Mail.new(message)
   filename       = the_mail.date.in_time_zone.to_s[0..18].gsub(' ', 'T').gsub(':', '_')
   filename       = "#{filename}F#{the_mail.from[0].sub('@', '_').gsub('.', '_')}"
@@ -16,8 +12,7 @@ def do_process message
   })
   @stub = WcoEmail::MessageStub.create({
     object_key:  filename,
-    object_path: "https://#{::S3_CREDENTIALS[:bucket_ses]}.s3.amazonaws.com/#{filename}",
-    state:       WcoEmail::MessageStub::STATE_PENDING,
+    status:      WcoEmail::MessageStub::STATUS_PENDING,
   })
   if @stub.persisted?
     # WcoEmail::MessageIntakeJob.perform_later( @stub.id.to_s )
@@ -46,16 +41,22 @@ namespace :wco_email do
       exit 22
     end
 
+    client ||= Aws::S3::Client.new({
+      region:            ::S3_CREDENTIALS[:region_ses],
+      access_key_id:     ::S3_CREDENTIALS[:access_key_id_ses],
+      secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
+    })
+
     which_file = ENV['mbox_path']
     message    = nil
 
-    import_tag = Wco::Tag.create!({ slug: '20231228-import' })
+    import_tag = Wco::Tag.find_or_create_by({ slug: '20231228-import' })
 
     File.readlines( which_file, encoding: "ISO8859-1" ).each do |line|
       if (line.match(/\AFrom /))
 
         if message
-          do_process message
+          do_process message, client
           print '.'
         end
         message = ''
@@ -66,7 +67,7 @@ namespace :wco_email do
     end
 
     if message
-      do_process message
+      do_process message, client
       print '.'
     end
     message = ''
@@ -74,6 +75,12 @@ namespace :wco_email do
     puts "ok"
   end
 
+  desc 'churn one'
+  task churn_one: :environment do
+    # @stub = MsgStub.where({ status: 'status_pending' }).first
+    @stub = WcoEmail::MessageStub.find_by object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
+    WcoEmail::MessageIntakeJob.perform_sync( @stub.id.to_s )
+  end
 
 
 end
@@ -81,26 +88,3 @@ end
 
 
 
-
-
-
-
-
-
-
-
-  ## Not used until I revisit it. _vp_ 2023-04-02
-  # desc 'after lambda puts object_key in mdb'
-  # task churn_messages: :environment do
-  #   Office::EmailMessageStub.pending.each do |msg|
-  #     Ishapi::EmailMessageIntakeJob.process_later( msg.id )
-  #   end
-  # end
-
-  # desc 'be rake email:churn_one key_id=0ijbh58ocnat5oal6iqchn4rosj9q99u3opq37o1'
-  # task churn_one: :environment do
-  #   object_key = ENV['key_id'] || 'iao4kfrcot6d3pd3hqp9af21e28iev6b5eoi6781'
-  #   stub = MsgStub.find_or_create_by({ object_key: object_key }).update({ state: 'state_pending' })
-  #   stub = MsgStub.find_by({ object_key: object_key })
-  #   EIJ.new.perform( stub.id )
-  # end
