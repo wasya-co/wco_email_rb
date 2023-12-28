@@ -1,6 +1,7 @@
 
 WcoEmail::Engine.routes.draw do
-  root to: '/wco/application#home'
+  # root to: '/wco_email/email_conversations#index'
+  root to: redirect('/email/email_conversations')
 
   get 'analytics', to: 'application#analytics'
   get 'tinymce',   to: 'application#tinymce', as: :application_tinymce

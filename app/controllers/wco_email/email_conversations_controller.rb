@@ -3,6 +3,8 @@ class WcoEmail::EmailConversationsController < Wco::ApplicationController
 
   # before_action :set_lists, except: [ :index ]
 
+  layout 'wco_email/application'
+
   def index
     authorize! :index, WcoEmail::Conversation
     @email_conversations = WcoEmail::Conversation.all

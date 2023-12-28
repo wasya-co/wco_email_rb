@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'devise',     "~> 4.9.3"
   spec.add_dependency "cancancan",  "~> 3.5.0"
 
-  spec.add_dependency 'ish_models', "~> 3.1.0"
+  spec.add_dependency 'wco_models', "~> 3.1.0"
 
   spec.add_dependency 'mongoid',           '~> 7.3.0'
   spec.add_dependency 'mongoid_paranoia',  '~> 0.6.0'
@@ -37,6 +37,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'kaminari-mongoid',  '~> 1.0.1'
   spec.add_dependency 'kaminari-actionview'
 
-
+  spec.add_dependency 'aws-sdk-s3'
 
 end

@@ -1,7 +1,5 @@
-require 'spec_helper'
 
-describe WcoEmail::EmailConversationsController, :type => :controller do
-
+describe WcoEmail::EmailConversationsController do
   render_views
   routes { WcoEmail::Engine.routes }
 

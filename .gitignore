@@ -2,7 +2,8 @@
 .bundle
 .byebug_history
 
-config/initializers/00_s3.rb
+/config/initializers/0*
+/config/initializers/00_s3.rb
 /config/master.key
 
 /db/*.sqlite3
@@ -24,6 +25,7 @@ config/initializers/00_s3.rb
 /storage/*
 !/storage/.keep
 
+/test/dummy/config/initializers/0*
 /test/dummy/config/initializers/00_s3.rb
 
 /tmp/*

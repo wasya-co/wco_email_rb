@@ -12,7 +12,7 @@ group :development, :test do
 
   gem 'sass-rails', "~> 5.0"
 
-  gem 'ish_models',  github: 'wasya-co/ish_models',     branch: '3.1.0'
+  gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.1.0'
 
   gem 'omniauth', '~> 2.1.1'
   gem "omniauth-keycloak",              "~> 1.5.1"
