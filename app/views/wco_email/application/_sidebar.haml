@@ -1,0 +1,10 @@
+
+.application--sidebar
+  %ul
+    - @tags.each do |tag|
+      %li
+        = link_to tag.slug, email_conversations_in_path( tag.slug )
+        -# (#{tag.conversations.unread.length}, #{tag.conversations.length})
+        (#{tag.conversations.unread.length})
+        (#{tag.conversations.length})
+

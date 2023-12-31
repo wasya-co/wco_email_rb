@@ -21,5 +21,7 @@ group :development, :test do
   gem 'kaminari-mongoid'
   gem 'kaminari-actionview'
 
+  gem 'irb', '>= 1.2.8'
+
 end
 

@@ -2,7 +2,7 @@
 require 'aws-sdk-s3'
 require 'mail'
 
-def do_process message, client
+def do_process message, client, tag
   the_mail       = Mail.new(message)
   filename       = the_mail.date.in_time_zone.to_s[0..18].gsub(' ', 'T').gsub(':', '_')
   filename       = "#{filename}F#{the_mail.from[0].sub('@', '_').gsub('.', '_')}"
@@ -13,11 +13,12 @@ def do_process message, client
   @stub = WcoEmail::MessageStub.create({
     object_key:  filename,
     status:      WcoEmail::MessageStub::STATUS_PENDING,
+    tags:        tag ? [ tag ] : [],
   })
   if @stub.persisted?
     # WcoEmail::MessageIntakeJob.perform_later( @stub.id.to_s )
   else
-    puts! @stub.errors.full.messages.join(", "), "111 Cannot save this stub: #{@stub.id}."
+    puts! @stub.errors.full.messages.join(", "), "Cannot save this stub_id: #{@stub.id} object_key: #{filename} "
   end
 end
 
@@ -30,13 +31,13 @@ namespace :wco_email do
   end
 
   ## Not used until I revisit it. _vp_ 2023-04-02
-  desc 'wco_email:churn_mbox mbox_path=<filepath> '
-  task churn_mbox: :environment do
+  desc 'wco_email:mbox2stubs mbox_path=<filepath> [ tagname=<some-new-slug> ] '
+  task mbox2stubs: :environment do
 
     ## Usage
     if !ENV['mbox_path']
       puts ""
-      puts "Usage: wco_email:churn_mbox mbox_path=<filepath> "
+      puts "Usage: wco_email:mbox2stubs mbox_path=<filepath> [ tagname=<some-new-slug> ] "
       puts ""
       exit 22
     end
@@ -50,13 +51,15 @@ namespace :wco_email do
     which_file = ENV['mbox_path']
     message    = nil
 
-    import_tag = Wco::Tag.find_or_create_by({ slug: '20231228-import' })
+    if ENV['tagname']
+      tag = Wco::Tag.find_or_create_by({ slug: ENV['tagname'] })
+    end
 
     File.readlines( which_file, encoding: "ISO8859-1" ).each do |line|
       if (line.match(/\AFrom /))
 
         if message
-          do_process message, client
+          do_process message, client, tag
           print '.'
         end
         message = ''
@@ -67,7 +70,7 @@ namespace :wco_email do
     end
 
     if message
-      do_process message, client
+      do_process message, client, tag
       print '.'
     end
     message = ''
@@ -75,11 +78,34 @@ namespace :wco_email do
     puts "ok"
   end
 
-  desc 'churn one'
-  task churn_one: :environment do
-    # @stub = MsgStub.where({ status: 'status_pending' }).first
-    @stub = WcoEmail::MessageStub.find_by object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
-    WcoEmail::MessageIntakeJob.perform_sync( @stub.id.to_s )
+  ##
+  ## @stub = WcoEmail::MessageStub.find_by object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
+  ##
+  desc 'churn_n_stubs n=<num> [ tagname=<some-new-slug> ] '
+  task churn_n_stubs: :environment do
+
+    ## Usage
+    if !ENV['n']
+      puts ""
+      puts "Usage: churn_n_stubs n=<num> [ tagname=<some-new-slug> ] "
+      puts ""
+      exit 22
+    end
+
+    if ENV['tagname']
+      tag = Wco::Tag.find_or_create_by({ slug: ENV['tagname'] })
+    end
+
+    n = ENV['n'].to_i
+    stubs = WcoEmail::MessageStub.where({ status: 'status_pending' }).limit n
+    stubs.each_with_index do |stub, idx|
+      puts "+++ +++ churning ##{idx+1}"
+
+      stub.tags.push( tag )
+      stub.save
+
+      WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
+    end
   end
 
 

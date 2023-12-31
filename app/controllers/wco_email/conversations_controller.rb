@@ -1,17 +1,13 @@
 
 class WcoEmail::ConversationsController < Wco::ApplicationController
 
-  # before_action :set_lists, except: [ :index ]
+  before_action :set_lists
 
   layout 'wco_email/application'
 
   def index
     authorize! :index, WcoEmail::Conversation
     @email_conversations = WcoEmail::Conversation.all
-
-    # @new_tag = WpTag.new
-    # @emailtags = WpTag.emailtags
-    # @emailtags_list = [[nil,nil]] + WpTag.emailtags.map { |p| [ p.name, p.slug ] }
 
     per_page = current_profile.per_page
     # if current_profile.per_page > 100
@@ -23,16 +19,9 @@ class WcoEmail::ConversationsController < Wco::ApplicationController
       tag = Wco::Tag.find_by slug: params[:tagname]
       @email_conversations = @email_conversations.where( :tag_ids.in => [ tag.id ] )
     end
-
-    return # herehere
-
-
-
-
-
-
     if params[:tagname_not]
-      @email_conversations = @email_conversations.not_in_emailtag( params[:not_slug] )
+      tag_not = Wco::Tag.find_by slug: params[:tagname_not]
+      @email_conversations = @email_conversations.where( :tag_ids.nin => [ tag_not.id ] )
     end
 
     if params[:subject].present?
@@ -44,9 +33,9 @@ class WcoEmail::ConversationsController < Wco::ApplicationController
     end
 
     @email_conversations = @email_conversations.order_by( latest_at: :desc
-      ).includes( :email_messages # , :lead_ties
-      # ).page( params[:conv_page]
-      # ).per( per_page
+      # ).includes( :email_messages
+      ).page( params[:conv_page]
+      ).per( per_page
       )
   end
 
@@ -56,6 +45,15 @@ class WcoEmail::ConversationsController < Wco::ApplicationController
     @conversation = ::WcoEmail::Conversation.find( params[:id] )
     @messages     = @conversation.messages.order_by( date: :asc )
     @conversation.update_attributes({ status: Conv::STATUS_READ })
+  end
+
+  ##
+  ## private
+  ##
+  private
+
+  def set_lists
+    @tags = Wco::Tag.all
   end
 
 end

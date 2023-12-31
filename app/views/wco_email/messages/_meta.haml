@@ -1,0 +1,13 @@
+
+.messages--meta
+  %ul
+    %li <b>date:</b> #{message.date}
+    %li
+      <b>n_images:</b> #{message.photos.length}
+    %li
+      <b>n_assets:</b> #{message.assets.length}
+      - if !message.assets.blank?
+        %ol
+          - message.assets.each do |asset|
+            %li
+              = link_to asset.filename, wco_sites_path, target: :_blank

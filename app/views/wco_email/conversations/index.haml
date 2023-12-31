@@ -1,8 +1,13 @@
 
 .conversations-index.maxwidth
-  %ul
+  = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page
+  %ol.ml-0.pl-0
     - @email_conversations.each do |conv|
       %li
-        = link_to conv.subject, email_conversation_path(conv)
+        - if conv.unread?
+          <b>#{link_to conv.subject, email_conversation_path(conv)}</b>
+        - else
+          = link_to conv.subject, email_conversation_path(conv)
+        -# (#{conv.messages.unread.length}, #{conv.messages.length})
         (#{conv.messages.length})
-
+  = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page

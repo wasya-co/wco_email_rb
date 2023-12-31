@@ -5,15 +5,24 @@
     Wco Email & CRM
   .flex-row
     %ul
-
-      %li= link_to 'Inbox', email_conversations_in_path(Wco::Tag::INBOX)
-      %li= link_to 'Trash', email_conversations_in_path(Wco::Tag::TRASH)
-      -# %li
-      -#   = link_to "#{WpTag::INBOX} (#{Office::EmailConversation.in_emailtag(WpTag::INBOX).length})", email_conversations_in_path(WpTag::INBOX), class: 'chip'
-      -#   = link_to '[+]', new_email_context_path
+      %li= link_to 'Email Messages', email_conversations_path
       %li
         = link_to "Tmpls (#{WcoEmail::MessageTemplate.all.length})", email_templates_path
         = link_to '[+]', new_email_template_path
+        = link_to "Campaigns (#{WcoEmail::Campaign.all.length})", email_campaigns_path
+        = link_to '[+]', new_email_campaign_path
+      %li
+        = link_to "Email Filters (#{WcoEmail::EmailFilter.active.length})", email_filters_path
+        = link_to '[+]', new_email_filter_path
+      %li
+        = link_to "Email Ctxs (#{WcoEmail::Context.all.length})", email_contexts_path({ sent: false })
+        = link_to '[+]', new_email_context_path
+        = link_to 'summary', email_contexts_summary_path( format: :html )
+        = link_to '[csv]', email_contexts_summary_path( format: :csv )
+      %li
+        = link_to 'Unsubs', unsubscribes_path
+        = link_to '[summary]', analytics_path
+    %ul
       %li
         = link_to "Companies (#{Wco::Leadset.all.length})", leadsets_path
         .inline-search
@@ -21,42 +30,24 @@
             = text_field_tag :q
         = link_to '[+]', new_leadset_path
       %li
-        = link_to "EActions", email_actions_path
-        = link_to '[+]', new_email_action_path
-    %ul
-      %li
-        = link_to "Filters (#{WcoEmail::EmailFilter.active.length})", email_filters_path
-        = link_to '[+]', new_email_filter_path
-      %li
-        = link_to "Ctxs (#{WcoEmail::Context.all.length})", email_contexts_path({ sent: false })
-        = link_to '[+]', new_email_context_path
-        = link_to 'summary', email_contexts_summary_path( format: :html )
-        = link_to '[csv]', email_contexts_summary_path( format: :csv )
-
-      %li
-        -# @TODO: herehere, re-add
-        -# = link_to "Leads (#{Wco::Lead.kept.length})", leads_path
         = link_to "Leads (#{Wco::Lead.all.length})", leads_path
         .inline-search
           = form_tag leads_path, method: :get do
             = text_field_tag :q
         = link_to '[+]', new_lead_path
+    %ul
+      %li
+        = link_to "Email Actions", email_actions_path
+        = link_to '[+]', new_email_action_path
       %li
         = link_to "Schs (#{WcoEmail::ScheduledEmailAction.active.length})", scheduled_email_actions_path
         = link_to '[+]', new_scheduled_email_action_path
-
-    %ul
       %li
         = link_to 'OLATs', lead_action_templates_path
         = link_to '[+]', new_lead_action_template_path
         = link_to 'Lead Actions', lead_actions_path
       %li
-        = link_to "Campaigns (#{WcoEmail::Campaign.all.length})", email_campaigns_path
-        = link_to '[+]', new_email_campaign_path
-      %li
         = link_to "OActions (#{Wco::OfficeAction.all.length})", office_actions_path
         = link_to '[+]', new_office_action_path
-      %li
-        = link_to 'Unsubs', unsubscribes_path
-        = link_to 'Analytics', analytics_path
+
   .c

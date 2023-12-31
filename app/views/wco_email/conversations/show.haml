@@ -4,8 +4,9 @@
     = @conversation.subject
     (#{@conversation.messages.length})
 
-  %ul
+  %ul.m-0.p-0
     - @conversation.messages.each do |msg|
       %li
+        = render 'wco_email/messages/meta', message: msg
         .descr= raw msg.part_html_sanitized
         -# = msg.inspect
