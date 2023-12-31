@@ -20,26 +20,15 @@ WcoEmail::Engine.routes.draw do
   resources :email_filters
   resources :email_templates
 
-  resources :galleries do
-    post 'multiadd', :to => 'photos#j_create', :as => :multiadd
-  end
 
   resources :lead_action_templates
   resources :lead_actions
-  resources :leads
-  resources :leadsets
 
   resources :office_actions
 
-  resources :profiles
-  post 'publishers/:id/do-run', to: 'publishers#do_run', as: :do_run_publisher
-  resources :publishers
-  resources :photos
-
-  resources :sites
   resources :scheduled_email_actions
 
-  resources :tags
+  # resources :tags
 
   resources :unsubscribes
 

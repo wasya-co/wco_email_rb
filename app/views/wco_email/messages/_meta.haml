@@ -10,4 +10,4 @@
         %ol
           - message.assets.each do |asset|
             %li
-              = link_to asset.filename, wco_sites_path, target: :_blank
+              = link_to asset.filename, asset.object.url(:original), target: :_blank

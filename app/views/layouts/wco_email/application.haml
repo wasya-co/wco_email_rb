@@ -45,17 +45,17 @@
     = csrf_meta_tags
   %body{ class: [ params[:controller].gsub("wco_email/",""), "#{params[:controller].gsub("wco_email/","")}-#{params[:action]}", params[:action], "application-fullwidth" ] }
 
-    = render       "/wco/application/main_header"
-    = render "/wco_email/application/main_header"
-    = render '/wco/application/alerts_notices' if notice || alert
+    = render "/wco/main_header"
+    = render "/wco_email/main_header"
+    = render '/wco/alerts_notices' if notice || alert
     %hr
 
     .row
       .col-md-3
-        = render 'wco_email/application/sidebar'
+        = render 'wco_email/sidebar'
       .col-md-9
         %span.absolute.collapse-expand#mainW
         = yield
 
-    = render '/wco/application/main_footer'
+    = render '/wco/main_footer'
     = render 'analytics' if Rails.env.production?

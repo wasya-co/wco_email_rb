@@ -24,17 +24,17 @@
         = link_to '[summary]', analytics_path
     %ul
       %li
-        = link_to "Companies (#{Wco::Leadset.all.length})", leadsets_path
+        = link_to "Companies (#{Wco::Leadset.all.length})", wco.leadsets_path
         .inline-search
-          = form_tag leadsets_path, method: :get do
+          = form_tag wco.leadsets_path, method: :get do
             = text_field_tag :q
-        = link_to '[+]', new_leadset_path
+        = link_to '[+]', wco.new_leadset_path
       %li
-        = link_to "Leads (#{Wco::Lead.all.length})", leads_path
+        = link_to "Leads (#{Wco::Lead.all.length})", wco.leads_path
         .inline-search
-          = form_tag leads_path, method: :get do
+          = form_tag wco.leads_path, method: :get do
             = text_field_tag :q
-        = link_to '[+]', new_lead_path
+        = link_to '[+]', wco.new_lead_path
     %ul
       %li
         = link_to "Email Actions", email_actions_path
