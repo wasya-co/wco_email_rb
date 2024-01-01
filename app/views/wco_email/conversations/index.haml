@@ -1,13 +1,33 @@
 
-.conversations-index.maxwidth
+.conversations-index.padded
+
   = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page
-  %ol.ml-0.pl-0
-    - @email_conversations.each do |conv|
-      %li
-        - if conv.unread?
-          <b>#{link_to conv.subject, email_conversation_path(conv)}</b>
-        - else
-          = link_to conv.subject, email_conversation_path(conv)
-        -# (#{conv.messages.unread.length}, #{conv.messages.length})
-        (#{conv.messages.length})
+
+  %table.bordered
+    %tr
+      %th.latest-at latest_at
+      %th.leads leads
+      %th.subject subject
+      %th.preview preview
+    - @email_conversations.each_with_index do |conv, idx|
+      %tr
+        %td.latest-at
+          = pp_date conv.latest_at
+          = pp_time conv.latest_at
+        %td.leads
+          -# - conv.from_emails.each do |from|
+          -#   = link_to from, wco.lead_path( from )
+          -# %hr
+          - conv.leads.each do |lead|
+            = link_to lead.email, wco.lead_path( lead )
+        %td.subject
+          - if conv.unread?
+            <b>#{link_to conv.subject, email_conversation_path(conv)}</b>
+          - else
+            = link_to conv.subject, email_conversation_path(conv)
+          -# (#{conv.messages.unread.length}, #{conv.messages.length})
+          (#{conv.messages.length})
+        %td.preview
+          = conv.preview
+
   = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page

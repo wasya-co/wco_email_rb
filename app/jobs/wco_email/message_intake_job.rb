@@ -44,10 +44,12 @@ class WcoEmail::MessageIntakeJob
       })
 
       raw                = client.get_object( bucket: ::S3_CREDENTIALS[:bucket_ses], key: stub.object_key ).body.read
-      # puts! raw, 'raw'
       the_mail           = Mail.new( raw )
+
       message_id         = the_mail.header['message-id']&.decoded
       message_id       ||= "#{the_mail.date.iso8601}::#{the_mail.from}"
+      puts! message_id, 'message_id'
+
       in_reply_to_id     = the_mail.header['in-reply-to']&.to_s
       puts! in_reply_to_id, 'in_reply_to_id'
 
@@ -75,7 +77,11 @@ class WcoEmail::MessageIntakeJob
       end
 
       @message   = WcoEmail::Message.where( message_id: message_id ).first
+      if @message
+        @message.delete
+      end
       @message ||= WcoEmail::Message.create({
+        stub:         stub,
         conversation: conv,
 
         message_id:     message_id,
@@ -95,7 +101,7 @@ class WcoEmail::MessageIntakeJob
         ccs:  the_mail.cc,
       })
       if !@message.persisted?
-        throw "Could not create email_message: #{@message.errors.full_messages.join(', ')} ."
+        throw "Could not create email_message: #{@message.errors.messages} ."
       end
 
       ## Parts
@@ -148,7 +154,7 @@ class WcoEmail::MessageIntakeJob
         status:      WcoEmail::Conversation::STATUS_UNREAD,
         latest_at:   the_mail.date || Time.now.to_datetime,
         from_emails: ( conv.from_emails + the_mail.from ).uniq,
-        preview:     @message.body_sanitized[0...200],
+        preview:     @message.preview_str,
       })
 
       ##

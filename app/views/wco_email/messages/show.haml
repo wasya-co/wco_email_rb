@@ -1,0 +1,13 @@
+
+.messages-show
+  %h5
+    Message
+    <b>Subject:</b>
+    = link_to @message.conversation.subject, email_conversation_path(@message.conversation)
+    (#{@message.conversation.messages.length})
+
+  = render 'meta', message: @message
+  %ul
+    %li.descr= raw @message.part_html
+    %li.descr
+      %pre.code= @message.part_txt

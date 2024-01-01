@@ -8,5 +8,4 @@
     - @conversation.messages.each do |msg|
       %li
         = render 'wco_email/messages/meta', message: msg
-        .descr= raw msg.part_html_sanitized
-        -# = msg.inspect
+        %iframe.message-iframe{ src: message_iframe_path(msg) }

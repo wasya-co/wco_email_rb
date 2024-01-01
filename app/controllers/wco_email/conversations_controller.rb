@@ -1,13 +1,9 @@
 
-class WcoEmail::ConversationsController < Wco::ApplicationController
-
-  before_action :set_lists
-
-  layout 'wco_email/application'
+class WcoEmail::ConversationsController < WcoEmail::ApplicationController
 
   def index
     authorize! :index, WcoEmail::Conversation
-    @email_conversations = WcoEmail::Conversation.all
+    @email_conversations = WcoEmail::Conversation.all.order_by({ latest_at: :desc })
 
     per_page = current_profile.per_page
     # if current_profile.per_page > 100
@@ -39,21 +35,11 @@ class WcoEmail::ConversationsController < Wco::ApplicationController
       )
   end
 
-
   def show
     authorize! :email_conversations_show, Ability
     @conversation = ::WcoEmail::Conversation.find( params[:id] )
     @messages     = @conversation.messages.order_by( date: :asc )
     @conversation.update_attributes({ status: Conv::STATUS_READ })
-  end
-
-  ##
-  ## private
-  ##
-  private
-
-  def set_lists
-    @tags = Wco::Tag.all
   end
 
 end

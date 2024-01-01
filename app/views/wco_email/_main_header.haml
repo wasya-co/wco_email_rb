@@ -7,6 +7,10 @@
     %ul
       %li= link_to 'Email Messages', email_conversations_path
       %li
+        Stubs
+        (#{WcoEmail::MessageStub.pending.length})
+        (#{WcoEmail::MessageStub.all.length})
+      %li
         = link_to "Tmpls (#{WcoEmail::MessageTemplate.all.length})", email_templates_path
         = link_to '[+]', new_email_template_path
         = link_to "Campaigns (#{WcoEmail::Campaign.all.length})", email_campaigns_path

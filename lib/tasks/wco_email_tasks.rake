@@ -6,6 +6,8 @@ def do_process message, client, tag
   the_mail       = Mail.new(message)
   filename       = the_mail.date.in_time_zone.to_s[0..18].gsub(' ', 'T').gsub(':', '_')
   filename       = "#{filename}F#{the_mail.from[0].sub('@', '_').gsub('.', '_')}"
+  puts! filename, 'filename'
+
   flag = client.put_object({ bucket: ::S3_CREDENTIALS[:bucket_ses],
     key: filename,
     body: message,
@@ -18,7 +20,7 @@ def do_process message, client, tag
   if @stub.persisted?
     # WcoEmail::MessageIntakeJob.perform_later( @stub.id.to_s )
   else
-    puts! @stub.errors.full.messages.join(", "), "Cannot save this stub_id: #{@stub.id} object_key: #{filename} "
+    puts! @stub.errors.full_messages.join(", "), "Cannot save this stub_id: #{@stub.id} object_key: #{filename} "
   end
 end
 
@@ -81,13 +83,13 @@ namespace :wco_email do
   ##
   ## @stub = WcoEmail::MessageStub.find_by object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
   ##
-  desc 'churn_n_stubs n=<num> [ tagname=<some-new-slug> ] '
+  desc 'churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] '
   task churn_n_stubs: :environment do
 
     ## Usage
     if !ENV['n']
       puts ""
-      puts "Usage: churn_n_stubs n=<num> [ tagname=<some-new-slug> ] "
+      puts "Usage: churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] "
       puts ""
       exit 22
     end
@@ -102,6 +104,17 @@ namespace :wco_email do
       puts "+++ +++ churning ##{idx+1}"
 
       stub.tags.push( tag )
+
+      if ENV['process_images']
+        if ENV['process_images'] == 'false'
+          process_images = false
+        elsif
+          ENV['process_images'] == 'true'
+          process_images = true
+        end
+        stub.config = { process_images: process_images }.to_json
+      end
+
       stub.save
 
       WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
