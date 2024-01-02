@@ -1,0 +1,6 @@
+
+.flex-row
+  = link_to '[use]', new_email_context_path({ email_template_id: tmpl.id })
+  = link_to '[~]', edit_email_template_path({ id: tmpl })
+  = button_to '[x]', email_template_path({ id: tmpl }), method: :delete, :data => { :confirm => 'Are you sure?' }, form_class: 'inline'
+  = link_to tmpl.slug, email_template_path({ id: tmpl })

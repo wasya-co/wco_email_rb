@@ -19,6 +19,7 @@ WcoEmail::Engine.routes.draw do
   post 'email_contexts/send_immediate/:id',      to: 'email_contexts#send_immediate',   as: :send_immediate_email_context
   resources :email_contexts
   resources :email_filters
+  get 'email_templates/:id/iframe', to: 'email_templates#show_iframe', as: :email_template_iframe
   resources :email_templates
 
 
@@ -28,6 +29,7 @@ WcoEmail::Engine.routes.draw do
   get 'messages/:id/iframe', to: 'messages#show_iframe', as: :message_iframe
   resources :messages
 
+  get '/obf/:id', to: 'obfuscated_redirects#show', as: :obf
   resources :office_actions
 
   resources :scheduled_email_actions

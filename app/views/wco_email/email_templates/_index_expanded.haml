@@ -1,0 +1,11 @@
+
+.email-templates--index-expanded.padded
+  = render '/wco_email/email_templates/header'
+
+  = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'
+  .row
+    - @templates.each do |tmpl|
+      .col-md-6
+        %iframe.email-template-iframe{ src: email_template_iframe_path(tmpl) }
+        = render '/wco_email/email_templates/meta', tmpl: tmpl
+  = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'

@@ -11,8 +11,9 @@
         (#{WcoEmail::MessageStub.pending.length})
         (#{WcoEmail::MessageStub.all.length})
       %li
-        = link_to "Tmpls (#{WcoEmail::MessageTemplate.all.length})", email_templates_path
+        = link_to "Templates (#{WcoEmail::MessageTemplate.all.length})", email_templates_path
         = link_to '[+]', new_email_template_path
+      %li
         = link_to "Campaigns (#{WcoEmail::Campaign.all.length})", email_campaigns_path
         = link_to '[+]', new_email_campaign_path
       %li

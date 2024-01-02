@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-# This command will automatically be run when you run "rails" with Rails gems
-# installed from the root of your application.
 
 ENGINE_ROOT = File.expand_path('..', __dir__)
 ENGINE_PATH = File.expand_path('../lib/wco_email/engine', __dir__)
@@ -12,12 +10,8 @@ require "bundler/setup" if File.exist?(ENV["BUNDLE_GEMFILE"])
 
 require "active_model/railtie"
 require "active_job/railtie"
-# require "active_record/railtie"
-# require "active_storage/engine"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
-# require "action_cable/engine"
 require "sprockets/railtie"
-# require "rails/test_unit/railtie"
 require "rails/engine/commands"

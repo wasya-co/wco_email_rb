@@ -1,6 +1,8 @@
 
 class WcoEmail::ConversationsController < WcoEmail::ApplicationController
 
+  layout 'wco_email/mailbox'
+
   def index
     authorize! :index, WcoEmail::Conversation
     @email_conversations = WcoEmail::Conversation.all.order_by({ latest_at: :desc })

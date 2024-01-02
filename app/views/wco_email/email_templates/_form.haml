@@ -1,0 +1,51 @@
+
+- url = email_template.new_record? ? email_templates_path : email_template_path(email_template.id)
+
+.email-templates--form
+  = form_for email_template, url: url do |f|
+    .row
+      .col-md-4
+        .field
+          = f.label :slug
+          = f.text_field :slug
+      .col-md-4
+        .flex-row
+          = f.label :layout
+          = f.select :layout, options_for_select(WcoEmail::EmailTemplate::LAYOUTS, selected: email_template.layout), {}, class: 'select2'
+      .col-md-4
+        .field
+          = f.label "From"
+          = f.select :from_email, options_for_select(WcoEmail::EmailTemplate.from_email_list, selected: email_template.from_email), {}, class: 'select2'
+    .field.field-subject
+      = f.label :subject
+      = f.text_field :subject
+    .field
+      = f.label :preview_str
+      = f.text_field :preview_str
+    .field
+      = f.label :can_unsubscribe
+      = f.check_box :can_unsubscribe
+
+
+    .tab-labels
+      %a.label-raw{ href: "javascript: void(0)", data: { ref: '.tab-raw' } } Raw
+      %a.label-preview.active{ href: "javascript: void(0)", data: { ref: '.tab-preview' } } Preview
+      .label-save-preview= f.submit 'Save & Preview'
+    .tabs
+      .tab-raw
+        = f.text_area :body
+      .tab-preview
+        - if email_template.persisted?
+          %iframe{ src: email_template_iframe_path(email_template), width: '100%', height: '100%' }
+
+    .field
+      = f.label :config_json
+      = f.text_area :config_json
+
+    -# .field
+    -#   = f.label :config_exe
+    -#   = f.text_area :config_exe
+
+    .actions
+      = f.submit 'Save'
+

@@ -1,7 +1,10 @@
 require "active_support/core_ext/integer/time"
 
+Rails.application.routes.default_url_options[:host] = "email.local:3004"
 Rails.application.configure do
-  config.hosts << "email.local"
+  config.hosts << "email.local:3004"
+  config.action_mailer.default_url_options = { :host => 'email.local', :port => 3004 }
+  # routes.default_url_options = { :host => 'email.local', :port => 3004 }
 
   # Settings specified here will take precedence over those in config/application.rb.
 
