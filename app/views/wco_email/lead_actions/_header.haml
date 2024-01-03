@@ -1,0 +1,8 @@
+
+
+
+= link_to "Lead Actions (#{WcoEmail::LeadAction.all.length})", lead_actions_path
+.inline-search
+  = form_tag lead_actions_path, method: :get do
+    = text_field_tag :q
+= link_to '[+]', new_lead_action_path

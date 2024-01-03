@@ -1,0 +1,7 @@
+
+= link_to "Lead Action Tmpls (#{WcoEmail::LeadActionTemplate.all.length})", lead_action_templates_path
+.inline-search
+  = form_tag lead_action_templates_path, method: :get do
+    = text_field_tag :q
+= link_to '[+]', new_lead_action_template_path
+

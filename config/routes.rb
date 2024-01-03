@@ -12,6 +12,7 @@ WcoEmail::Engine.routes.draw do
   get 'conversations/:id',                 to: '/wco_email/conversations#show',  as: :email_conversation
   # resources :conversations
 
+  resources :email_action_templates
   resources :email_actions
   resources :email_campaigns
 
@@ -22,7 +23,6 @@ WcoEmail::Engine.routes.draw do
   get 'email_templates/:id/iframe', to: 'email_templates#show_iframe', as: :email_template_iframe
   resources :email_templates
 
-
   resources :lead_action_templates
   resources :lead_actions
 
@@ -30,9 +30,8 @@ WcoEmail::Engine.routes.draw do
   resources :messages
 
   get '/obf/:id', to: 'obfuscated_redirects#show', as: :obf
-  resources :office_actions
 
-  resources :scheduled_email_actions
+
 
   resources :unsubscribes
 

@@ -1,0 +1,8 @@
+
+
+= link_to "Email Action Tmpls (#{WcoEmail::EmailActionTemplate.all.length})", email_action_templates_path
+.inline-search
+  = form_tag email_action_templates_path, method: :get do
+    = text_field_tag :q
+= link_to '[+]', new_email_action_template_path
+
