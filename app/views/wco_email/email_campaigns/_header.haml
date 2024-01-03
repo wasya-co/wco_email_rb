@@ -1,0 +1,5 @@
+
+= link_to "Email Campaigns (#{WcoEmail::Campaign.all.length})", email_campaigns_path
+= form_tag email_campaigns_path, method: :get do
+  = text_field_tag :q
+= link_to '[+]', new_email_campaign_path

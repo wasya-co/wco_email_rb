@@ -1,0 +1,5 @@
+
+= link_to "Email Filters (#{WcoEmail::EmailFilter.all.length})", email_filters_path
+= form_tag email_filters_path, method: :get do
+  = text_field_tag :q
+= link_to '[+]', new_email_filter_path

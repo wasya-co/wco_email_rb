@@ -61,8 +61,9 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
 
   def set_lists
     super
-    @email_templates_list = WcoEmail::EmailTemplate.list
-    @email_actions_list   = WcoEmail::EmailAction.list
+    @email_templates_list        = WcoEmail::EmailTemplate.list
+    @email_actions_list          = WcoEmail::EmailAction.list
+    @email_action_templates_list = WcoEmail::EmailActionTemplate.list
   end
 
 

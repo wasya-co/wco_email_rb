@@ -31,8 +31,8 @@
           %label Template
           = f.select :email_template_id, options_for_select(@email_templates_list, selected: params[:email_template_id] || email_filter.email_template_id ), {}, { class: 'select2' }
         .field
-          = f.label :email_action
-          = f.select :email_action, options_for_select( @email_actions_list, selected: email_filter.email_action_id ), {}, class: 'select2'
+          = f.label :email_action_template
+          = f.select :email_action_template, options_for_select( @email_action_templates_list, selected: email_filter.email_action_template ), {}, class: 'select2'
         -# .field
         -#   = f.label :wp_term_id
         -#   = f.select :wp_term_id, options_for_select( @email_tags_list, selected: email_filter.wp_term_id ), {}, class: 'select2'

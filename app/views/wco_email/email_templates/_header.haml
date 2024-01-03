@@ -1,5 +1,6 @@
-%h3.center.collapse-expand#emailTemplatesIndex
-  Email Templates (#{WcoEmail::EmailTemplate.all.count})
-  = link_to '[+]', new_email_template_path
-  = link_to '[list]', email_templates_path
-  = link_to '[list-expanded]', email_templates_path({ template: '_index_expanded' })
+
+= link_to "Email Templates (#{WcoEmail::EmailTemplate.all.count})", email_templates_path
+= form_tag email_templates_path, method: :get do
+  = text_field_tag :q
+= link_to '[+]', new_email_template_path
+= link_to '[expanded]', email_templates_path({ template: '_index_expanded' })
