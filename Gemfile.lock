@@ -1,15 +1,17 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 3e712383a1aa98754ded53cd3ecca507835fb946
+  revision: 1cb8cc33bfaa70b4bf6e48be1c357041da15ce85
   branch: 3.1.0
   specs:
     wco_models (3.1.0.37)
       aws-sdk-s3
+      business_time
       cancancan (~> 3.5.0)
       capybara
       devise (~> 4.9.3)
       droplet_kit (~> 3.20.0)
       haml (~> 6.3.0)
+      httparty
       kaminari-mongoid (~> 1.0.1)
       mongoid (~> 7.3.0)
       mongoid-autoinc (~> 6.0)
@@ -135,6 +137,9 @@ GEM
     bindata (2.4.15)
     bson (4.15.0)
     builder (3.2.4)
+    business_time (0.13.0)
+      activesupport (>= 3.2.0)
+      tzinfo
     byebug (11.1.3)
     cancancan (3.5.0)
     capybara (3.39.2)

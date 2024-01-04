@@ -2,6 +2,7 @@
 require 'cancancan'
 
 require 'haml'
+require 'httparty'
 
 require "wco_email/engine"
 
@@ -12,3 +13,5 @@ def puts! a, b=''
   puts "+++ +++ #{b}:"
   puts a.inspect
 end
+
+ActiveSupport.escape_html_entities_in_json = true
