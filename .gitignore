@@ -2,6 +2,7 @@
 .bundle
 .byebug_history
 
+chromedriver
 /config/initializers/0*
 /config/initializers/00_s3.rb
 /config/master.key
