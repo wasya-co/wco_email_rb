@@ -3,6 +3,17 @@
   %h5
     = @conversation.subject
     (#{@conversation.messages.length})
+    %span.gray.mini= @conversation.id
+
+
+  - if @other_convs.present?
+    - @other_convs.each do |conv|
+      .d-flex
+        = button_to "Merge", merge_email_conversations_path( @conversation, conv ), data: { confirm: 'Are you sure?' }
+        = conv.subject
+        (#{conv.messages.length})
+        %span.gray.mini= conv.id
+
 
   %ul.m-0.p-0
     - @conversation.messages.each do |msg|

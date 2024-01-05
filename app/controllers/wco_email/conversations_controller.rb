@@ -37,11 +37,43 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
       )
   end
 
+  ## merge conv1 into conv2, and delete conv1
+  def merge
+    authorize! :email_conversations_merge, Ability
+    conv1 = WcoEmail::Conversation.find params[:id1]
+    conv2 = WcoEmail::Conversation.find params[:id2]
+    conv1.messages.map do |msg|
+      msg.update conversation: conv2
+    end
+    conv1.tags.map do |tag|
+      conv2.tags.push tag
+    end
+    conv1.leads.map do |lead|
+      conv2.leads.push lead
+    end
+    conv2.save!
+    conv1.delete
+
+    flash_notice "Probably ok"
+    redirect_to action: :show, id: conv2.id
+  end
+
   def show
     authorize! :email_conversations_show, Ability
     @conversation = ::WcoEmail::Conversation.find( params[:id] )
     @messages     = @conversation.messages.order_by( date: :asc )
     @conversation.update_attributes({ status: Conv::STATUS_READ })
+
+    @other_convs = WcoEmail::Message.where( :message_id.in => @messages.map( &:in_reply_to_id )
+      ).where( :conversation_id.ne => @conversation.id
+      ).map( &:conversation_id ).uniq
+    other_convs_by_subj = WcoEmail::Conversation.where( subject: @conversation.subject
+      ).where( :conversation_id.ne => @conversation.id
+      ).map( &:id )
+    if @other_convs.present?
+      @other_convs = WcoEmail::Conversation.find( @other_convs + other_convs_by_subj )
+    end
+
   end
 
 end

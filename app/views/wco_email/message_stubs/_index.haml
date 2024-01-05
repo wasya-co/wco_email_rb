@@ -1,0 +1,10 @@
+
+.message-stubs--index
+  %ul
+    - stubs.each do |stub|
+      %li
+        .a
+          = stub.status
+          .d-inline-block= button_to 'churn', wco_email.churn_message_stub_path(stub), data: { confirm: 'Are you sure?' }
+        .a= stub.object_key
+        .a= stub.tags.map &:slug

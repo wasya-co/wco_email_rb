@@ -1,5 +1,5 @@
 
-describe WcoEmail::EmailConversationsController do
+describe WcoEmail::ConversationsController do
   render_views
   routes { WcoEmail::Engine.routes }
 
@@ -15,7 +15,7 @@ describe WcoEmail::EmailConversationsController do
     before do
       User.all.destroy_all
       user = User.create!( email: 'victor@wasya.co', password: 'test1234', provider: 'keycloakopenid' )
-      Wco::Profile.all.destroy_all
+      Wco::Profile.unscoped.map &:destroy!
       p = Wco::Profile.create!( email: user.email )
       sign_in user
 

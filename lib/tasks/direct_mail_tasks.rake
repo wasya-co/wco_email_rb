@@ -1,4 +1,3 @@
-require 'redd'
 
 namespace :office do
 

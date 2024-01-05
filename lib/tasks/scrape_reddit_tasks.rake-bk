@@ -6,10 +6,8 @@ namespace :reddit do
   task :crawl_1 => :environment do
     session = Redd.it({
       user_agent: 'Redd:IshBot:v0.0.0',
-      client_id:  'P9eHGjMQ6Ra2nU1vnJy10w',
-      secret:     'Hmdy7KTazn9zfpyhNUo6-lAJhHVqmg',
-      # username:   ENV['reddit_username'],
-      # password:   ENV['reddit_password'],
+      client_id:  '<>',
+      secret:     '<>',
     })
 
     top = session.subreddit('gmejungle').top

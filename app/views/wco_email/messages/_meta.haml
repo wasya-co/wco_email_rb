@@ -15,8 +15,12 @@
       <b>message_id:</b> #{message.message_id}
     %li
       <b>object_key:</b> #{message.object_key}
+    %li <b>in_reply_to_id:</b> #{message.in_reply_to_id}
     %li
       <b>n_images:</b> #{message.photos.length}
+      %br
+      - message.photos.each do |photo|
+        = image_tag photo.photo.url(:thumb)
     %li
       <b>n_assets:</b> #{message.assets.length}
       - if !message.assets.blank?

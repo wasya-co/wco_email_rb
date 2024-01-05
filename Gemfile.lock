@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 1cb8cc33bfaa70b4bf6e48be1c357041da15ce85
+  revision: c1476b30b087ed78da851398d75800c180c01ae4
   branch: 3.1.0
   specs:
     wco_models (3.1.0.37)
@@ -30,6 +30,7 @@ PATH
   specs:
     wco_email (0.1.0.0)
       aws-sdk-s3
+      business_time
       cancancan (~> 3.5.0)
       devise (~> 4.9.3)
       exception_notification (~> 4.5.0)
@@ -45,6 +46,7 @@ PATH
       prawn
       prawn-table
       rails (~> 6.1.7)
+      sidekiq
       wco_models (~> 3.1.0)
 
 GEM

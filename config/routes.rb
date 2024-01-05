@@ -10,6 +10,7 @@ WcoEmail::Engine.routes.draw do
   get 'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :email_conversations_in
   get 'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :email_conversations_in_not
   get 'conversations/:id',                 to: '/wco_email/conversations#show',  as: :email_conversation
+  post 'conversations/:id1/merge/:id2',    to: '/wco_email/conversations#merge', as: :merge_email_conversations
   # resources :conversations
 
   resources :email_action_templates
@@ -28,6 +29,9 @@ WcoEmail::Engine.routes.draw do
 
   get 'messages/:id/iframe', to: 'messages#show_iframe', as: :message_iframe
   resources :messages
+
+  post 'message_stub/:id/churn', to: 'message_stubs#churn', as: :churn_message_stub
+  resources :message_stubs
 
   get '/obf/:id', to: 'obfuscated_redirects#show', as: :obf
 
