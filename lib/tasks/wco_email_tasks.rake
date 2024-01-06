@@ -53,6 +53,24 @@ namespace :wco_email do
     end
   end
 
+  desc "Usage: wco_email:mbox_info mbox_path=<filepath> "
+  task mbox_info: :environment do
+
+    ## Usage
+    if !ENV['mbox_path']
+      puts ""
+      puts "Usage: wco_email:mbox_info mbox_path=<filepath> "
+      puts ""
+      exit 22
+    end
+
+    mbox_path = ENV['mbox_path']
+
+    out   = File.read(mbox_path, encoding: "ISO8859-1" )
+    count = out.scan(/^From /).size
+
+    puts! count, 'count'
+  end
 
 end
 
