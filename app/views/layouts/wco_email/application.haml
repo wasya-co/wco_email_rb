@@ -25,9 +25,12 @@
     = stylesheet_link_tag "//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
     = javascript_include_tag "//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"
 
+    = javascript_include_tag "wco/application"
+    = stylesheet_link_tag    "wco/application", media: "all"
+
     = javascript_include_tag "wco_email/application"
     = stylesheet_link_tag    "wco_email/application", media: "all"
-    = stylesheet_link_tag    "wco/application", media: "all"
+
 
     -# %script{crossorigin: "", src: "https://unpkg.com/react@18/umd/react.development.js"}
     -# %script{crossorigin: "", src: "https://unpkg.com/react-dom@18/umd/react-dom.development.js"}

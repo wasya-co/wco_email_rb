@@ -1,5 +1,5 @@
 //
 //= require rails-ujs
 //
-//= require wco/application
+// require wco/application
 //
