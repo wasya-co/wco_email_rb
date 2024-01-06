@@ -44,7 +44,8 @@ chromedriver
 yarn-debug.log*
 .yarn-integrity
 
-vendor
+/vendor/bundle
+
 
 w
 .DS_Store
