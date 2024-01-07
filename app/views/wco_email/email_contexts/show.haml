@@ -10,7 +10,7 @@
         %li <b>Layout:</b> #{@ctx.email_template.layout}
         %hr
         %li <b>From:</b> #{@ctx.from_email}
-        %li <b>To Lead:</b> #{link_to @ctx.lead.email, lead_path(@ctx.lead)}
+        %li <b>To Lead:</b> #{link_to @ctx.lead.email, wco.lead_path(@ctx.lead)}
         %li <b>Subject:</b> #{@ctx.subject}
 
 

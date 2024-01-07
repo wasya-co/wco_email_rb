@@ -6,6 +6,8 @@ EmailCampaign = WcoEmail::Campaign
 ##
 class WcoEmail::EmailCampaignsController < WcoEmail::ApplicationController
 
+  before_action :set_lists
+
   def create
     @campaign = EmailCampaign.new params[:campaign].permit!
     authorize! :create, @campaign
@@ -57,6 +59,15 @@ class WcoEmail::EmailCampaignsController < WcoEmail::ApplicationController
       flash[:alert] = "Cannot update campaign: #{@campaign.errors.messages}"
     end
     redirect_to :action => 'index'
+  end
+
+  ##
+  ## private
+  ##
+  private
+
+  def set_lists
+    @email_templates_list = WcoEmail::EmailTemplate.list
   end
 
 end

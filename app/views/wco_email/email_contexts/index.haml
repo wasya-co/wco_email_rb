@@ -32,7 +32,7 @@
             %td.from
               = ctx.from_email ? ctx.from_email : "t| #{ctx.tmpl.from_email}"
             %td.to
-              = link_to ctx.lead.email, lead_path(ctx.lead)
+              = link_to ctx.lead.email, wco.lead_path(ctx.lead)
             %td
               = link_to email_context_path(ctx) do
                 = ctx.subject ? ctx.subject : "t| #{ctx.tmpl.subject}"

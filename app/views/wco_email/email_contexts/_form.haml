@@ -14,7 +14,7 @@
 
     .field.flex-row
       %label From
-      = f.select :from_email, options_for_select(Ish::EmailTemplate.from_email_list, selected: ctx.from_email), {}, { class: 'select2' }
+      = f.select :from_email, options_for_select(WcoEmail::EmailTemplate.from_email_list, selected: ctx.from_email), {}, { class: 'select2' }
 
     .field.flex-row
       %label To lead

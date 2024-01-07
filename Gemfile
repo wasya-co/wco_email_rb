@@ -4,6 +4,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
+gem 'mongoid',           '~> 7.3.0'
+gem 'mongoid_paranoia',  '~> 0.6.0'
+gem 'mongoid-autoinc',   '~> 6.0.3'
+gem 'mongoid-paperclip', '~> 0.1.0'
 
 group :development, :test do
   gem 'byebug'
