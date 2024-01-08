@@ -76,11 +76,14 @@ class WcoEmail::MessageIntakeJob
       })
     end
 
-    @message   = WcoEmail::Message.where( message_id: message_id ).first
-    if @message
-      @message.delete
+    message   = WcoEmail::Message.unscoped.where( message_id: message_id ).first
+    if message
+      message.message_id = "#{Time.now.strftime('%Y%m%d')}-trash-#{message.message_id}"
+      message.object_key = "#{Time.now.strftime('%Y%m%d')}-trash-#{message.object_key}"
+      message.save!( validate: false )
+      message.delete
     end
-    @message ||= WcoEmail::Message.create!({
+    @message = WcoEmail::Message.create!({
       stub:         stub,
       conversation: conv,
 

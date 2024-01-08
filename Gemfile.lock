@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 739d0e35c755e1a15eec63a19af38e1f58fa2cf8
+  revision: 4fc13deb9e1b2f36691f8bfbab4e9108e69fde61
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.45)
+    wco_models (3.1.0.46)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -182,6 +182,11 @@ GEM
     exception_notification (4.5.0)
       actionmailer (>= 5.2, < 8)
       activesupport (>= 5.2, < 8)
+    factory_bot (6.4.5)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     faraday (2.7.12)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -440,6 +445,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  factory_bot_rails
   irb (>= 1.2.8)
   kaminari-actionview
   kaminari-mongoid

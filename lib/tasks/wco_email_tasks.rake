@@ -72,6 +72,20 @@ namespace :wco_email do
     puts! count, 'count'
   end
 
+  desc 'remove duplicates of stubs'
+  task remove_stub_duplicates: :environment do
+    outs = WcoEmail::MessageStub.collection.aggregate([
+      {"$group" => { "_id" => "$object_key", "count" => { "$sum" => 1 } } },
+      {"$match": {"_id" => { "$ne" => nil } , "count" => {"$gt" => 1} } },
+      {"$project" => {"object_key" => "$_id", "_id" => 0} }
+    ])
+    outs = outs.to_a
+    outs.each do |out|
+      WcoEmail::MessageStub.where( object_key: out['object_key'] )[1].destroy!
+      print '.'
+    end
+  end
+
 end
 
 

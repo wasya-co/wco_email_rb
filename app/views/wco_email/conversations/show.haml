@@ -1,8 +1,11 @@
 
+- content_for :sidebar do
+  = render 'wco_email/sidebar'
+
 .conversations-show.maxwidth
   %h5
     = @conversation.subject
-    (#{@conversation.messages.length})
+    <b>(#{@conversation.messages.length})</b>
     %span.gray.mini= @conversation.id
 
 

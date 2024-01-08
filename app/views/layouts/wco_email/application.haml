@@ -47,8 +47,13 @@
     = render '/wco/alerts_notices' if notice || alert
     %hr
 
-    %span.absolute.collapse-expand#mainW
-    = yield
+    .padded
+      .row
+        .col-md-2.border-right
+          = yield :sidebar
+        .col-md-10
+          %span.absolute.collapse-expand#mainW
+          = yield
 
     = render '/wco/main_footer'
     = render '/wco_email/analytics' if Rails.env.production?

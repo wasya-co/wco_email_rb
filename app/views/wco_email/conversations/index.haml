@@ -1,20 +1,20 @@
 
+- content_for :sidebar do
+  = render 'wco_email/sidebar'
+
 .conversations-index
 
   = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page
 
   %table.bordered
     %tr
-      %th.latest-at latest_at
       %th.leads leads
-      %th.subject subject
-      %th.preview preview
+      %th.subject subject, preview
+      %th.latest-at latest_at
     - @email_conversations.each_with_index do |conv, idx|
       %tr
-        %td.latest-at
-          = pp_date conv.latest_at
-          = pp_time conv.latest_at
-        %td.leads
+
+        %td.leads.mini
           -# - conv.from_emails.each do |from|
           -#   = link_to from, wco.lead_path( from )
           -# %hr
@@ -25,9 +25,11 @@
             <b>#{link_to conv.subject, email_conversation_path(conv)}</b>
           - else
             = link_to conv.subject, email_conversation_path(conv)
-          -# (#{conv.messages.unread.length}, #{conv.messages.length})
-          (#{conv.messages.length})
-        %td.preview
-          = conv.preview
+          <b>(#{conv.messages.length})</b>
+          %span.gray= conv.preview
+        %td.latest-at
+          = pp_date conv.latest_at
+          = pp_time conv.latest_at
+
 
   = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page

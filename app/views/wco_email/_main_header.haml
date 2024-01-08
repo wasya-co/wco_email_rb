@@ -14,9 +14,8 @@
       %li= render '/wco_email/email_campaigns/header'
       %li= render '/wco_email/email_filters/header'
       %li= render '/wco_email/email_contexts/header'
-      %li
-        = link_to 'Unsubs', unsubscribes_path
-        = link_to '[summary]', analytics_path
+      %li= render '/wco_email/unsubscribes/header'
+
 
     %ul
       %li= render '/wco_email/email_action_templates/header'

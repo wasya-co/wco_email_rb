@@ -1,17 +1,11 @@
 
 class WcoEmail::ConversationsController < WcoEmail::ApplicationController
 
-  layout 'wco_email/mailbox'
+  # layout 'wco_email/mailbox'
 
   def index
     authorize! :index, WcoEmail::Conversation
-    @email_conversations = WcoEmail::Conversation.all.order_by({ latest_at: :desc })
-
-    per_page = current_profile.per_page
-    # if current_profile.per_page > 100
-    #   flash_notice "Cannot display more than 100 conversations per page."
-    #   per_page = 100
-    # end
+    @email_conversations = WcoEmail::Conversation.all
 
     if params[:tagname]
       tag = Wco::Tag.find_by slug: params[:tagname]
@@ -31,9 +25,9 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     end
 
     @email_conversations = @email_conversations.order_by( latest_at: :desc
-      # ).includes( :email_messages
+      ).includes( :leads
       ).page( params[:conv_page]
-      ).per( per_page
+      ).per( current_profile.per_page
       )
   end
 
