@@ -1,23 +1,6 @@
 
 namespace :wco_email do
 
-  ## Not used until I revisit it. _vp_ 2023-04-02
-  desc 'wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> skip=0'
-  task mbox2stubs: :environment do
-
-    ## Usage
-    if !ENV['mbox_path'] || !ENV['tagname']
-      puts ""
-      puts "Usage: wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> "
-      puts ""
-      exit 22
-    end
-
-    WcoEmail::MessageStub.mbox2stubs ENV['mbox_path'], tagname: ENV['tagname'], skip: ENV['skip'].to_i
-
-    puts "ok"
-  end
-
   ##
   ## @stub = WcoEmail::MessageStub.find_by object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
   ##
@@ -70,6 +53,23 @@ namespace :wco_email do
     count = out.scan(/^From /).size
 
     puts! count, 'count'
+  end
+
+  ## Not used until I revisit it. _vp_ 2023-04-02
+  desc 'wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> skip=0'
+  task mbox2stubs: :environment do
+
+    ## Usage
+    if !ENV['mbox_path'] || !ENV['tagname']
+      puts ""
+      puts "Usage: wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> "
+      puts ""
+      exit 22
+    end
+
+    WcoEmail::MessageStub.mbox2stubs ENV['mbox_path'], tagname: ENV['tagname'], skip: ENV['skip'].to_i
+
+    puts "ok"
   end
 
   desc 'remove duplicates of stubs'
