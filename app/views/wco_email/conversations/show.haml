@@ -21,5 +21,7 @@
   %ul.m-0.p-0
     - @conversation.messages.each do |msg|
       %li
-        = render 'wco_email/messages/meta', message: msg
+        = render '/wco_email/messages/meta', message: msg
         %iframe.message-iframe{ src: message_iframe_path(msg) }
+
+        = render '/wco_email/email_contexts/form_reply', lead_id: msg.lead_id, message: msg

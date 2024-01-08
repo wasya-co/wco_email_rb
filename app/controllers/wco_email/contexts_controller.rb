@@ -1,12 +1,12 @@
 require 'csv'
 
 
-class WcoEmail::EmailContextsController < WcoEmail::ApplicationController
+class WcoEmail::ContextsController < WcoEmail::ApplicationController
 
   before_action :set_lists
 
   def create
-    @ctx    = WcoEmail::Context.new params[:ctx].permit!
+    @ctx    = WcoEmail::Context.new params[:context].permit!
     @tmpl   = WcoEmail::EmailTemplate.find @ctx.email_template_id
 
     @ctx.from_email ||= @tmpl.from_email

@@ -3,6 +3,8 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
 
   # layout 'wco_email/mailbox'
 
+  before_action :set_lists
+
   def index
     authorize! :index, WcoEmail::Conversation
     @email_conversations = WcoEmail::Conversation.all
@@ -68,6 +70,17 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
       @other_convs = WcoEmail::Conversation.find( @other_convs + other_convs_by_subj )
     end
 
+  end
+
+  ##
+  ## Private
+  ##
+  private
+
+  def set_lists
+    super
+    @email_templates_list = [ [nil, nil] ] + WcoEmail::EmailTemplate.all.map { |tmpl| [ tmpl.slug, tmpl.id ] }
+    @leads_list = Wco::Lead.list
   end
 
 end

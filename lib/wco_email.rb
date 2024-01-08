@@ -1,4 +1,6 @@
 
+require 'business_time'
+
 require 'cancancan'
 
 require 'haml'

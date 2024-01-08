@@ -76,6 +76,15 @@ class WcoEmail::MessageIntakeJob
       })
     end
 
+
+    ## Leadset, Lead
+    from      = the_mail.from ? the_mail.from[0] : "nobody@unknown-doma.in"
+    domain    = from.split('@')[1]
+    leadset   = Wco::Leadset.where(  company_url: domain ).first
+    leadset ||= Wco::Leadset.create( company_url: domain, email: from )
+    lead      = Wco::Lead.find_or_create_by( email: from, leadset: leadset )
+
+
     message   = WcoEmail::Message.unscoped.where( message_id: message_id ).first
     if message
       message.message_id = "#{Time.now.strftime('%Y%m%d')}-trash-#{message.message_id}"
@@ -86,6 +95,7 @@ class WcoEmail::MessageIntakeJob
     @message = WcoEmail::Message.create!({
       stub:         stub,
       conversation: conv,
+      lead:         lead,
 
       message_id:     message_id,
       in_reply_to_id: in_reply_to_id,
@@ -94,7 +104,7 @@ class WcoEmail::MessageIntakeJob
       subject: subject,
       date:    the_mail.date,
 
-      from:  the_mail.from ? the_mail.from[0] : "nobody@unknown-doma.in",
+      from:  from,
       froms: the_mail.from,
 
       to:  the_mail.to ? the_mail.to[0] : nil,
@@ -133,11 +143,6 @@ class WcoEmail::MessageIntakeJob
       puts! @message.errors.full_messages.join(", "), "Could not save @message"
     end
 
-    ## Leadset, Lead
-    domain    = @message.from.split('@')[1] rescue 'unknown.domain'
-    leadset   = Wco::Leadset.where( company_url: domain ).first
-    leadset ||= Wco::Leadset.create( company_url: domain, email: @message.from )
-    lead      = Wco::Lead.find_or_create_by( email: @message.from, leadset: leadset )
 
     conv.leads.push lead
     conv.save

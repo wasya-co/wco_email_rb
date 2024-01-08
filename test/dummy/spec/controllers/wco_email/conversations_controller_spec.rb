@@ -12,11 +12,7 @@ describe WcoEmail::ConversationsController do
   end
 
   before do
-    User.all.destroy_all
-    user = User.create!( email: 'victor@wasya.co', password: 'test1234', provider: 'keycloakopenid' )
-    Wco::Profile.unscoped.map &:destroy!
-    p = Wco::Profile.create!( email: user.email )
-    sign_in user
+    setup_users
 
     Wco::Tag.unscoped.map &:destroy!
     @inbox = create( :tag, slug: 'inbox' )
