@@ -8,15 +8,20 @@ describe WcoEmail::ContextsController do
     WcoEmail::EmailTemplate.unscoped.map &:destroy!
 
     setup_users
-  end
 
-  it '#show' do
-    ctx = create( :email_context, {
+    @ctx = create( :email_context, {
       lead: create(:lead),
       email_template: create(:email_template),
     })
+  end
 
-    get :show, params: { id: ctx.id }
+  it '#edit' do
+    get :edit, params: { id: @ctx.id }
+    response.code.should eql '200'
+  end
+
+  it '#show' do
+    get :show, params: { id: @ctx.id }
     response.code.should eql '200'
   end
 

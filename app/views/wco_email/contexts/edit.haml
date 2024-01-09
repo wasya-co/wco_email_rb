@@ -1,8 +1,8 @@
 
 .email-contexts-edit.max-width
   .header
-    %h2.title
+    %h5.title
       Edit email Context
-      = link_to "[view]", email_context_path( @ctx )
+      = link_to "[view]", context_path( @ctx )
       = button_to 'Send', send_immediate_email_context_path(@ctx), form_class: 'inline', :data => { :confirm => 'Are you sure?' }
-  = render '/wco_email/email_contexts/form', ctx: @ctx, tmpl: @tmpl
+  = render '/wco_email/contexts/form', ctx: @ctx, tmpl: @tmpl

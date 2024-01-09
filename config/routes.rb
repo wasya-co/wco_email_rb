@@ -16,6 +16,7 @@ WcoEmail::Engine.routes.draw do
   resources :email_action_templates
   resources :email_actions
   resources :email_campaigns
+  resources :email_layouts
 
   get  'contexts/iframe_src/:id',     to: 'contexts#iframe_src',       as: :email_context_iframe
   get  'contexts/summary',            to: 'contexts#summary'

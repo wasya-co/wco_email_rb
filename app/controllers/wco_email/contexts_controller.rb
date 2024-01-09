@@ -12,16 +12,18 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
     @ctx.from_email ||= @tmpl.from_email
     @ctx.subject    ||= @tmpl.subject
 
+    if params[:respond_inline]
+      @ctx.reply_to_message_id = params[:respond_inline]
+    end
+
     authorize! :create, @ctx
     if @ctx.save
-      flash[:notice] = 'Saved.'
+      flash_notice 'Saved.'
       redirect_to action: 'show', id: @ctx.id
       return
     else
-      # flash[:alert] = "Could not save: #{@ctx.errors.full_messages.join(', ')}"
-      flash[:alert] = ['Could not save:'] + @ctx.errors.full_messages
-      render action: :new
-      return
+      flash_alert @ctx
+      redirect_to request.referrer
     end
   end
 
@@ -145,6 +147,7 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
 
   def set_lists
     super
+    @email_layouts_list   = WcoEmail::EmailTemplate::LAYOUTS
     @email_templates_list = [ [nil, nil] ] + WcoEmail::EmailTemplate.all.map { |tmpl| [ tmpl.slug, tmpl.id ] }
     @leads_list = Wco::Lead.list
   end

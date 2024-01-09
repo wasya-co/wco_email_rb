@@ -1,17 +1,19 @@
 
 .email-contexts-show
   .header
-    %h2.title Email Context
+    %h5.title
+      = link_to '[~]', edit_context_path(@ctx)
+      Email Context `#{@ctx.subject}`
 
   .row
     .col-md-6
       %ul
-        %li <b>Template:</b> #{link_to @ctx.email_template.slug, email_template_path(@ctx.email_template), target: :_blank }
-        %li <b>Layout:</b> #{@ctx.email_template.layout}
-        %hr
-        %li <b>From:</b> #{@ctx.from_email}
-        %li <b>To Lead:</b> #{link_to @ctx.lead.email, wco.lead_path(@ctx.lead)}
-        %li <b>Subject:</b> #{@ctx.subject}
+        %li
+          <b>Layout:</b>   #{link_to @ctx.email_template.layout, email_layout_path(@ctx.email_template.layout) }
+          <b>Template:</b> #{link_to @ctx.email_template.slug, email_template_path(@ctx.email_template), target: :_blank }
+        %li <b>From:</b>     #{@ctx.from_email}
+        %li <b>To Lead:</b>  #{link_to @ctx.lead.email, wco.lead_path(@ctx.lead)}
+        -# %li <b>Subject:</b>  #{@ctx.subject}
 
 
     .col-md-6
@@ -20,7 +22,7 @@
         %li <b>Sent at:</b> #{@ctx.sent_at&.strftime('%Y-%m-%d %l:%M%P')}
         %li
           = button_to 'Send', send_immediate_email_context_path(@ctx), form_class: 'inline', :data => { :confirm => 'Are you sure?' }
-          = link_to '[~]', edit_context_path(@ctx)
+
 
   .max-width
     - if @ctx.sent_at

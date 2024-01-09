@@ -2,15 +2,20 @@
 -# = ctx.inspect
 
 .email-contexts--form
-  - url = ctx.new_record? ? email_contexts_path : email_context_path(ctx)
-  = form_for ctx, as: :ctx, url: url do |f|
+  -# - url = ctx.new_record? ? contexts_path : context_path(ctx)
+  = form_for ctx, as: :ctx do |f|
     .field.field-template
       = f.label "Template"
       = f.select :email_template_id, options_for_select(@email_templates_list, selected: params[:email_template_id] || ctx.email_template_id ), {}, { class: 'select2' }
       - if ctx.email_template_id
-        = link_to 'view', email_template_path( ctx.email_template_id ), target: :_blank, class: [ 'action-view' ]
-        = link_to '~', edit_email_template_path( ctx.email_template_id ), target: :_blank, class: [ 'action-view' ]
-        layout: #{ctx.tmpl.layout}
+        = link_to '[view]', email_template_path( ctx.email_template_id ), target: :_blank, class: [ 'action-view' ]
+        = link_to '[~]', edit_email_template_path( ctx.email_template_id ), target: :_blank, class: [ 'action-view' ]
+        <b>Layout:</b>
+        = ctx.email_template.layout
+
+    -# .field
+    -#   %label Layout
+    -#   = f.select :layout, options_for_select( @layouts_list, selected: ctx.layout_id )
 
     .field.flex-row
       %label From
@@ -28,7 +33,9 @@
       = f.label :subject
       = f.text_field :subject, class: 'w-100'
 
-
+    .field
+      = f.label :reply_to_message
+      = f.text_field :reply_to_message_id
 
     .tab-labels
       %a.label-raw{ href: "javascript: void(0)", data: { ref: '.tab-raw' } } Raw

@@ -5,3 +5,7 @@
 
 = raw ERB.new( @ctx.body ).result
 
+= @ctx.reply_to_message.inspect
+
+- if @ctx.reply_to_message
+  = @ctx.reply_to_message.part_html

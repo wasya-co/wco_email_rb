@@ -40,7 +40,16 @@ describe WcoEmail::ConversationsController do
 
   describe '#show' do
     it 'does' do
+      Wco::Lead.unscoped.map             &:destroy!
+      WcoEmail::Message.unscoped.map     &:destroy!
+      WcoEmail::MessageStub.unscoped.map &:destroy!
+
       conv = create( :email_conversation )
+      msg  = create( :email_message, {
+        conversation: conv,
+        lead: create(:lead),
+      })
+
       get :show, params: { id: conv.id }
       response.code.should eql '200'
     end
