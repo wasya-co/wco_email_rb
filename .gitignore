@@ -28,7 +28,7 @@ chromedriver
 !/storage/.keep
 
 /test/dummy/config/initializers/0*
-/test/dummy/config/initializers/00_s3.rb
+/test/dummy/spec/factories/wco_factories.rb
 
 /tmp/*
 !/tmp/.keep
