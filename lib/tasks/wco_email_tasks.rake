@@ -11,7 +11,7 @@ namespace :wco_email do
     if !ENV['n']
       puts ""
       puts "Usage: churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] "
-      puts "DOES NOT PRCESS IMAGES BY DEFAULT"
+      puts "DOES NOT PROCESS IMAGES BY DEFAULT"
       puts ""
       exit 22
     end
@@ -20,17 +20,16 @@ namespace :wco_email do
       tag = Wco::Tag.find_or_create_by({ slug: ENV['tagname'] })
     end
 
-    # process_images = ENV['process_images'] == 'true'
-    # stub_config = { process_images: process_images, skip_notification: true }.to_json
+    process_images = ENV['process_images'] == 'true'
 
     n = ENV['n'].to_i
     stubs = WcoEmail::MessageStub.pending.limit n
     stubs.each_with_index do |stub, idx|
       puts "+++ +++ churning ##{idx+1}"
 
-      # stub.tags.push( tag ) if tag
-      # stub.config = stub_config
-      # stub.save!
+      stub.tags.push( tag ) if tag
+      stub.config = JSON.parse( stub.config ).merge({ process_images: process_images, skip_notification: true }).to_json
+      stub.save!
 
       WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
     end
