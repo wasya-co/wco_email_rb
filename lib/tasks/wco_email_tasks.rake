@@ -86,7 +86,11 @@ namespace :wco_email do
     end
   end
 
+  ##
   ## 2024-01-10
+  ## WcoEmail::MessageStub.all.update_all({ bucket: 'ish-ses-2024' })
+  ## WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
+  ##
   desc 'import objectkey list'
   task import_objectkey_list: :environment do
 
@@ -97,27 +101,18 @@ namespace :wco_email do
       secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
     })
 
-    lines = File.read( './data/out_head' )
+    lines = File.read( './data/20240110_ish-ses_objectkeys' )
     lines.split("\n").each_with_index do |line, idx|
-      if idx == 0
+
         object_key = line.split.last
         stub = WcoEmail::MessageStub.create( object_key: object_key, bucket: bucket )
-        puts! stub.persisted?, 'persisted?'
-        # raw = client.get_object( bucket: 'ish-ses', key: stub.object_key ).body.read
-        # puts! raw, 'raw'
+        if stub.persisted?
+          print "#{idx}."
+        else
+          outs! stub.errors.full_messages.join(", ")
+        end
 
-        WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
-      end
     end
   end
 
 end
-
-=begin
-
-WcoEmail::MessageStub.all.update_all({ bucket: 'ish-ses-2024' })
-
-=end
-
-
-

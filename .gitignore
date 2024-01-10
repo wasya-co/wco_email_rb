@@ -7,7 +7,7 @@ chromedriver
 /config/initializers/00_s3.rb
 /config/master.key
 
-/data
+# /data
 /db/*.sqlite3
 /db/*.sqlite3-*
 
