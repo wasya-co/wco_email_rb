@@ -193,10 +193,15 @@ class WcoEmail::MessageIntakeJob
     stub.update_attributes({ status: WcoEmail::MessageStub::STATUS_PROCESSED })
 
     ## Notification
-    conv = WcoEmail::Conversation.find( conv.id )
-    if conv.tags.include? inbox_tag
-      out = WcoEmail::ApplicationMailer.forwarder_notify( @message.id.to_s )
-      Rails.env.production? ? out.deliver_later : out.deliver_now
+    config = JSON.parse(stub.config)
+    if config['skip_notification']
+      ;
+    else
+      conv = WcoEmail::Conversation.find( conv.id )
+      if conv.tags.include? inbox_tag
+        out = WcoEmail::ApplicationMailer.forwarder_notify( @message.id.to_s )
+        Rails.env.production? ? out.deliver_later : out.deliver_now
+      end
     end
 
     puts 'ok'
