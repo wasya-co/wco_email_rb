@@ -47,8 +47,8 @@ class WcoEmail::MessageIntakeJob
     the_mail           = Mail.new( raw )
 
     message_id         = the_mail.header['message-id']&.decoded
-    message_id       ||= "#{the_mail.date.iso8601}::#{the_mail.from}"
-    puts! message_id, 'message_id'
+    message_id       ||= "#{the_mail.date&.iso8601}::#{the_mail.from}"
+    # puts! message_id, 'message_id'
 
     in_reply_to_id     = the_mail.header['in-reply-to']&.to_s
     puts! in_reply_to_id, 'in_reply_to_id'
