@@ -4,16 +4,24 @@
 
 .conversations-index
 
-  = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page
+  = render '/wco_email/conversations/actions'
+
+  = render '/wco/paginate', resource: @conversations, param_name: :conv_page
 
   %table.bordered
     %tr
+      %th.select-all.nosort
+        .a
+          = check_box_tag :select_all
+          .n-selected -
       %th.leads leads
       %th.subject subject, preview
       %th.latest-at latest_at
-    - @email_conversations.each_with_index do |conv, idx|
+    - @conversations.each_with_index do |conv, idx|
       %tr
-
+        %td.select-all
+          .gray= idx+1
+          = check_box_tag 'conversation_ids[]', conv.id.to_s, nil, { class: 'i-sel' }
         %td.leads.mini
           -# - conv.from_emails.each do |from|
           -#   = link_to from, wco.lead_path( from )
@@ -32,4 +40,4 @@
           = pp_time conv.latest_at
 
 
-  = render '/wco/paginate', resource: @email_conversations, param_name: :conv_page
+  = render '/wco/paginate', resource: @conversations, param_name: :conv_page

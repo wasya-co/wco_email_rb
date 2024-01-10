@@ -6,12 +6,16 @@ WcoEmail::Engine.routes.draw do
   get 'analytics', to: 'application#analytics'
   get 'tinymce',   to: 'application#tinymce', as: :application_tinymce
 
-  get 'conversations',                     to: '/wco_email/conversations#index', as: :email_conversations
-  get 'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :email_conversations_in
-  get 'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :email_conversations_in_not
-  get 'conversations/:id',                 to: '/wco_email/conversations#show',  as: :email_conversation
-  post 'conversations/:id1/merge/:id2',    to: '/wco_email/conversations#merge', as: :merge_email_conversations
-  # resources :conversations
+  # get  'conversations',                     to: '/wco_email/conversations#index', as: :email_conversations
+  get  'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :email_conversations_in
+  get  'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :email_conversations_in_not
+  get  'conversations/:id',                 to: '/wco_email/conversations#show',  as: :email_conversation
+  post 'conversations/:id1/merge/:id2',     to: '/wco_email/conversations#merge', as: :merge_email_conversations
+  post 'conversations/addtag',              to: 'conversations#addtag'
+  post 'conversations/addtag/:slug',        to: 'conversations#addtag'
+  post 'conversations/rmtag',               to: 'conversations#rmtag'
+  post 'conversations/rmtag/:slug',         to: 'conversations#rmtag'
+  resources :conversations
 
   resources :email_action_templates
   resources :email_actions

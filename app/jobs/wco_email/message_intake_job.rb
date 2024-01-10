@@ -43,7 +43,7 @@ class WcoEmail::MessageIntakeJob
       secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
     })
 
-    raw                = client.get_object( bucket: ::S3_CREDENTIALS[:bucket_ses], key: stub.object_key ).body.read
+    raw                = client.get_object( bucket: stub.bucket, key: stub.object_key ).body.read
     the_mail           = Mail.new( raw )
 
     message_id         = the_mail.header['message-id']&.decoded
@@ -165,7 +165,7 @@ class WcoEmail::MessageIntakeJob
     ##
     ## Tags
     ##
-    inbox_tag = Wco::Tag.find_by({ slug: Wco::Tag::INBOX })
+    inbox_tag = Wco::Tag.inbox
     conv.tags.push inbox_tag
     conv.tags.push stub.tags
     conv.save
@@ -184,7 +184,7 @@ class WcoEmail::MessageIntakeJob
 
         # || MiaTagger.analyze( @message.part_html, :is_spammy_recruite ).score > .5
 
-        # puts! "applying filter #{filter} to conv #{conv}" if DEBUG
+        puts! "applying filter #{filter} to conv #{conv}" if DEBUG
 
         @message.apply_filter( filter )
       end

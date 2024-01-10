@@ -28,6 +28,7 @@ chromedriver
 !/storage/.keep
 
 /test/dummy/config/initializers/0*
+/test/dummy/config/mongoid.yml
 /test/dummy/spec/factories/wco_factories.rb
 
 /tmp/*

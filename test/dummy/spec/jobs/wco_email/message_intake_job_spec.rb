@@ -12,7 +12,10 @@ RSpec.describe WcoEmail::MessageIntakeJob do
       WcoEmail::Message.unscoped.where({ object_key: object_key }).length.should eql 0
 
       WcoEmail::MessageStub.unscoped.where({ object_key: object_key }).map &:destroy!
-      stub = WcoEmail::MessageStub.create!({ object_key: object_key })
+      stub = WcoEmail::MessageStub.create!({
+        bucket: ::S3_CREDENTIALS[:bucket_ses],
+        object_key: object_key,
+      })
 
       WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
 
