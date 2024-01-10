@@ -14,3 +14,9 @@ git commit -m "autobuild `date "+%Y%m%d"`"
 git push
 
 
+gem build wco_email.gemspec
+gem push wco_email-$version.gem
+
+rm wco_email-`cat VERSION`.gem
+
+echo "wco_email build ok"
