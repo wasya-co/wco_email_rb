@@ -9,6 +9,11 @@ gem 'mongoid_paranoia',  '~> 0.6.0'
 gem 'mongoid-autoinc',   '~> 6.0.3'
 gem 'mongoid-paperclip', '~> 0.1.0'
 
+gem 'omniauth',                       '~> 2.1.1'
+gem "omniauth-keycloak",              "~> 1.5.1"
+gem "omniauth-rails_csrf_protection", "~> 1.0.1"
+
+
 group :development, :test do
   gem 'byebug'
 
@@ -18,10 +23,6 @@ group :development, :test do
 
   gem 'kaminari-mongoid'
   gem 'kaminari-actionview'
-
-  gem 'omniauth', '~> 2.1.1'
-  gem "omniauth-keycloak",              "~> 1.5.1"
-  gem "omniauth-rails_csrf_protection", "~> 1.0.1"
 
   gem 'rspec-rails', "~> 6.1.0"
   gem 'rails-controller-testing', "~> 1.0.5"

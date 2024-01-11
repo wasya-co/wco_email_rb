@@ -7,3 +7,4 @@
 //
 
 console.log('loaded wco_email/application.js')
+;
