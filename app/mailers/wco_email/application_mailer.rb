@@ -9,7 +9,7 @@ class WcoEmail::ApplicationMailer < ActionMailer::Base
 
   def forwarder_notify msg_id
     @msg = WcoEmail::Message.find msg_id
-    mail( to: 'poxlovi@gmail.com',
+    mail( to:      "poxlovi@gmail.com",
           subject: "POX::#{@msg.subject}" )
   end
 
@@ -80,11 +80,7 @@ class WcoEmail::ApplicationMailer < ActionMailer::Base
 
     # eval( @ctx.tmpl.config_exe )
 
-    if 'plain' == @ctx.tmpl.layout
-      rendered_str = ERB.new( @ctx.body ).result( @ctx.get_binding )
-    else
-      rendered_str = renderer.render_to_string("/wco_email/email_templates/_#{@ctx.tmpl.layout}")
-    end
+    rendered_str = renderer.render_to_string("/wco_email/email_templates/_#{@ctx.tmpl.layout}")
     @ctx.update({
       rendered_str: rendered_str,
       sent_at: Time.now.to_s,
@@ -93,6 +89,7 @@ class WcoEmail::ApplicationMailer < ActionMailer::Base
     mail( from:    @ctx.from_email,
           to:      @ctx.to_email,
           cc:      @ctx.cc,
+          bcc:     "poxlovi@gmail.com",
           subject: ERB.new( @ctx.subject ).result( @ctx.get_binding ),
           body:    rendered_str,
           content_type: "text/html" )

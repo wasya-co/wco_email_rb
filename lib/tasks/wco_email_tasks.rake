@@ -25,7 +25,7 @@ namespace :wco_email do
     n = ENV['n'].to_i
     stubs = WcoEmail::MessageStub.pending.limit n
     stubs.each_with_index do |stub, idx|
-      puts "+++ +++ churning ##{idx+1}"
+      puts "+++ +++ churning ##{idx+1} object_key: #{stub.object_key}"
 
       stub.tags.push( tag ) if tag
       stub.config = JSON.parse( stub.config ).merge({ process_images: process_images, skip_notification: true }).to_json

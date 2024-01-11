@@ -5,7 +5,11 @@
 
 = raw ERB.new( @ctx.body ).result
 
-= @ctx.reply_to_message.inspect
+-# = @ctx.reply_to_message.inspect
 
 - if @ctx.reply_to_message
-  = @ctx.reply_to_message.part_html
+  %br
+  %br
+  .mini Your previous message is shown below.
+  %hr
+  = raw @ctx.reply_to_message.part_html_sanitized

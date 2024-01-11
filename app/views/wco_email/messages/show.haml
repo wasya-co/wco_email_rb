@@ -7,7 +7,7 @@
     (#{@message.conversation.messages.length})
 
   = render 'meta', message: @message
-  %ul
-    %li.descr= raw @message.part_html
-    %li.descr
-      %pre.code= @message.part_txt
+  %iframe.message-iframe{ src: message_iframe_path(@message) }
+  = render '/wco_email/contexts/form_reply', lead_id: @message.lead_id, message: @message
+
+

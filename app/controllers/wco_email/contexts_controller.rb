@@ -89,12 +89,12 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
   def send_immediate
     @ctx = WcoEmail::Context.find params[:id]
     authorize! :do_send, @ctx
-    flash_notice 'Sent immediately.'
 
     out = WcoEmail::ApplicationMailer.send_context_email( @ctx[:id].to_s )
     Rails.env.production? ? out.deliver_later : out.deliver_now
 
-    redirect_to action: 'index'
+    flash_notice 'Sent immediately.'
+    redirect_to request.referrer
   end
 
   def send_schedule

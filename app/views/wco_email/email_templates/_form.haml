@@ -2,7 +2,7 @@
 - url = email_template.new_record? ? email_templates_path : email_template_path(email_template.id)
 
 .email-templates--form
-  = form_for email_template, url: url do |f|
+  = form_for email_template, as: :template, url: url do |f|
     .field
       %label Slug
       = f.text_field :slug
@@ -10,7 +10,7 @@
       %label Layout
       = f.select :layout, options_for_select(WcoEmail::EmailTemplate::LAYOUTS, selected: email_template.layout), {}, class: 'select2'
       %label From
-      = f.select :from_email, options_for_select(WcoEmail::EmailTemplate.from_email_list, selected: email_template.from_email), {}, class: 'select2'
+      = f.select :from_email, options_for_select(WcoEmail::EmailTemplate.from_emails_list, selected: email_template.from_email), {}, class: 'select2'
     .field.field-subject
       = f.label :subject
       = f.text_field :subject

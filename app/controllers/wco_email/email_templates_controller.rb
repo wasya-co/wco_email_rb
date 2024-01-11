@@ -6,11 +6,11 @@ class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
 
   def create
     authorize! :create, WcoEmail::EmailTemplate
-    template = WcoEmail::EmailTemplate.create params[:template].permit!
-    if template.persisted?
+    @template = WcoEmail::EmailTemplate.create params[:template].permit!
+    if @template.persisted?
       flash[:notice] = 'Success.'
     else
-      flash[:alert] = "Could not create an email template: #{template.errors.full_messages.join(', ')}."
+      flash[:alert] = "Could not create an email template: #{@template.errors.full_messages.join(', ')}."
     end
     redirect_to action: :index
   end

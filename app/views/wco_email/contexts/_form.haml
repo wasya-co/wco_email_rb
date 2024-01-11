@@ -4,7 +4,8 @@
 .email-contexts--form
   -# - url = ctx.new_record? ? contexts_path : context_path(ctx)
   = form_for ctx, as: :ctx do |f|
-    .field.field-template
+
+    .flex-row
       = f.label "Template"
       = f.select :email_template_id, options_for_select(@email_templates_list, selected: params[:email_template_id] || ctx.email_template_id ), {}, { class: 'select2' }
       - if ctx.email_template_id
@@ -17,27 +18,25 @@
     -#   %label Layout
     -#   = f.select :layout, options_for_select( @layouts_list, selected: ctx.layout_id )
 
-    .field.flex-row
+    .flex-row
       %label From
-      = f.select :from_email, options_for_select(WcoEmail::EmailTemplate.from_email_list, selected: ctx.from_email), {}, { class: 'select2' }
+      = f.select :from_email, options_for_select(WcoEmail::EmailTemplate.from_emails_list, selected: ctx.from_email), {}, { class: 'select2' }
 
-    .field.flex-row
       %label To lead
       = f.select :lead_id, options_for_select( @leads_list, selected: ctx.lead_id ), {}, { class: 'select2' }
 
-    .field.flex-row
       %label cc
       = f.text_field :cc, class: 'w-100'
 
-    .field.field-subject
+    .flex-row
       = f.label :subject
       = f.text_field :subject, class: 'w-100'
 
-    .field
+    .flex-row
       = f.label :reply_to_message
-      = f.text_field :reply_to_message_id
+      = f.select :reply_to_message_id, options_for_select([[ ctx.reply_to_message.subject, ctx.reply_to_message_id ]], selected: ctx.reply_to_message_id), {}, class: 'w-100'
 
-    .tab-labels
+    .tab-labels.flex-row
       %a.label-raw{ href: "javascript: void(0)", data: { ref: '.tab-raw' } } Raw
       %a.label-preview.active{ href: "javascript: void(0)", data: { ref: '.tab-preview' } } Preview
       .label-save-preview= f.submit 'Save & Preview'
@@ -48,7 +47,7 @@
         - if ctx.new_record?
           New record...
         - else
-          %iframe{ src: email_context_iframe_path(ctx), width: '100%', height: '100%' }
+          %iframe{ src: context_iframe_path(ctx), width: '100%', height: '100%' }
 
 
     .actions

@@ -1,34 +1,34 @@
 
-.email-contexts-show
+.email-contexts-show.maxwidth
   .header
     %h5.title
       = link_to '[~]', edit_context_path(@ctx)
       Email Context `#{@ctx.subject}`
 
   .row
-    .col-md-6
+    .col-md-8
       %ul
         %li
-          <b>Layout:</b>   #{link_to @ctx.email_template.layout, email_layout_path(@ctx.email_template.layout) }
-          <b>Template:</b> #{link_to @ctx.email_template.slug, email_template_path(@ctx.email_template), target: :_blank }
-        %li <b>From:</b>     #{@ctx.from_email}
-        %li <b>To Lead:</b>  #{link_to @ctx.lead.email, wco.lead_path(@ctx.lead)}
-        -# %li <b>Subject:</b>  #{@ctx.subject}
+          <b>Layout:</b>             #{link_to @ctx.email_template.layout, email_layout_path(@ctx.email_template.layout) }
+          <b>Template:</b>           #{link_to @ctx.email_template.slug, email_template_path(@ctx.email_template), target: :_blank }
+        %li <b>From:</b>             #{@ctx.from_email}
+        %li <b>To Lead:</b>          #{link_to @ctx.lead.email, wco.lead_path(@ctx.lead)}
+        %li <b>reply_to_message:</b> #{ link_to @ctx.reply_to_message, message_path(@ctx.reply_to_message), target: :_blank }
 
 
-    .col-md-6
+    .col-md-4
       %ul
         %li <b>Send at:</b> #{@ctx.send_at&.strftime('%Y-%m-%d %l:%M%P')}
         %li <b>Sent at:</b> #{@ctx.sent_at&.strftime('%Y-%m-%d %l:%M%P')}
         %li
-          = button_to 'Send', send_immediate_email_context_path(@ctx), form_class: 'inline', :data => { :confirm => 'Are you sure?' }
+          = button_to 'Send', send_context_path(@ctx), form_class: 'inline', :data => { :confirm => 'Are you sure?' }
 
 
-  .max-width
+  .maxwidth
     - if @ctx.sent_at
       = raw @ctx.rendered_str
       -# = @ctx.tmpl
 
     - else
       -# = link_to 'i-src', context_iframe_path(@ctx), target: :_blank
-      %iframe{ src: email_context_iframe_path(@ctx), width: '100%', height: '100%' }
+      %iframe.h-500px{ src: email_context_iframe_path(@ctx), width: '100%', height: '100%' }
