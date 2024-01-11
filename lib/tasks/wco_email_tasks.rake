@@ -31,7 +31,7 @@ namespace :wco_email do
       stub.config = JSON.parse( stub.config ).merge({ process_images: process_images, skip_notification: true }).to_json
       stub.save!
 
-      WcoEmail::MessageIntakeJob.perform_async( stub.id.to_s )
+      WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
     end
   end
 
