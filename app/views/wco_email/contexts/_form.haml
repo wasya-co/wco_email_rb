@@ -3,7 +3,7 @@
 
 .email-contexts--form
   -# - url = ctx.new_record? ? contexts_path : context_path(ctx)
-  = form_for ctx, as: :ctx do |f|
+  = form_for ctx, as: :context do |f|
 
     .flex-row
       = f.label "Template"
@@ -34,7 +34,7 @@
 
     .flex-row
       = f.label :reply_to_message
-      = f.select :reply_to_message_id, options_for_select([[ ctx.reply_to_message.subject, ctx.reply_to_message_id ]], selected: ctx.reply_to_message_id), {}, class: 'w-100'
+      = f.select :reply_to_message_id, options_for_select([[ ctx.reply_to_message, ctx.reply_to_message_id ]], selected: ctx.reply_to_message_id), {}, class: 'w-100'
 
     .tab-labels.flex-row
       %a.label-raw{ href: "javascript: void(0)", data: { ref: '.tab-raw' } } Raw

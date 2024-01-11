@@ -129,7 +129,7 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
     @ctx = WcoEmail::Context.find params[:id]
     authorize! :update, @ctx
 
-    if @ctx.update_attributes params[:ctx].permit!
+    if @ctx.update_attributes params[:context].permit!
       flash[:notice] = 'Saved.'
       redirect_to action: 'edit', id: @ctx.id
       return

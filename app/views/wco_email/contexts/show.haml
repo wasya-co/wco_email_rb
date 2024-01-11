@@ -13,7 +13,8 @@
           <b>Template:</b>           #{link_to @ctx.email_template.slug, email_template_path(@ctx.email_template), target: :_blank }
         %li <b>From:</b>             #{@ctx.from_email}
         %li <b>To Lead:</b>          #{link_to @ctx.lead.email, wco.lead_path(@ctx.lead)}
-        %li <b>reply_to_message:</b> #{ link_to @ctx.reply_to_message, message_path(@ctx.reply_to_message), target: :_blank }
+        - if @ctx.reply_to_message
+          %li <b>reply_to_message:</b> #{ link_to @ctx.reply_to_message, message_path(@ctx.reply_to_message), target: :_blank }
 
 
     .col-md-4
