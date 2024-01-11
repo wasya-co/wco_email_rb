@@ -5,6 +5,8 @@ class WcoEmail::ApiController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   def create_email_message
+    puts! params, 'params'
+
     stub = WcoEmail::MessageStub.create!({
       bucket:     params[:bucket],
       object_key: params[:object_key],
