@@ -119,7 +119,7 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
   private
 
   def set_lists
-    super
+    @tags       = Wco::Tag.all
     @email_templates_list = [ [nil, nil] ] + WcoEmail::EmailTemplate.all.map { |tmpl| [ tmpl.slug, tmpl.id ] }
     @leads_list = Wco::Lead.list
     @tags_list  = Wco::Tag.list

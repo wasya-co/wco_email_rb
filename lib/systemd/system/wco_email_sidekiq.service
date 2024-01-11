@@ -1,0 +1,22 @@
+[Unit]
+Description=wco_email_rb_sidekiq
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/projects/micros_email/current
+ExecStart=/root/.rbenv/shims/bundle exec sidekiq -q wco_email_rb -q wco_email_rb_mailers
+ExecStop=/bin/echo nothing
+Restart=on-failure
+Environment=RAILS_ENV=production
+Environment=RAILS_LOG_TO_STDOUT=true
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=wco_email_rb_sidekiq
+
+# StandardOutput=append:/var/log/sidekiq/production.log
+# StandardError=append:/var/log/sidekiq/production.log
+
+[Install]
+WantedBy=multi-user.target

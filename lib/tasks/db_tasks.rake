@@ -1,4 +1,26 @@
 
+=begin
+
+
+## clean
+WcoEmail::EmailAction.each do |act|
+  if !act.lead
+    act.delete
+  end
+end
+
+
+
+## clean
+WcoEmail::Context.each do |ttt|
+  if !ttt.lead
+    ttt.delete
+  end
+end
+
+
+=end
+
 namespace :db do
 
   desc "seed"

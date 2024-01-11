@@ -24,4 +24,4 @@
         = render '/wco_email/messages/meta', message: msg
         %iframe.message-iframe{ src: message_iframe_path(msg) }
 
-        = render '/wco_email/contexts/form_reply', lead_id: msg.lead_id, message: msg, ctx: WcoEmail::Context.new({ from_email: msg.to.downcase, subject: msg.subject })
+        = render '/wco_email/contexts/form_reply', lead_id: msg.lead_id, message: msg, ctx: WcoEmail::Context.new({ from_email: msg.to&.downcase, subject: msg.subject })

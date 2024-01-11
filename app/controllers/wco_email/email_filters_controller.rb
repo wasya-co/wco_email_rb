@@ -33,8 +33,8 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
 
   def index
     authorize! :index, WcoEmail::EmailFilter.new
-    @email_filter = WcoEmail::EmailFilter.new
-    @email_filters = WcoEmail::EmailFilter.active
+    @email_filter  = WcoEmail::EmailFilter.new
+    @email_filters = WcoEmail::EmailFilter.all
   end
 
   def new
@@ -60,7 +60,7 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
   private
 
   def set_lists
-    super
+    # super
     @email_templates_list        = WcoEmail::EmailTemplate.list
     @email_actions_list          = WcoEmail::EmailAction.list
     @email_action_templates_list = WcoEmail::EmailActionTemplate.list
