@@ -1,7 +1,18 @@
 
 class WcoEmail::ApiController < ActionController::Base
 
-  before_action :check_credentials
+  before_action      :check_credentials
+  skip_before_action :verify_authenticity_token
+
+  def create_email_message
+    stub = WcoEmail::MessageStub.create!({
+      bucket:     params[:bucket],
+      object_key: params[:object_key],
+    })
+
+    WcoEmail::MessageIntakeJob.perform_async( stub.id.to_s )
+    render status: :ok, json: { status: :ok }
+  end
 
   ##
   ## private
