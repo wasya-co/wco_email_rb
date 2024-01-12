@@ -34,7 +34,7 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
   def index
     authorize! :index, WcoEmail::EmailFilter.new
     @email_filter  = WcoEmail::EmailFilter.new
-    @email_filters = WcoEmail::EmailFilter.all
+    @email_filters = WcoEmail::EmailFilter.all.page( params[WcoEmail::EmailFilter::PAGE_PARAM_NAME] ).per( current_profile.per_page )
   end
 
   def new
