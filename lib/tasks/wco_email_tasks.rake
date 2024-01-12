@@ -4,14 +4,15 @@ namespace :wco_email do
   ##
   ## @stub = WcoEmail::MessageStub.find_by object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
   ##
-  desc 'churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>]'
+  desc 'churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] [status=<status>]'
   task churn_n_stubs: :environment do
 
     ## Usage
     if !ENV['n']
       puts ""
-      puts "Usage: churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] "
+      puts "Usage: churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] [status=<status>] "
       puts "DOES NOT PROCESS IMAGES BY DEFAULT"
+      puts "status can be something other than STATUS_PENDING"
       puts ""
       exit 22
     end
@@ -22,8 +23,11 @@ namespace :wco_email do
 
     process_images = ENV['process_images'] == 'true'
 
+    status = ENV['status']
+    status ||= WcoEmail::MessageStub::STATUS_PENDING
+
     n = ENV['n'].to_i
-    stubs = WcoEmail::MessageStub.pending.limit n
+    stubs = WcoEmail::MessageStub.where( status: status ).limit n
     stubs.each_with_index do |stub, idx|
       puts "+++ +++ churning ##{idx+1} object_key: #{stub.object_key}"
 

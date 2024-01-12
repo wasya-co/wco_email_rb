@@ -32,7 +32,7 @@ class WcoEmail::MessageIntakeJob
     stub = WcoEmail::MessageStub.find id
     puts "+++ +++ Performing WcoEmail::MessageIntakeJob for object_key `#{stub.object_key}`."
 
-    if stub.status != WcoEmail::MessageStub::STATUS_PENDING
+    if [ WcoEmail::MessageStub::STATUS_PROCESSED, WcoEmail::MessageStub::STATUS_FAILED ].include?( stub.status )
       raise "This stub has already been processed: #{stub.id.to_s}."
       return
     end
@@ -40,6 +40,7 @@ class WcoEmail::MessageIntakeJob
     begin
       stub.do_process
     rescue => err
+      stub.update({ status: WcoEmail::MessageStub::STATUS_FAILED })
       puts! err, "WcoEmail::MessageIntakeJob error"
       ::ExceptionNotifier.notify_exception(
         err,
