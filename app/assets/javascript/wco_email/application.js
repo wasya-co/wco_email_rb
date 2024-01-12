@@ -1,9 +1,16 @@
 //
-// require rails-ujs
+// trash: require rails-ujs
 //
-// require wco/application
-// require ./contexts
-// require ./conversations
+//= require ./contexts
+//= require ./conversations
 //
 
-console.log('loaded wco_email/application.js')
+$(function () {
+
+if ($(".tinymce").length > 0) {
+  $(".tinymce").summernote()
+}
+
+logg('loaded wco_email/application.js')
+}) // END
+

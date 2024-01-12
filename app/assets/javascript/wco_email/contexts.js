@@ -16,4 +16,5 @@ $(document).ready(() => {
     })
   }
 
-})
+  logg('loaded wco_email/contexts.js')
+}) // END

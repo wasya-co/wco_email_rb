@@ -20,6 +20,11 @@ describe WcoEmail::ContextsController do
     response.code.should eql '200'
   end
 
+  it '#new' do
+    get :new
+    response.code.should eql '200'
+  end
+
   it '#show' do
     get :show, params: { id: @ctx.id }
     response.code.should eql '200'

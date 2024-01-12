@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 1238bf5dc08e73ac4a2b20b7dcb673984e7ee9d1
+  revision: f990900a987debc236cf43a0746b6b9284db29ed
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.57)
+    wco_models (3.1.0.58)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -31,7 +31,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.8)
+    wco_email (0.1.1.9)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -118,7 +118,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     aes_key_wrap (1.1.0)
     aws-eventstream (1.3.0)
-    aws-partitions (1.878.0)
+    aws-partitions (1.879.0)
     aws-sdk-core (3.190.2)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.651.0)

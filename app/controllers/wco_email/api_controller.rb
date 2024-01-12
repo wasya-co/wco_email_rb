@@ -5,7 +5,7 @@ class WcoEmail::ApiController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   def create_email_message
-    # puts! params, 'params'
+    puts! params, 'params'
 
     stub = WcoEmail::MessageStub.create!({
       bucket:     params[:bucket],
@@ -23,7 +23,7 @@ class WcoEmail::ApiController < ActionController::Base
 
   def check_credentials
     if params[:secret] != AWS_SES_LAMBDA_SECRET
-      render status: 400, json: { status: 400 }
+      render status: 400, json: { status: 400, message: "#check_credentials says unauthorized." }
       return
     end
   end

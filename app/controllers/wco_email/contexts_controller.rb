@@ -78,7 +78,7 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
     authorize! :new, WcoEmail::Context
     @tmpl = @email_template = WcoEmail::EmailTemplate.where( slug: params[:template_slug] ).first ||
       WcoEmail::EmailTemplate.where( id: params[:template_slug] ).first ||
-      WcoEmail::EmailTemplate.new
+      WcoEmail::EmailTemplate.where({ slug: 'blank' }).last
     attrs = {}
     if @tmpl
       attrs = @tmpl.attributes.slice( :subject, :body, :from_email )
@@ -146,10 +146,9 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
   private
 
   def set_lists
-    super
     @email_layouts_list   = WcoEmail::EmailTemplate::LAYOUTS
     @email_templates_list = [ [nil, nil] ] + WcoEmail::EmailTemplate.all.map { |tmpl| [ tmpl.slug, tmpl.id ] }
-    @leads_list = Wco::Lead.list
+    @leads_list           = Wco::Lead.list
   end
 
 end

@@ -8,11 +8,8 @@ require 'sidekiq'
 ## 2023-03-07 _vp_ Continue
 ## 2023-12-28 _vp_ Continue
 ##
-## class_name EIJ
-##
 class WcoEmail::MessageIntakeJob
   include Sidekiq::Job
-  # include Sidekiq::Util
 
   sidekiq_options queue: 'wco_email_rb'
 

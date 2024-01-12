@@ -2,8 +2,6 @@
 
 class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
 
-  # before_action :set_lists, only: %i| new |
-
   def create
     authorize! :create, WcoEmail::EmailTemplate
     @template = WcoEmail::EmailTemplate.create params[:template].permit!

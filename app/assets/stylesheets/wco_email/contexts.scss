@@ -7,7 +7,8 @@
 .email-templates--form {
   form {
     > .actions {
-      text-align: right;
+      display: flex;
+      justify-content: space-between;
     }
 
     .tab-labels {
@@ -31,6 +32,9 @@
 
     }
     .tabs {
+      > div {
+        border: 2px dotted gray;
+      }
       .tab-raw {
         display: none;
       }
