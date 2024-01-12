@@ -2,6 +2,7 @@
 require 'aws-sdk-s3'
 require 'mail'
 require 'sidekiq'
+require 'exception_notification'
 
 ##
 ## 2023-02-26 _vp_ Let's go
@@ -40,7 +41,7 @@ class WcoEmail::MessageIntakeJob
       stub.do_process
     rescue => err
       puts! err, "WcoEmail::MessageIntakeJob error"
-      ExceptionNotifier.notify_exception(
+      ::ExceptionNotifier.notify_exception(
         err,
         data: { stub: stub }
       )

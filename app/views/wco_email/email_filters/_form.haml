@@ -33,8 +33,8 @@
         .field
           = f.label :email_action_template
           = f.select :email_action_template, options_for_select( @email_action_templates_list, selected: email_filter.email_action_template ), {}, class: 'select2'
-        -# .field
-        -#   = f.label :wp_term_id
-        -#   = f.select :wp_term_id, options_for_select( @email_tags_list, selected: email_filter.wp_term_id ), {}, class: 'select2'
+        .field
+          = f.label :tag
+          = f.select :tag, options_for_select( @tags_list, selected: email_filter.tag_id ), {}, class: 'select2'
         .actions
           = f.submit

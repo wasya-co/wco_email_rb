@@ -93,22 +93,24 @@ namespace :wco_email do
   desc 'import objectkey list'
   task import_objectkey_list: :environment do
 
-    bucket = 'ish-ses'
+    # bucket = 'ish-ses'
+    bucket = 'ish-test-2024'
     client ||= Aws::S3::Client.new({
       region:            ::S3_CREDENTIALS[:region_ses],
       access_key_id:     ::S3_CREDENTIALS[:access_key_id_ses],
       secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
     })
 
-    lines = File.read( './data/20240110_ish-ses_objectkeys' )
+    # lines = File.read( './data/20240110_ish-ses_objectkeys' )
+    lines = File.read( './data/out_head' )
     lines.split("\n").each_with_index do |line, idx|
 
         object_key = line.split.last
         stub = WcoEmail::MessageStub.create( object_key: object_key, bucket: bucket )
         if stub.persisted?
-          print "#{idx}."
+          print "#{idx+1}."
         else
-          outs! stub.errors.full_messages.join(", ")
+          puts! stub.errors.full_messages.join(", ")
         end
 
     end

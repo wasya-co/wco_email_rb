@@ -24,9 +24,9 @@
         %th Subject Exact
         %th Body Exact
         %th Kind
-        -# %th Email Action
-        %th Email Action Template
-        -# %th Email Tag
+        %th Respond with <br />Email Template
+        %th Email Action <br />(template)
+        %th Tag
     - @email_filters.each_with_index do |ef, idx|
 
       %tr
@@ -44,8 +44,8 @@
         %td= ef.subject_exact
         %td= ef.body_exact
         %td= ef.kind
-        -# %td= ef.email_action&.id
+        %td= ef.email_template&.slug
         %td= ef.email_action_template&.slug
-        -# %td= ef.category&.name
+        %td= ef.tag&.slug
 
 
