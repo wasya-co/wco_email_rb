@@ -7,7 +7,6 @@ describe WcoEmail::EmailTemplatesController do
     setup_users
   end
 
-
   describe "#index" do
     it 'does' do
       get :index

@@ -11,18 +11,21 @@
       %tr
         %td
         %td Active?
-        %td From
-        %td To
-        %td Tmpl
+        %td Email Action Template
+        %td To <br />(Lead)
+        %td.tmpl Email Template
         %td Perform at
     %tbody
       - @schs.each do |sch|
         %tr
           %td= link_to '[~]', edit_email_action_path(sch)
           %td= sch.status == 'active' ? 'Y' : '-'
-          %td= sch.tmpl.from_email
-          %td= link_to sch.lead.email, lead_path(sch.lead)
-          %td= link_to sch.tmpl.email_template.slug, email_template_path(sch.tmpl.email_template)
+          %td.email_action_template
+            = render '/wco_email/email_action_templates/show_cell', tmpl: sch.tmpl
+          %td.to
+            = link_to sch.lead.email, wco.lead_path(sch.lead)
+          %td.tmpl
+            = render '/wco_email/email_templates/show_cell', tmpl: sch.tmpl.email_template
           %td= sch.perform_at.in_time_zone
 
 

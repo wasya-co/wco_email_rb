@@ -33,7 +33,7 @@ class WcoEmail::MessageIntakeJob
     puts "+++ +++ Performing WcoEmail::MessageIntakeJob for object_key `#{stub.object_key}`."
 
     if [ WcoEmail::MessageStub::STATUS_PROCESSED, WcoEmail::MessageStub::STATUS_FAILED ].include?( stub.status )
-      raise "This stub has already been processed: #{stub.id.to_s}."
+      raise "This stub has already been processed, or errored out: #{stub.id.to_s}."
       return
     end
 

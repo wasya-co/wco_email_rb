@@ -6,60 +6,62 @@ class WcoEmail::EmailActionTemplatesController < WcoEmail::ApplicationController
   ## Alphabetized : )
 
   def destroy
-    @act = @email_action = WcoEmail::EmailAction.find( params[:id] )
-    authorize! :delete, @act
-    @act.update_attributes({ deleted_at: Time.now })
+    @tmpl = WcoEmail::EmailActionTemplate.find( params[:id] )
+    authorize! :delete, @tmpl
+    @tmpl.delete
     flash_notice 'Probably success'
     redirect_to action: :index
   end
 
   def edit
-    @act = @email_action = WcoEmail::EmailAction.find( params[:id] )
-    # @act.ties.push WcoEmail::EmailActionTie.new( next_email_action_id: nil )
-    authorize! :edit, @act
+    @tmpl = WcoEmail::EmailActionTemplate.find( params[:id] )
+    @tmpl.ties.push WcoEmail::EmailActionTemplateTie.new( next_tmpl_id: nil )
+    authorize! :edit, @tmpl
   end
 
   def index
-    @email_actions = WcoEmail::EmailAction.where({ :deleted_at => nil })
+    @tmpls = WcoEmail::EmailActionTemplate.all
 
-    authorize! :index, @new_email_action
+    authorize! :index, @new_tmpl
   end
 
   def new
-    authorize! :new, @new_email_action
+    authorize! :new, @new_tmpl
   end
 
   def show
-    @act = @email_action = WcoEmail::EmailAction.find( params[:id] )
-    authorize! :show, @act
+    @tmpl = WcoEmail::EmailActionTemplate.find( params[:id] )
+    authorize! :show, @tmpl
   end
 
-  def update
-    if params[:id]
-      @act = @email_action = WcoEmail::EmailAction.find( params[:id] )
-    else
-      @act = @email_action = WcoEmail::EmailAction.new
-    end
-    authorize! :upsert, @act
+  def update # or create
+    puts! params, 'params'
 
-    if params[:email_action][:ties_attributes]
-      params[:email_action][:ties_attributes].each do |k, v|
-        if !v[:next_email_action_id].present?
-          params[:email_action][:ties_attributes].delete( k )
+    if params[:id]
+      @tmpl = WcoEmail::EmailActionTemplate.find( params[:id] )
+    else
+      @tmpl = WcoEmail::EmailActionTemplate.new
+    end
+    authorize! :upsert, @tmpl
+
+    if params[:tmpl][:ties_attributes]
+      params[:tmpl][:ties_attributes].each do |k, v|
+        if !v[:next_tmpl_id].present?
+          params[:tmpl][:ties_attributes].delete( k )
         end
         if v[:to_delete] == "1"
-          EActie.find( v[:id] ).delete
-          params[:email_action][:ties_attributes].delete( k )
+          WcoEmail::EmailActionTemplateTie.find( v[:id] ).delete
+          params[:tmpl][:ties_attributes].delete( k )
         end
       end
     end
 
-    flag = @act.update_attributes( params[:email_action].permit! )
+    flag = @tmpl.update_attributes( params[:tmpl].permit! )
     if flag
       flash[:notice] = 'Success'
       redirect_to action: 'index'
     else
-      flash[:alert] = "No luck: #{@act.errors.full_messages.join(', ')}. #{@act.ties.map { |t| t.errors.full_messages.join(', ') }.join(' | ') }"
+      flash[:alert] = "No luck: #{@tmpl.errors.full_messages.join(', ')}. #{@tmpl.ties.map { |t| t.errors.full_messages.join(', ') }.join(' | ') }"
       render action: 'edit'
     end
 
@@ -71,7 +73,9 @@ class WcoEmail::EmailActionTemplatesController < WcoEmail::ApplicationController
   private
 
   def set_lists
-    @new_email_action = WcoEmail::EmailAction.new
+    @email_action_templates_list = WcoEmail::EmailActionTemplate.list
+    @email_templates_list = WcoEmail::EmailTemplate.list
+    @new_tmpl = WcoEmail::EmailActionTemplate.new
   end
 
 end

@@ -17,6 +17,7 @@ WcoEmail::Engine.routes.draw do
   post 'conversations/rmtag/:slug',         to: 'conversations#rmtag'
   resources :conversations
 
+  post 'email_action_templates', to: 'email_action_templates#update'
   resources :email_action_templates
   resources :email_actions
   resources :email_campaigns

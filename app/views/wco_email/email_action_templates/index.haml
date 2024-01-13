@@ -1,36 +1,45 @@
 
-.email-actions-index.padded
+.email-action-templates-index.padded
 
   .header
     %h2.title
-      Email Actions (#{@email_actions.length})
-      = link_to '[+]', new_email_action_path
+      Email Action Templates (#{@tmpls.length})
+      = link_to '[+]', new_email_action_template_path
 
   %table.bordered
     %tr
-      %th= check_box_tag 'abba'
-      %th
-      %th slug
+      %th= check_box_tag 'hmm'
+      %th &nbsp;
+      %th Slug
+      %th From
+      %th Tmpl
       %th next actions
-    - @email_actions.each do |eact|
+    - @tmpls.each_with_index do |tmpl, idx|
       %tr
-        %td= check_box_tag 'abba'
-        %td.flex-row
-
-          = link_to '[~]', edit_email_action_path( eact )
-          = button_to '[x]', email_action_path( eact ), data: { confirm: 'Are you sure?' }, method: :delete
+        %td
+          .gray= idx+1
+          = check_box_tag 'hmm'
+        %td
+          .flex-row
+            = link_to '[~]', edit_email_action_template_path( tmpl )
+            = button_to '[x]', email_action_template_path( tmpl ), data: { confirm: 'Are you sure?' }, method: :delete
 
         %td
-          -# = link_to eact.slug, email_action_path( eact )
-          = eact.slug
-          .em.small= eact.descr
+          = tmpl.slug
         %td
+          = tmpl.from_email
+        %td.tmpl
+          = render '/wco_email/email_templates/show_cell', tmpl: tmpl.email_template
+
+        %td
+          - if tmpl.ties.blank?
+            No ties
           %ul
-            - eact.ties.map do |next_a|
+            - tmpl.ties.map do |tie|
               %li
-                .a= next_a.next_at_exe
+                .a= tie.next_at_exe
                 .a
-                  - if next_a.next_email_action.slug == eact.slug
+                  - if tie.next_tmpl.slug == tmpl.slug
                     (same)
-                  = next_a.next_email_action.slug
+                  = tie.next_tmpl.slug
 
