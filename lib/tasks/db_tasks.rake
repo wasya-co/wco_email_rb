@@ -10,7 +10,7 @@ namespace :db do
     end
   end
 
-  desk 'clean email actions'
+  desc 'clean email actions'
   task clean_email_actions: :environment do
     WcoEmail::EmailAction.each do |act|
       if !act.lead
