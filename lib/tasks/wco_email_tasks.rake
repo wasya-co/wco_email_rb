@@ -37,6 +37,9 @@ namespace :wco_email do
       stub.save!
 
       WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
+
+      sleep 1 # second
+      print '.'
     end
   end
 
@@ -105,6 +108,20 @@ namespace :wco_email do
     WcoEmail::MessageStub.mbox2stubs ENV['mbox_path'], tagname: ENV['tagname'], skip: ENV['skip'].to_i
 
     puts "ok"
+  end
+
+  desc 'remove message duplicates'
+  task remove_message_duplicates: :environment do
+    outs = WcoEmail::Message.collection.aggregate([
+      {"$group" => { "_id" => "$message_id", "count" => { "$sum" => 1 } } },
+      {"$match": {"_id" => { "$ne" => nil } , "count" => {"$gt" => 1} } },
+      {"$project" => {"message_id" => "$_id", "_id" => 0} }
+    ])
+    outs = outs.to_a
+    outs.each do |out|
+      WcoEmail::Message.where( message_id: out['message_id'] )[1].destroy!
+      print '.'
+    end
   end
 
   desc 'remove duplicates of stubs'
