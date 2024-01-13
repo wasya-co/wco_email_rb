@@ -10,9 +10,9 @@
         .field
           %label Slug
           = f.text_field :slug
-        .field
-          %label from_email
-          = f.select :from_email, options_for_select( WcoEmail::EmailTemplate::FROM_EMAILS_2, selected: tmpl.from_email ), {}, { class: 'select2' }
+        -# .field
+        -#   %label from_email
+        -#   = f.select :from_email, options_for_select( WcoEmail::EmailTemplate::FROM_EMAILS_2, selected: tmpl.from_email ), {}, { class: 'select2' }
         .field
           %label Template
           = f.select :email_template_id, options_for_select( @email_templates_list, selected: tmpl.email_template_id ), {}, class: 'select2'
