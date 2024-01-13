@@ -11,7 +11,7 @@
       %th= check_box_tag 'hmm'
       %th &nbsp;
       %th Slug
-      %th From
+      -# %th From
       %th Tmpl
       %th next actions
     - @tmpls.each_with_index do |tmpl, idx|
@@ -26,8 +26,7 @@
 
         %td
           = tmpl.slug
-        %td
-          = tmpl.from_email
+        -# %td= tmpl.from_email
         %td.tmpl
           = render '/wco_email/email_templates/show_cell', tmpl: tmpl.email_template
 
