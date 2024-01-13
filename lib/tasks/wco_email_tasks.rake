@@ -147,7 +147,7 @@ namespace :wco_email do
         print '^'
       end
 
-      duration = Rails.env.production? ? 120 : 15 # 2 minutes or 15 seconds
+      duration = Rails.env.production? ? 15 : 15 # 2 minutes or 15 seconds
       sleep duration
       print '.'
 
@@ -182,7 +182,7 @@ namespace :wco_email do
         print '^'
       end
 
-      duration = Rails.env.production? ? 120 : 15 # 2 minutes or 15 seconds
+      duration = Rails.env.production? ? 15 : 15 # 2 minutes or 15 seconds
       sleep duration
       print '.'
 

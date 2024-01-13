@@ -1,31 +1,30 @@
 
-.application--main-header.main-header.maxwidth{ class: "#{ENV['RAILS_ENV']} #{ENV['RAILS_ENV'][0...3]=="dev" ? "development" : ''}" }
+.application--main-header.main-header{ class: "#{ENV['RAILS_ENV']} #{ENV['RAILS_ENV'][0...3]=="dev" ? "development" : ''}" }
+  .maxwidth
+    %i.fa.fa-compress.collapse-expand#collapseHeaderEmail
+      Wco Email & CRM
+    .flex-row
+      %ul
+        %li= link_to 'Email Messages', conversations_path
+        %li
+          Stubs
+          (#{WcoEmail::MessageStub.pending.length})
+          (#{WcoEmail::MessageStub.all.length})
+        %li= render '/wco_email/email_templates/header'
+        %li= render '/wco_email/email_campaigns/header'
+        %li= render '/wco_email/email_filters/header'
+        %li= render '/wco_email/contexts/header'
+        %li= render '/wco_email/unsubscribes/header'
 
-  %i.fa.fa-compress.collapse-expand#collapseHeaderEmail
-    Wco Email & CRM
-  .flex-row
-    %ul
-      %li= link_to 'Email Messages', conversations_path
-      %li
-        Stubs
-        (#{WcoEmail::MessageStub.pending.length})
-        (#{WcoEmail::MessageStub.all.length})
-      %li= render '/wco_email/email_templates/header'
-      %li= render '/wco_email/email_campaigns/header'
-      %li= render '/wco_email/email_filters/header'
-      %li= render '/wco_email/contexts/header'
-      %li= render '/wco_email/unsubscribes/header'
 
+      %ul
+        %li= render '/wco_email/email_action_templates/header'
+        %li= render '/wco_email/email_actions/header'
 
-    %ul
-      %li= render '/wco_email/email_action_templates/header'
-      %li= render '/wco_email/email_actions/header'
+        -# %li= render '/wco_email/lead_action_templates/header'
+        -# %li= render '/wco_email/lead_actions/header'
 
-      -# %li= render '/wco_email/lead_action_templates/header'
-      -# %li= render '/wco_email/lead_actions/header'
+        -# %li
+        -#   = link_to "OActions (#{Wco::OfficeAction.all.length})", office_actions_path
+        -#   = link_to '[+]', new_office_action_path
 
-      -# %li
-      -#   = link_to "OActions (#{Wco::OfficeAction.all.length})", office_actions_path
-      -#   = link_to '[+]', new_office_action_path
-
-  .c
