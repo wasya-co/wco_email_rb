@@ -146,7 +146,9 @@ namespace :wco_email do
       schs = WcoEmail::EmailAction.active.where({ :perform_at.lte => Time.now })
       print "[#{schs.length}]" if schs.length != 0
       schs.each do |sch|
+
         sch.send_and_roll
+
         print '^'
         sleep 1
       end
@@ -158,10 +160,11 @@ namespace :wco_email do
 
   desc 'send contexts'
   task send_contexts: :environment do
+    puts! "Starting wco_email:run_email_actions..."
     while true do
 
       ctxs = WcoEmail::Context.scheduled.notsent
-      print "sending[#{ctxs.length}]"
+      print "[#{ctxs.length}]" if ctxs.length != 0
       ctxs.map do |ctx|
 
         unsub = WcoEmail::Unsubscribe.where({ lead_id: ctx.lead_id, template_id: ctx.email_template_id }).first
@@ -186,8 +189,8 @@ namespace :wco_email do
         sleep 1
       end
 
-      sleep 15
       print '.'
+      sleep 15
 
     end
   end
