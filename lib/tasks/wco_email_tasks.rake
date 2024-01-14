@@ -140,19 +140,19 @@ namespace :wco_email do
 
   desc 'email actions, send and roll'
   task run_email_actions: :environment do
+    puts! "Starting wco_email:run_email_actions..."
     while true do
 
       schs = WcoEmail::EmailAction.active.where({ :perform_at.lte => Time.now })
-      print "run_email_actions[#{schs.length}]"
+      print "[#{schs.length}]" if schs.length != 0
       schs.each do |sch|
         sch.send_and_roll
         print '^'
         sleep 1
       end
 
-      sleep 15
       print '.'
-
+      sleep 15
     end
   end
 
