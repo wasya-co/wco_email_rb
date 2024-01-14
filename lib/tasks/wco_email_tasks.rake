@@ -39,7 +39,7 @@ namespace :wco_email do
       WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
 
       sleep 1 # second
-      print '.'
+      puts '.'
     end
   end
 
@@ -66,7 +66,7 @@ namespace :wco_email do
         object_key = line.split.last
         stub = WcoEmail::MessageStub.create( object_key: object_key, bucket: bucket )
         if stub.persisted?
-          print "#{idx+1}."
+          puts "#{idx+1}."
         else
           puts! stub.errors.full_messages.join(", ")
         end
@@ -120,7 +120,7 @@ namespace :wco_email do
     outs = outs.to_a
     outs.each do |out|
       WcoEmail::Message.where( message_id: out['message_id'] )[1].destroy!
-      print '.'
+      puts '.'
     end
   end
 
@@ -134,7 +134,7 @@ namespace :wco_email do
     outs = outs.to_a
     outs.each do |out|
       WcoEmail::MessageStub.where( object_key: out['object_key'] )[1].destroy!
-      print '.'
+      puts '.'
     end
   end
 
@@ -144,14 +144,14 @@ namespace :wco_email do
     while true do
 
       schs = WcoEmail::EmailAction.active.where({ :perform_at.lte => Time.now })
-      print "[#{schs.length}]" if schs.length != 0
+      puts "[#{schs.length}]" if schs.length != 0
       schs.each do |sch|
         sch.send_and_roll
-        print '^'
+        puts '^'
         sleep 1
       end
 
-      print '.'
+      puts '.'
       sleep 15
     end
   end
@@ -161,7 +161,7 @@ namespace :wco_email do
     while true do
 
       ctxs = WcoEmail::Context.scheduled.notsent
-      print "sending[#{ctxs.length}]"
+      puts "sending[#{ctxs.length}]"
       ctxs.map do |ctx|
 
         unsub = WcoEmail::Unsubscribe.where({ lead_id: ctx.lead_id, template_id: ctx.email_template_id }).first
@@ -182,12 +182,12 @@ namespace :wco_email do
           Rails.env.production? ? out.deliver_later : out.deliver_now
         end
 
-        print '^'
+        puts '^'
         sleep 1
       end
 
       sleep 15
-      print '.'
+      puts '.'
 
     end
   end
