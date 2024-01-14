@@ -142,13 +142,15 @@ namespace :wco_email do
   task run_email_actions: :environment do
     while true do
 
-      WcoEmail::EmailAction.active.where({ :perform_at.lte => Time.now }).each do |sch|
+      schs = WcoEmail::EmailAction.active.where({ :perform_at.lte => Time.now })
+      print "run_email_actions[#{schs.length}]"
+      schs.each do |sch|
         sch.send_and_roll
         print '^'
+        sleep 1
       end
 
-      duration = Rails.env.production? ? 15 : 15 # 2 minutes or 15 seconds
-      sleep duration
+      sleep 15
       print '.'
 
     end
@@ -159,6 +161,7 @@ namespace :wco_email do
     while true do
 
       ctxs = WcoEmail::Context.scheduled.notsent
+      print "sending[#{ctxs.length}]"
       ctxs.map do |ctx|
 
         unsub = WcoEmail::Unsubscribe.where({ lead_id: ctx.lead_id, template_id: ctx.email_template_id }).first
@@ -180,10 +183,10 @@ namespace :wco_email do
         end
 
         print '^'
+        sleep 1
       end
 
-      duration = Rails.env.production? ? 15 : 15 # 2 minutes or 15 seconds
-      sleep duration
+      sleep 15
       print '.'
 
     end
