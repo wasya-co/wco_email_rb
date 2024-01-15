@@ -188,8 +188,8 @@ namespace :wco_email do
           Rails.env.production? ? out.deliver_later : out.deliver_now
         end
 
-        print '^'
-        sleep 1
+        print "#{ctx.id}^"
+        sleep 10
       end
 
       print '.'
