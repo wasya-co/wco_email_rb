@@ -34,12 +34,17 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
   def index
     authorize! :index, WcoEmail::EmailFilter.new
     @email_filter  = WcoEmail::EmailFilter.new
-    @email_filters = WcoEmail::EmailFilter.all # .page( params[WcoEmail::EmailFilter::PAGE_PARAM_NAME] ).per( current_profile.per_page )
+    @email_filters = WcoEmail::EmailFilter.all.includes( :email_template, :conversations )
   end
 
   def new
     @email_filter = WcoEmail::EmailFilter.new
     authorize! :new, @email_filter
+  end
+
+  def show
+    @email_filter = WcoEmail::EmailFilter.find params[:id]
+    authorize! :show, @email_filter
   end
 
   def update
