@@ -101,6 +101,7 @@ $(".add-tag-btn").click(function(e) {
     },
     error: e => {
       logg((e||{}).responseText, 'Err')
+      location.reload()
     },
   })
 
@@ -133,6 +134,7 @@ $(".remove-tag-btn").click(function(e) {
     },
     error: e => {
       logg((e||{}).responseText, 'Err')
+      location.reload()
     },
   })
 

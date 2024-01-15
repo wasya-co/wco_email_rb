@@ -4,19 +4,9 @@ Rails.application.routes.default_url_options[:host] = "email.local:3004"
 Rails.application.configure do
   config.hosts << "email.local:3004"
   config.action_mailer.default_url_options = { :host => 'email.local', :port => 3004 }
-  # routes.default_url_options = { :host => 'email.local', :port => 3004 }
 
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  # In the development environment your application's code is reloaded any time
-  # it changes. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-
-  # Do not eager load code on boot.
-  config.eager_load = false
-
-  # Show full error reports.
+  config.eager_load    = false
   config.consider_all_requests_local = true
 
   # Enable/disable caching. By default caching is disabled.
@@ -31,7 +21,6 @@ Rails.application.configure do
     }
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 
@@ -50,7 +39,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  # config.active_support.deprecation = :log
 
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise

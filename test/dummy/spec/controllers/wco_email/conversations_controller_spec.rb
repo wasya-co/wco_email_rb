@@ -29,7 +29,7 @@ describe WcoEmail::ConversationsController do
       conv.reload
 
       # puts! conv.tags.map(&:slug), 'actual tags'
-      conv.tag_ids.should eql( [ tag1.id, tag2.id ]  )
+      conv.tag_ids.should eql( [ tag1.id, tag2.id ] )
     end
   end
 
@@ -51,6 +51,16 @@ describe WcoEmail::ConversationsController do
       end
     end
 
+  end
+
+  it '#rmtag' do
+    tag1  = create( :tag )
+    conv  = create( :email_conversation, tags: [ tag1 ] )
+
+    post :rmtag, params: { slug: tag1.slug, ids: [ conv.id ] }
+    conv.reload
+
+    conv.tag_ids.should eql( [] )
   end
 
   describe '#show' do

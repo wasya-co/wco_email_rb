@@ -4,10 +4,14 @@
 
 .conversations-index
 
+  %h5
+    - if @tag
+      Tag `#{@tag}`
+    - if @tag_not
+      Tag-not `#{@tag_not}`
   = render '/wco_email/conversations/actions'
 
   = render '/wco/paginate', resource: @conversations, param_name: :conv_page
-
   %table.bordered
     %tr
       %th.select-all.nosort
@@ -16,6 +20,7 @@
           .n-selected -
       %th.leads leads
       %th.subject subject, preview
+      %th.tags Tags
       %th.latest-at latest_at
     - @conversations.each_with_index do |conv, idx|
       %tr
@@ -35,9 +40,11 @@
             = link_to conv.subject, email_conversation_path(conv)
           <b>(#{conv.messages.length})</b>
           %span.gray= conv.preview
+        %td.tags.mini
+          - conv.tags.each do |tag|
+            .mb-1
+              .Chip= tag.slug
         %td.latest-at
           = pp_date conv.latest_at
           = pp_time conv.latest_at
-
-
   = render '/wco/paginate', resource: @conversations, param_name: :conv_page

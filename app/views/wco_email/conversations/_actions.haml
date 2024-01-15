@@ -10,7 +10,8 @@
     %i.material-icons refresh
     refresh
   .bordered.inline-block
-    = select_tag :emailtag, options_for_select(@tags_list)
+    .d-inline-block
+      = select_tag :emailtag, options_for_select(@tags_list), class: 'select2'
     = check_box_tag :is_move
     %label move?
     %a.btn.add-tag-btn{ href: "javascript: void(0)", data: { url: conversations_addtag_path } }

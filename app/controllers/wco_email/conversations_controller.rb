@@ -4,48 +4,35 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
   # layout 'wco_email/mailbox'
 
   before_action :set_lists
+  before_action :find_convs_tags, only: %i| addtag rmtag |
 
   ## many tags to many convs
   def addtag
     authorize! :addtag, WcoEmail::Conversation
-    # convs = WcoEmail::Conversation.where({ :id.in => params[:ids].split(",") })
-    convs = WcoEmail::Conversation.find( params[:ids] )
-    tags  = Wco::Tag.where({ :slug.in => params[:slug].split(",") })
-    if tags.blank?
-      tags  = Wco::Tag.where({ :id.in => params[:slug].split(",") })
-    end
+
     inbox = Wco::Tag.inbox
-    outs = convs.map do |conv|
-      conv.tags.push tags
+    outs = @convs.map do |conv|
+      conv.tags.push @tags
       conv.tags.delete( inbox ) if params[:is_move]
       conv.save
     end
     flash_notice "Outcomes: #{outs}"
-    redirect_to request.referrer || root_path
-  end
 
-  # def delete
-  #   authorize! :delete, WcoEmail::Conversation
-  #   convs = WcoEmail::Conversation.find params[:ids]
-  #   outs = convs.map do |conv|
-  #     conv.add_tag( WpTag::TRASH )
-  #     conv.remove_tag( WpTag::INBOX )
-  #   end
-  #   flash[:notice] = "outcome: #{outs}"
-  #   render json: { status: :ok }
-  # end
+    render json: { status: 'ok' }
+    # redirect_to request.referrer # || root_path
+  end
 
   def index
     authorize! :index, WcoEmail::Conversation
     @conversations = WcoEmail::Conversation.all
 
     if params[:tagname]
-      tag = Wco::Tag.find_by slug: params[:tagname]
-      @conversations = @conversations.where( :tag_ids.in => [ tag.id ] )
+      @tag = Wco::Tag.find_by slug: params[:tagname]
+      @conversations = @conversations.where( :tag_ids.in => [ @tag.id ] )
     end
     if params[:tagname_not]
-      tag_not = Wco::Tag.find_by slug: params[:tagname_not]
-      @conversations = @conversations.where( :tag_ids.nin => [ tag_not.id ] )
+      @tag_not = Wco::Tag.find_by slug: params[:tagname_not]
+      @conversations = @conversations.where( :tag_ids.nin => [ @tag_not.id ] )
     end
 
     if params[:subject].present?
@@ -84,15 +71,18 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     redirect_to action: :show, id: conv2.id
   end
 
-  #
   def rmtag
     authorize! :addtag, WcoEmail::Conversation
-    convs = WcoEmail::Conversation.find params[:ids]
-    outs = convs.map do |conv|
-      conv.remove_tag( params[:emailtag] )
+
+    outs = @convs.map do |conv|
+      @tags.map do |tag|
+        conv.tags.delete( tag )
+      end
+      conv.save
     end
-    flash[:notice] = "outcome: #{outs}"
-    redirect_to request.referrer
+    flash_notice "Outcomes: #{outs}"
+    render json: { status: 'ok' }
+    # redirect_to request.referrer || root_path
   end
 
   def show
@@ -118,6 +108,14 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
   ##
   private
 
+  def find_convs_tags
+    @convs = WcoEmail::Conversation.find params[:ids]
+    @tags  = Wco::Tag.where({ :slug.in => params[:slug].split(",") })
+    if @tags.blank?
+      @tags  = Wco::Tag.where({ :id.in => params[:slug].split(",") })
+    end
+  end
+
   def set_lists
     @tags       = Wco::Tag.all
     @email_templates_list = [ [nil, nil] ] + WcoEmail::EmailTemplate.all.map { |tmpl| [ tmpl.slug, tmpl.id ] }
@@ -126,4 +124,6 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
   end
 
 end
+
+
 
