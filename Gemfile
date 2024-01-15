@@ -24,6 +24,9 @@ group :development, :test do
   gem 'kaminari-mongoid'
   gem 'kaminari-actionview'
 
+  ## https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
+  gem 'rack-mini-profiler', '~> 2.0'
+
   gem 'rspec-rails', "~> 6.1.0"
   gem 'rails-controller-testing', "~> 1.0.5"
 

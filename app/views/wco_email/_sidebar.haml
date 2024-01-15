@@ -7,4 +7,5 @@
         -# (#{tag.conversations.unread.length}, #{tag.conversations.length})
         (#{tag.conversations.unread.length})
         (#{tag.conversations.length})
+        = link_to "not", email_conversations_not_in_path( tag.slug )
 

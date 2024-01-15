@@ -44,7 +44,7 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     end
 
     @conversations = @conversations.order_by( latest_at: :desc
-      ).includes( :leads
+      ).includes( :leads, :messages
       ).page( params[:conv_page]
       ).per( current_profile.per_page
       )

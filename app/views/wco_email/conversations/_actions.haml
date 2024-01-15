@@ -1,14 +1,16 @@
 
 .conversations--actions.bordered.d-flex
-  %a.btn.archive-btn{ href: "javascript: void(0)", data: { url: conversations_rmtag_path(Wco::Tag::INBOX) } }
-    %i.material-icons archive
-    archive
-  %a.btn.delete-btn{ href: "javascript: void(0)", data: { url: conversations_path } }
-    %i.material-icons delete
-    delete
-  %a.btn.reload-btn{ href: "javascript: location.reload()" }
-    %i.material-icons refresh
-    refresh
+
+  -# %a.btn.archive-btn{ href: "javascript: void(0)", data: { url: conversations_rmtag_path(Wco::Tag::INBOX) } }
+  -#   %i.material-icons archive
+  -#   archive
+  -# %a.btn.delete-btn{ href: "javascript: void(0)", data: { url: conversations_path } }
+  -#   %i.material-icons delete
+  -#   delete
+  -# %a.btn.reload-btn{ href: "javascript: location.reload()" }
+  -#   %i.material-icons refresh
+  -#   refresh
+
   .bordered.inline-block
     .d-inline-block
       = select_tag :emailtag, options_for_select(@tags_list), class: 'select2'

@@ -9,6 +9,7 @@
       Tag `#{@tag}`
     - if @tag_not
       Tag-not `#{@tag_not}`
+    (#{@conversations.length})
   = render '/wco_email/conversations/actions'
 
   = render '/wco/paginate', resource: @conversations, param_name: :conv_page

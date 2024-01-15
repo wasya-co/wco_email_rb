@@ -8,7 +8,7 @@ WcoEmail::Engine.routes.draw do
 
   # get  'conversations',                     to: '/wco_email/conversations#index', as: :email_conversations
   get  'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :email_conversations_in
-  get  'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :email_conversations_in_not
+  get  'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :email_conversations_not_in
   get  'conversations/:id',                 to: '/wco_email/conversations#show',  as: :email_conversation
   post 'conversations/:id1/merge/:id2',     to: '/wco_email/conversations#merge', as: :merge_email_conversations
   post 'conversations/addtag',              to: 'conversations#addtag'
