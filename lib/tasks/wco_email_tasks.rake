@@ -160,7 +160,7 @@ namespace :wco_email do
 
   desc 'send contexts'
   task send_contexts: :environment do
-    puts! "Starting wco_email:run_email_actions..."
+    puts! "Starting wco_email:send_contexts..."
     while true do
 
       ctxs = WcoEmail::Context.scheduled.notsent
