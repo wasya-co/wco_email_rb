@@ -36,9 +36,9 @@
             = link_to lead.email, wco.lead_path( lead )
         %td.subject
           - if conv.unread?
-            <b>#{link_to conv.subject, email_conversation_path(conv)}</b>
+            <b>#{link_to conv.subject, conversation_path(conv)}</b>
           - else
-            = link_to conv.subject, email_conversation_path(conv)
+            = link_to conv.subject, conversation_path(conv)
           <b>(#{conv.messages.length})</b>
           %span.gray= conv.preview
         %td.tags.mini

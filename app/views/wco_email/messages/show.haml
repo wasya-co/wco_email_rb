@@ -3,7 +3,7 @@
   %h5
     Message
     <b>Subject:</b>
-    = link_to @message.conversation.subject, email_conversation_path(@message.conversation)
+    = link_to @message.conversation.subject, conversation_path(@message.conversation)
     (#{@message.conversation.messages.length})
 
   = render 'meta', message: @message

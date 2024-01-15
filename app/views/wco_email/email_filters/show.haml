@@ -6,4 +6,4 @@
   %h5 Convs (#{@email_filter.conversations.length})
   %ul
     - @email_filter.conversations.each do |conv|
-      %li= link_to conv, email_conversation_path(conv)
+      %li= link_to conv, conversation_path(conv)

@@ -1,5 +1,9 @@
 
-EF = WcoEmail::EmailFilter
+EC  = WcoEmail::Conversation
+EF  = WcoEmail::EmailFilter
+EM  = WcoEmail::Message
+MS  = WcoEmail::MessageStub
+EMS = MS
 
 class WcoEmail::ApplicationController < Wco::ApplicationController
   # before_action :set_lists

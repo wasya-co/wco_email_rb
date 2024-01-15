@@ -5,7 +5,7 @@
       Wco Email & CRM
     .flex-row
       %ul
-        %li= link_to 'Email Messages', conversations_path
+        %li= link_to 'Inbox', conversations_in_path('inbox')
         %li
           Stubs
           (#{WcoEmail::MessageStub.pending.length})

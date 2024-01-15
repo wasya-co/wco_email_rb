@@ -50,6 +50,11 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
   def update
     @email_filter = WcoEmail::EmailFilter.find params[:id]
     authorize! :update, @email_filter
+
+    if params[:email_filter][:tag].blank?
+      params[:email_filter].delete :tag
+    end
+
     flag = @email_filter.update_attributes( params[:email_filter].permit! )
     if flag
       flash[:notice] = 'Success'
