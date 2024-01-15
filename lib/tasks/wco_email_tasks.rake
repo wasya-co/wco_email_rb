@@ -181,6 +181,9 @@ namespace :wco_email do
             unsubscribed_at: Time.now.to_s,
           })
         else
+          ctx.update({
+            sent_at: Time.now.to_s,
+          })
           out = WcoEmail::ApplicationMailer.send_context_email( ctx[:id].to_s )
           Rails.env.production? ? out.deliver_later : out.deliver_now
         end
