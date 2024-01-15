@@ -149,8 +149,8 @@ namespace :wco_email do
 
         sch.send_and_roll
 
-        print '^'
-        sleep 1
+        print "[#{sch.id}]^"
+        sleep 15
       end
 
       print '.'
@@ -188,8 +188,8 @@ namespace :wco_email do
           Rails.env.production? ? out.deliver_later : out.deliver_now
         end
 
-        print "#{ctx.id}^"
-        sleep 10
+        print "[#{ctx.id}]^"
+        sleep 15
       end
 
       print '.'
