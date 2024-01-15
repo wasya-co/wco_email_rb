@@ -1,4 +1,6 @@
 
+EF = WcoEmail::EmailFilter
+
 class WcoEmail::ApplicationController < Wco::ApplicationController
   # before_action :set_lists
   layout 'wco_email/application'
