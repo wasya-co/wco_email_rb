@@ -1,6 +1,4 @@
 
-Sch = WcoEmail::EmailAction
-
 class WcoEmail::EmailActionsController < WcoEmail::ApplicationController
 
   before_action :set_lists
