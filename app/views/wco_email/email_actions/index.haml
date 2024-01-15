@@ -26,7 +26,9 @@
             = link_to sch.lead.email, wco.lead_path(sch.lead)
           %td.tmpl
             = render '/wco_email/email_templates/show_cell', tmpl: sch.tmpl.email_template
-          %td= sch.perform_at.in_time_zone
+          %td
+            = pp_date sch.perform_at.in_time_zone
+            = pp_time sch.perform_at.in_time_zone
 
 
 
