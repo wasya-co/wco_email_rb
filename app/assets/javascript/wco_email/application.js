@@ -7,10 +7,8 @@
 
 $(function () {
 
-if ($(".tinymce").length > 0) {
-  $(".tinymce").summernote()
-}
 
-logg('loaded wco_email/application.js')
+
+// logg('loaded wco_email/application.js')
 }) // END
 

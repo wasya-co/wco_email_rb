@@ -8,14 +8,32 @@ describe WcoEmail::EmailTemplatesController do
   end
 
   describe "#index" do
-    it 'does' do
+    it 'sanity, _index_expanded' do
       get :index
       response.code.should eql '200'
+      assigns( :templates ).length.should > 0
+
+      get :index, params: { view: '_index_expanded' }
+      response.code.should eql '200'
+      assigns( :templates ).length.should > 0
+    end
+
+    it 'search' do
+      q = 'pri'
+      create( :email_template, slug: "xx#{q}xx" )
+
+      get :index, params: { q: q }
+
+      outs = assigns( :templates )
+      outs.length.should > 0
+      outs.each do |out|
+        out.slug.include?( q ).should eql true
+      end
     end
   end
 
   describe '#show' do
-    it 'does' do
+    it 'sanity' do
       WcoEmail::EmailTemplate.unscoped.map &:destroy!
       tmpl = create( :email_template )
 

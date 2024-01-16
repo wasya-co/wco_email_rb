@@ -3,4 +3,4 @@
 = form_tag email_templates_path, method: :get do
   = text_field_tag :q
 = link_to '[+]', new_email_template_path
-= link_to '[expanded]', email_templates_path({ template: '_index_expanded' })
+= link_to '[expanded]', email_templates_path({ view: '_index_expanded' })

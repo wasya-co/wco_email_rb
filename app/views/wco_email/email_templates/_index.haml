@@ -4,7 +4,7 @@
   %h5.flex-row.collapse-expand#emailTemplatesIndex
     = render '/wco_email/email_templates/header'
 
-  = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'
+  -# = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'
   .email-templates-index.maxwidth
     %table.bordered.data-table
       %thead
@@ -16,11 +16,12 @@
 
       - @templates.each do |tmpl|
         %tr
-          %td.flex-row
-            = link_to '[use]', new_context_path({ email_template_id: tmpl.id })
-            = link_to '[~]', edit_email_template_path({ id: tmpl })
-            = button_to '[x]', email_template_path({ id: tmpl }), method: :delete, :data => { :confirm => 'Are you sure?' }, form_class: 'inline'
+          %td
+            .flex-row
+              = link_to '[use]', new_context_path({ email_template_id: tmpl.id })
+              = link_to '[~]', edit_email_template_path({ id: tmpl })
+              = button_to '[x]', email_template_path({ id: tmpl }), method: :delete, :data => { :confirm => 'Are you sure?' }, form_class: 'inline'
           %td= link_to tmpl.slug, email_template_path({ id: tmpl })
           %td= pp_date tmpl.created_at
           %td= pp_date tmpl.updated_at
-  = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'
+  -# = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'

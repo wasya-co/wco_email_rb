@@ -56,11 +56,21 @@ class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
 
   def index
     authorize! :index, WcoEmail::EmailTemplate
-    @templates = WcoEmail::EmailTemplate.all.order_by( slug: :asc
-      ).page( params[:templates_page]
-      ).per( current_profile.per_page
-      )
-    render params[:template] || '_index'
+    @templates = WcoEmail::EmailTemplate.all
+
+    if params[:q]
+      q = URI.decode(params[:q])
+      @templates = @templates.where({ :slug => /#{q}/i })
+    end
+
+    @templates = @templates.order_by( slug: :asc )
+
+    if '_index_expanded' == params[:view]
+      @templates = @templates.page( params[:templates_page]
+        ).per( current_profile.per_page
+        )
+    end
+    render params[:view] || '_index'
   end
 
   def new
