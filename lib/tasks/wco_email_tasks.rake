@@ -158,6 +158,8 @@ namespace :wco_email do
     end
   end
 
+
+
   desc 'send contexts'
   task send_contexts: :environment do
     puts! "Starting wco_email:send_contexts..."
