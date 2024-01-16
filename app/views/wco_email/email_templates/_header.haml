@@ -1,6 +1,11 @@
 
-= link_to "Email Templates (#{WcoEmail::EmailTemplate.all.count})", email_templates_path
+- if defined? templates
+  - q = params[:q]
+- else
+  - templates = WcoEmail::EmailTemplate.all
+
+= link_to "Email Templates (#{templates.count})", email_templates_path
 = form_tag email_templates_path, method: :get do
-  = text_field_tag :q
+  = text_field_tag :q, q
 = link_to '[+]', new_email_template_path
 = link_to '[expanded]', email_templates_path({ view: '_index_expanded' })

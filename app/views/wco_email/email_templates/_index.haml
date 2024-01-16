@@ -2,7 +2,7 @@
 .email-templates--index.maxwidth
 
   %h5.flex-row.collapse-expand#emailTemplatesIndex
-    = render '/wco_email/email_templates/header'
+    = render '/wco_email/email_templates/header', templates: @templates
 
   -# = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'
   .email-templates-index.maxwidth

@@ -20,9 +20,19 @@ class WcoEmail::EmailActionTemplatesController < WcoEmail::ApplicationController
   end
 
   def index
-    @tmpls = WcoEmail::EmailActionTemplate.all
-
     authorize! :index, @new_tmpl
+    if params[:deleted]
+      @tmpls = WcoEmail::EmailActionTemplate.deleted
+    else
+      @tmpls = WcoEmail::EmailActionTemplate.all
+    end
+
+    if params[:q]
+      q = URI.decode(params[:q])
+      @tmpls = @tmpls.where({ :slug => /#{q}/i })
+    end
+
+    @tmpls = @tmpls.order_by( slug: :asc )
   end
 
   def new

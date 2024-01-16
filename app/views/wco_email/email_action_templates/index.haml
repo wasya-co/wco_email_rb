@@ -1,10 +1,8 @@
 
-.email-action-templates-index.padded
-
+.email-action-templates-index.maxwidth
   .header
-    %h2.title
-      Email Action Templates (#{@tmpls.length})
-      = link_to '[+]', new_email_action_template_path
+    %h5.title
+      = render 'header', tmpls: @tmpls
 
   %table.bordered
     %tr

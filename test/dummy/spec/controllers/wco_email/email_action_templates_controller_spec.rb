@@ -5,7 +5,9 @@ describe WcoEmail::EmailActionTemplatesController do
 
   before do
     Wco::Lead.unscoped.map &:destroy!
+    WcoEmail::EmailActionTemplate.unscoped.map &:destroy!
     WcoEmail::EmailTemplate.unscoped.map &:destroy!
+    @eat = create( :email_action_template )
 
     setup_users
   end

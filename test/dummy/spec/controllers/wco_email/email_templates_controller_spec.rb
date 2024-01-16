@@ -4,6 +4,11 @@ describe WcoEmail::EmailTemplatesController do
   routes { WcoEmail::Engine.routes }
 
   before do
+    Wco::Lead.unscoped.map &:destroy!
+    WcoEmail::EmailActionTemplate.unscoped.map &:destroy!
+    WcoEmail::EmailTemplate.unscoped.map &:destroy!
+    @eat = create( :email_action_template )
+
     setup_users
   end
 
