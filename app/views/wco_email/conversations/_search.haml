@@ -2,12 +2,10 @@
 
 .conversations--search.Card
   .inline-block
-    = form_tag email_conversations_path do
-      %label Search from_email
+    = form_tag conversations_path, method: :get do
+      %b Search
+      %label from_email
       = text_field_tag :from_email, params[:from_email]
-      -# = submit_tag '>'
-      -# .inline-block
-      -#   = form_tag email_conversations_path do
       %label by subject
       = text_field_tag :subject, params[:subject]
       = submit_tag '>'

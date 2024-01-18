@@ -3,13 +3,14 @@
   = render 'wco_email/sidebar'
 
 .conversations-index
-
-  %h5
-    - if @tag
-      Tag `#{@tag}`
-    - if @tag_not
-      Tag-not `#{@tag_not}`
-    (#{@conversations.length})
+  .header
+    %h5.title
+      - if @tag
+        Tag `#{@tag}`
+      - if @tag_not
+        Tag-not `#{@tag_not}`
+      (#{@conversations.length})
+    = render '/wco_email/conversations/search'
   = render '/wco_email/conversations/actions'
 
   = render '/wco/paginate', resource: @conversations, param_name: :conv_page
