@@ -1,4 +1,10 @@
 
+-# = @lead.inspect
+-# = @tmpl.inspect
+= @rendered_str
+
+
+= raw @ctx.body
 = raw ERB.new( @ctx.body ).result
 
 -# = @ctx.reply_to_message.inspect

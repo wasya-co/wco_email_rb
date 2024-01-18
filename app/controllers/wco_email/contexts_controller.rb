@@ -44,18 +44,6 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
     authorize! :edit, @ctx
   end
 
-  def iframe_src
-    @ctx = @email_context = WcoEmail::Context.find params[:id]
-    authorize! :iframe_src, @ctx
-
-    @tmpl        = @email_template = @ctx.email_template
-    @tmpl_config = OpenStruct.new JSON.parse( @ctx.tmpl[:config_json] )
-    @lead        = @ctx.lead
-    @body        = @ctx.body
-
-    render layout: false
-  end
-
   def index
     authorize! :index, WcoEmail::Context
     @ctxs = WcoEmail::Context.all.order_by( sent_at: :desc, send_at: :desc
@@ -111,6 +99,20 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
   def show
     @ctx = @email_context = WcoEmail::Context.find( params[:id] )
     authorize! :show, @ctx
+  end
+
+  def show_iframe
+    @ctx = @email_context = WcoEmail::Context.find params[:id]
+    authorize! :iframe_src, @ctx
+
+    @tmpl        = @email_template = @ctx.email_template
+    @tmpl_config = OpenStruct.new JSON.parse( @ctx.tmpl[:config_json] )
+    @lead        = @ctx.lead
+    @body        = @ctx.body
+
+    @renderer = WcoEmail::ApplicationMailer.renderer ctx: @ctx
+
+    render layout: false
   end
 
   def summary

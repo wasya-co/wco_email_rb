@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 78326727515897da41245691c836b34625c41d46
+  revision: e3c328d3f5ad0a37a02af68fdaa92947f2a39a8c
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.85)
+    wco_models (3.1.0.89)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -315,8 +315,6 @@ GEM
     public_suffix (5.0.4)
     racc (1.7.3)
     rack (2.2.8)
-    rack-mini-profiler (2.3.4)
-      rack (>= 1.2.0)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
     rack-test (2.1.0)
@@ -458,7 +456,6 @@ DEPENDENCIES
   omniauth (~> 2.1.1)
   omniauth-keycloak (~> 1.5.1)
   omniauth-rails_csrf_protection (~> 1.0.1)
-  rack-mini-profiler (~> 2.0)
   rails-controller-testing (~> 1.0.5)
   rspec-rails (~> 6.1.0)
   sass-rails (~> 6.0)

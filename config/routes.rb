@@ -22,7 +22,7 @@ WcoEmail::Engine.routes.draw do
   resources :email_campaigns
   resources :email_layouts
 
-  get  'contexts/iframe_src/:id',     to: 'contexts#iframe_src',       as: :context_iframe
+  get  'contexts/show_iframe/:id',    to: 'contexts#show_iframe',       as: :context_iframe
   get  'contexts/summary',            to: 'contexts#summary'
   post 'contexts/send_immediate/:id', to: 'contexts#send_immediate',   as: :send_context
   resources :contexts

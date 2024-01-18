@@ -27,7 +27,7 @@
 
     .flex-row
       = f.label :reply_to_message
-      = f.select :reply_to_message_id, options_for_select([[ ctx.reply_to_message, ctx.reply_to_message_id ]], selected: ctx.reply_to_message_id), {}, class: 'w-100'
+      = f.select :reply_to_message_id, options_for_select([[ ctx.reply_to_message&.preview_str, ctx.reply_to_message_id ]], selected: ctx.reply_to_message_id), {}, class: 'w-100'
 
 
     .tab-labels.flex-row
@@ -41,7 +41,9 @@
         - if ctx.new_record?
           New record...
         - else
-          %iframe{ src: context_iframe_path(ctx), width: '100%', height: '100%' }
+          %iframe{ src: context_iframe_path(ctx.id), width: '100%', height: '100%' }
+    .gray.mini= link_to context_iframe_path(ctx.id), context_iframe_path(ctx.id), target: :_blank
+
 
 
     .actions

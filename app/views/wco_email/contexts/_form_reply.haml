@@ -17,6 +17,8 @@
     .flex-row
       %label Subject
       = f.text_field :subject, class: 'w-100'
+    .field
+      = f.text_area :body, class: 'tinymce'
     .flex-row
       .flex-row
         %label Respond inline?
