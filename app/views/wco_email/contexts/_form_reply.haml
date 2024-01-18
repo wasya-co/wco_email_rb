@@ -18,7 +18,8 @@
       %label Subject
       = f.text_field :subject, class: 'w-100'
     .field
-      = f.text_area :body, class: 'tinymce'
+      -## No tinymce, b/c I must allow body to be empty, to be overridden by the template.
+      = f.text_area :body
     .flex-row
       .flex-row
         %label Respond inline?
