@@ -41,9 +41,4 @@ WcoEmail::Engine.routes.draw do
 
   get '/obf/:id', to: 'obfuscated_redirects#show', as: :obf
 
-
-
-  resources :unsubscribes
-
-
 end

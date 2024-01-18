@@ -97,8 +97,6 @@ class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
     })
 
     @renderer = WcoEmail::ApplicationMailer.renderer ctx: @ctx
-    # @rendered_str = renderer.render_to_string("/wco_email/email_templates/_#{@ctx.tmpl.layout}")
-    # @rendered_str = renderer.render_to_string( inline: @ctx.body )
 
     render layout: false
   end

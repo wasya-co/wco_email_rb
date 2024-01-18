@@ -9,5 +9,6 @@
     - @templates.each do |tmpl|
       .col-md-6
         %iframe.email-template-iframe{ src: email_template_iframe_path(tmpl) }
+        .gray.mini= link_to email_template_iframe_path(tmpl), email_template_iframe_path(tmpl), target: :_blank
         = render '/wco_email/email_templates/meta', tmpl: tmpl
   = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'
