@@ -13,6 +13,7 @@ gem 'omniauth',                       '~> 2.1.1'
 gem "omniauth-keycloak",              "~> 1.5.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0.1"
 
+gem 'jbuilder', '~> 2.11.5'
 
 group :development, :test do
   gem 'byebug'

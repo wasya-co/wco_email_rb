@@ -12,14 +12,13 @@
         = f.select :lead, options_for_select( @leads_list, selected: lead_id ), {}, class: 'select2', required: true
       .flex-row
         = f.label :template
-        = f.select :email_template_id, options_for_select( @email_templates_list ), {}, class: 'select2', required: true
+        = f.select :email_template_id, options_for_select( @email_templates_list, selected: ctx.email_template_id ), {}, class: 'select2', required: true
         = link_to '[+]', new_email_template_path, target: :_blank
     .flex-row
       %label Subject
       = f.text_field :subject, class: 'w-100'
     .field
-      -## No tinymce, b/c I must allow body to be empty, to be overridden by the template.
-      = f.text_area :body
+      = f.text_area :body, class: 'tinymce'
     .flex-row
       .flex-row
         %label Respond inline?

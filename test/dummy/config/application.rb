@@ -20,5 +20,5 @@ module Dummy
   end
 end
 
+DEBUG ||= true
 
-DEBUG = true
