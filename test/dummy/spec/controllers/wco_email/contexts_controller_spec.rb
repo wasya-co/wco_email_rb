@@ -4,8 +4,9 @@ describe WcoEmail::ContextsController do
   routes { WcoEmail::Engine.routes }
 
   before do
-    Wco::Lead.unscoped.map &:destroy!
-    WcoEmail::EmailTemplate.unscoped.map &:destroy!
+    destroy_every( Wco::Lead,
+      WcoEmail::Context,
+      WcoEmail::EmailTemplate )
 
     setup_users
 
@@ -13,10 +14,19 @@ describe WcoEmail::ContextsController do
       lead: create(:lead),
       email_template: create(:email_template),
     })
+    # @ctx_no_tmpl = create( :email_context, {
+    #   lead: create(:lead),
+    # })
   end
 
   it '#edit' do
     get :edit, params: { id: @ctx.id }
+    response.code.should eql '200'
+  end
+
+  it '#index' do
+    get :index
+    assigns(:ctxs).length.should > 0
     response.code.should eql '200'
   end
 
