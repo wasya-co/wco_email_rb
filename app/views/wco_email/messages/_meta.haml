@@ -20,7 +20,9 @@
       <b>n_images:</b> #{message.photos.length}
       %br
       - message.photos.each do |photo|
-        = image_tag photo.photo.url(:thumb)
+        = link_to photo.photo.url(:original), target: :_blank do
+          %span.bordered.p-0= image_tag( photo.photo.url(:mini) )
+          = photo.photo.original_filename
     %li
       <b>n_assets:</b> #{message.assets.length}
       - if !message.assets.blank?
