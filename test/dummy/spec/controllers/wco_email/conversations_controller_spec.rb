@@ -14,8 +14,10 @@ describe WcoEmail::ConversationsController do
   before do
     setup_users
 
-    Wco::Tag.unscoped.map &:destroy!
-    @inbox = create( :tag, slug: 'inbox' )
+    destroy_every(
+      Wco::Tag,
+    )
+    @inbox = Wco::Tag.inbox
   end
 
   describe '#addtag' do

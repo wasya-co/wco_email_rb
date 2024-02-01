@@ -25,12 +25,26 @@ RSpec.configure do |config|
 
 end
 
-blank_email_template = WcoEmail::EmailTemplate.find_or_create_by({ slug: 'blank' })
+def do_seed
+  blank_email_template = WcoEmail::EmailTemplate.find_or_create_by({ slug: 'blank' })
+
+  inbox = Wco::Tag.find_or_create_by({ slug: 'inbox' })
+  trash = Wco::Tag.find_or_create_by({ slug: 'trash' })
+  spam  = Wco::Tag.find_or_create_by({ slug: 'spam' })
+
+  wasyaco  = Wco::Leadset.find_or_create_by!({ company_url: 'wasya.co' })
+
+  poxlovi  = Wco::Lead.find_or_create_by!({ email: 'poxlovi@gmail.com' })
+  piousbox = Wco::Lead.find_or_create_by!({ email: 'piousbox@gmail.com' })
+  victor   = Wco::Lead.find_or_create_by!({ email: 'victor@wasya.co' })
+end
 
 def destroy_every *args
   args.each do |arg|
     arg.unscoped.map &:destroy!
   end
+
+  do_seed
 end
 
 def setup_users
