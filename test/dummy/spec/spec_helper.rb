@@ -25,6 +25,8 @@ RSpec.configure do |config|
 
 end
 
+blank_email_template = WcoEmail::EmailTemplate.find_or_create_by({ slug: 'blank' })
+
 def destroy_every *args
   args.each do |arg|
     arg.unscoped.map &:destroy!

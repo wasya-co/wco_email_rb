@@ -41,4 +41,7 @@ WcoEmail::Engine.routes.draw do
 
   get '/obf/:id', to: 'obfuscated_redirects#show', as: :obf
 
+  ## In order to have unsubscribes_url , unsubscribes must be in wco .
+  # resources :unsubscribes
+
 end
