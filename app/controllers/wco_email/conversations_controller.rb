@@ -22,6 +22,11 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     # redirect_to request.referrer # || root_path
   end
 
+  def edit
+    @conversation = ::WcoEmail::Conversation.find( params[:id] )
+    authorize! :edit, @conversation
+  end
+
   def index
     authorize! :index, WcoEmail::Conversation
     @conversations = WcoEmail::Conversation.all
@@ -86,8 +91,8 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
   end
 
   def show
-    authorize! :show, WcoEmail::Conversation
     @conversation = ::WcoEmail::Conversation.find( params[:id] )
+    authorize! :show, @conversation
     @messages     = @conversation.messages.order_by( date: :asc )
     @conversation.update_attributes({ status: Conv::STATUS_READ })
 
@@ -102,6 +107,16 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     end
   end
 
+  def update
+    @conversation = ::WcoEmail::Conversation.find( params[:id] )
+    authorize! :update, @conversation
+    if @conversation.update( params[:conversation].permit! )
+      flash_notice 'ok'
+    else
+      flash_alert @conversation
+    end
+    redirect_to action: 'show', id: @conversation.id
+  end
 
   ##
   ## private

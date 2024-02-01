@@ -6,6 +6,7 @@
   %h5
     = @conversation.subject
     <b>(#{@conversation.messages.length})</b>
+    = link_to '[~]', edit_conversation_path(@conversation)
     %span.gray.mini= @conversation.id
 
 
