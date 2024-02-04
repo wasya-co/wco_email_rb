@@ -9,4 +9,6 @@
       %label by subject
       = text_field_tag :subject, params[:subject]
       = submit_tag '>'
+      - if params[:lead_id]
+        <b>lead_id:</b>#{params[:lead_id]}
 

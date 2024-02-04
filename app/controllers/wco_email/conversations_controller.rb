@@ -48,6 +48,10 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
       @conversations = @conversations.where({ from_emails: /.*#{params[:from_email]}.*/i })
     end
 
+    if params[:lead_id].present?
+      @conversations = @conversations.where( lead_ids: params[:lead_id] )
+    end
+
     @conversations = @conversations.order_by( latest_at: :desc
       ).includes( :leads, :messages
       ).page( params[:conv_page]

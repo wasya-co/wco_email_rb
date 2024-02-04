@@ -8,6 +8,10 @@
     <b>(#{@conversation.messages.length})</b>
     = link_to '[~]', edit_conversation_path(@conversation)
     %span.gray.mini= @conversation.id
+  .leads
+    .d-inline <b>Leads:</b>
+    - @conversation.leads.each do |lead|
+      .Chip= link_to lead.email, wco.lead_path( lead )
 
 
   - if @other_convs.present?
