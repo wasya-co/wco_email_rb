@@ -37,6 +37,11 @@ describe WcoEmail::EmailTemplatesController do
     end
   end
 
+  it '#new' do
+    get :new
+    response.code.should eql '200'
+  end
+
   describe '#show' do
     it 'sanity' do
       WcoEmail::EmailTemplate.unscoped.map &:destroy!
