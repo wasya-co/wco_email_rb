@@ -30,7 +30,8 @@
       .tab-raw
         -## 2024-01-xx No class tinymce, cannot have tinymce mess with my own templating.
         -## 2024-02-05 re-addedd tinymce
-        = f.text_area :body, class: 'tinymce'
+        -##            ah! I meant, erb templates are ruined by summernote.
+        = f.text_area :body
 
       .tab-preview
         - if email_template.persisted?
