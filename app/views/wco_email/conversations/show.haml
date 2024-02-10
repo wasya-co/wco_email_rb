@@ -27,6 +27,9 @@
     - @conversation.messages.each do |msg|
       %li
         = render '/wco_email/messages/meta', message: msg
-        %iframe.message-iframe{ src: message_iframe_path(msg) }
+        = link_to '[expand]', message_iframe_path(msg, expand_history: true), target: "iframe_#{msg.id}"
+        = link_to '[collapse]', message_iframe_path(msg), target: "iframe_#{msg.id}"
+        %iframe.message-iframe{ src: message_iframe_path(msg), id: "iframe_#{msg.id}", name: "iframe_#{msg.id}", onload: "resizeIframe(this)" }
 
-        = render '/wco_email/contexts/form_reply', lead_id: msg.lead_id, message: msg, ctx: WcoEmail::Context.new({ from_email: msg.to&.downcase, subject: msg.subject, email_template_id: ET.find_by( slug: 'blank').id })
+  - msg = @conversation.messages.last
+  = render '/wco_email/contexts/form_reply', lead_id: msg.lead_id, message: msg, ctx: WcoEmail::Context.new({ from_email: msg.to&.downcase, subject: msg.subject, email_template_id: ET.find_by( slug: 'blank').id })
