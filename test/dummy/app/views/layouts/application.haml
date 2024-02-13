@@ -9,7 +9,10 @@
     = javascript_include_tag 'application'
     = stylesheet_link_tag 'application', media: 'all'
   %body
-    Wco Email Dummy. Main app: #{link_to 'email', '/email'}
+    - if current_user
+      Wco Email Dummy. Main app: #{link_to 'email', '/email'}
+    - else
+      Not logged in.
     %hr
 
     = render '/wco/alerts_notices'
