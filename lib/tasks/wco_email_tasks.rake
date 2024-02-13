@@ -172,7 +172,6 @@ namespace :wco_email do
         unsub = WcoEmail::Unsubscribe.where({ lead_id: ctx.lead_id, template_id: ctx.email_template_id }).first
         if unsub
           puts! 'This user is unsubscribed; the context cannot be sent.' if DEBUG
-          # Office::AdminMessage.create({ message: "Lead `#{ctx.lead.full_name}` [mailto:#{ctx.lead.email}] has already unsubscribed from template `#{Ish::EmailTemplate.find( ctx.email_template_id ).slug}` ." })
           email_action_template_ids = WcoEmail::EmailActionTemplate.where({ email_template_id: ctx.email_template_id }).map(&:id)
           schs = WcoEmail::EmailAction.active.where({
             lead_id: ctx.lead_id,

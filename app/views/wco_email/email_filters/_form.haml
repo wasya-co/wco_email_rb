@@ -32,7 +32,7 @@
           = f.select :email_template_id, options_for_select(@email_templates_list, selected: params[:email_template_id] || email_filter.email_template_id ), {}, { class: 'select2' }
         .field
           = f.label :email_action_template
-          = f.select :email_action_template, options_for_select( @email_action_templates_list, selected: email_filter.email_action_template ), {}, class: 'select2'
+          = f.select :email_action_template, options_for_select( @email_action_templates_list, selected: email_filter.email_action_template_id ), {}, class: 'select2'
         .field
           = f.label :tag
           = f.select :tag, options_for_select( @tags_list, selected: email_filter.tag_id ), {}, class: 'select2'
