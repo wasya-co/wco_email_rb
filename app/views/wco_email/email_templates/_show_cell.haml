@@ -1,0 +1,7 @@
+
+= link_to '[~]', edit_email_template_path(tmpl)
+= link_to tmpl.slug, email_template_path(tmpl)
+%br
+<b>From:</b> #{tmpl.from_email}
+%br
+<b>Subject:</b> #{tmpl.subject}

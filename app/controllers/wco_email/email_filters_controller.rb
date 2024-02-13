@@ -33,8 +33,8 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
 
   def index
     authorize! :index, WcoEmail::EmailFilter.new
-    @email_filter = WcoEmail::EmailFilter.new
-    @email_filters = WcoEmail::EmailFilter.active
+    @email_filter  = WcoEmail::EmailFilter.new
+    @email_filters = WcoEmail::EmailFilter.all.includes( :email_template, :conversations )
   end
 
   def new
@@ -42,9 +42,19 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     authorize! :new, @email_filter
   end
 
+  def show
+    @email_filter = WcoEmail::EmailFilter.find params[:id]
+    authorize! :show, @email_filter
+  end
+
   def update
     @email_filter = WcoEmail::EmailFilter.find params[:id]
     authorize! :update, @email_filter
+
+    if params[:email_filter][:tag].blank?
+      params[:email_filter].delete :tag
+    end
+
     flag = @email_filter.update_attributes( params[:email_filter].permit! )
     if flag
       flash[:notice] = 'Success'
@@ -60,7 +70,7 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
   private
 
   def set_lists
-    super
+    @tags_list = Wco::Tag.list
     @email_templates_list        = WcoEmail::EmailTemplate.list
     @email_actions_list          = WcoEmail::EmailAction.list
     @email_action_templates_list = WcoEmail::EmailActionTemplate.list

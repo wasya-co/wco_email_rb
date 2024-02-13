@@ -1,30 +1,36 @@
 
-.messages--meta.flex-row
-  %ul
-    %li <b>froms:</b> #{message.froms}
-    %li <b>tos:</b> #{message.tos}
-    %li <b>ccs:</b> #{message.ccs}
-    %li <b>bccs:</b> #{message.bccs}
-    %li <b>logs:</b> #{message.logs}
-  %ul
-    %li
-      <b>date:</b> #{message.date}
-    %li
-      <b>id:</b> #{link_to message.id, message_path(message)}
-    %li
-      <b>message_id:</b> #{message.message_id}
-    %li
-      <b>object_key:</b> #{message.object_key}
-    %li <b>in_reply_to_id:</b> #{message.in_reply_to_id}
-    %li
-      <b>n_images:</b> #{message.photos.length}
-      %br
-      - message.photos.each do |photo|
-        = image_tag photo.photo.url(:thumb)
-    %li
-      <b>n_assets:</b> #{message.assets.length}
-      - if !message.assets.blank?
-        %ol
-          - message.assets.each do |asset|
-            %li
-              = link_to asset.filename, asset.object.url(:original), target: :_blank
+.d-inline-block
+  .collapse-expand{ id: "meta_#{message.id}" }
+    Meta
+  .messages--meta.flex-row{ style: 'display: none' }
+
+    %ul
+      %li <b>froms:</b> #{message.froms}
+      %li <b>tos:</b> #{message.tos}
+      %li <b>ccs:</b> #{message.ccs}
+      %li <b>bccs:</b> #{message.bccs}
+      %li <b>logs:</b> #{message.logs}
+    %ul
+      %li
+        <b>date:</b> #{message.date}
+      %li
+        <b>id:</b> #{link_to message.id, message_path(message)}
+      %li
+        <b>message_id:</b> #{message.message_id}
+      %li
+        <b>object_key:</b> #{message.object_key}
+      %li <b>in_reply_to_id:</b> #{message.in_reply_to_id}
+      %li
+        <b>n_images:</b> #{message.photos.length}
+        %br
+        - message.photos.each do |photo|
+          = link_to photo.photo.url(:original), target: :_blank do
+            %span.bordered.p-0= image_tag( photo.photo.url(:mini) )
+            = photo.photo.original_filename
+      %li
+        <b>n_assets:</b> #{message.assets.length}
+        - if !message.assets.blank?
+          %ol
+            - message.assets.each do |asset|
+              %li
+                = link_to asset.filename, asset.object.url(:original), target: :_blank

@@ -1,0 +1,22 @@
+
+- ctxs = @ctxs || WcoEmail::Context.all
+
+.a
+  = link_to contexts_path({ sent: false }) do
+    Email Contexts (#{ctxs.length})
+    - if @lead
+      For lead #{@lead.email}
+- if my_truthy? params[:sent]
+  = link_to '[notsent]', contexts_path({ sent: false })
+  <b>sent</b>
+- else
+  <b>notsent</b>
+  = link_to '[sent]', contexts_path({ sent: true })
+= form_tag contexts_path, method: :get do
+  = text_field_tag :q
+= link_to '[+]', new_context_path
+= link_to '[summary]', contexts_summary_path( format: :html )
+= link_to '[csv]',     contexts_summary_path( format: :csv )
+
+
+-# = link_to '[sent]', contexts_path({ sent: true })

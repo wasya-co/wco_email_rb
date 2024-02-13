@@ -1,0 +1,19 @@
+
+
+// .conversations--actions {
+//   display: flex;
+// }
+
+th.select-all {
+  width: 50px;
+
+  > div {
+    // border: 1px solid red;
+    display: flex;
+    padding: 8px 10px;
+  }
+}
+
+th.tags {
+  width: 200px;
+}

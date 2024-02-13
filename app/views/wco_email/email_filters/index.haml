@@ -12,37 +12,51 @@
     = render 'form', email_filter: @email_filter
   %hr
 
+  -# = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
   %table.bordered.data-table
     %thead
       %tr
         %th &nbsp;
         %th &nbsp;
-        %th From Regex
-        %th From Exact
-        %th Subject Regex
-        %th Subject Exact
-        %th Body Exact
-        %th Kind
-        %th Email Action
-        %th Email Template
-        %th Email Tag
-    - @email_filters.each do |ef|
+        %th n convs
+        %th Match
+        %th Action
+
+    - @email_filters.each_with_index do |ef, idx|
 
       %tr
-        %td= check_box_tag 'checked'
         %td
-          = link_to '[~]', edit_email_filter_path(ef)
-          .inline-block= button_to '[x]', email_filter_path(ef), method: :delete, data: { confirm: 'Are you sure?' }
+          .gray= idx+1
+          = check_box_tag 'checked'
         %td
-          `#{ef.from_regex}`
-        %td
-          `#{ef.from_exact}`
-        %td= ef.subject_regex
-        %td= ef.subject_exact
-        %td= ef.body_exact
-        %td= ef.kind
-        %td= ef.email_action&.slug
-        %td= ef.email_template&.slug
-        %td= ef.category&.name
+          .flex-row
+            = link_to '[~]',    edit_email_filter_path(ef)
+            = link_to '[view]', email_filter_path(ef)
+            .inline-block= button_to '[x]', email_filter_path(ef), method: :delete, data: { confirm: 'Are you sure?' }
+        %td.n-convs
+          = ef.conversations.length
+        %td.match
+          - if ef.from_regex.present?
+            .a <b>from_regex:</b> `#{ef.from_regex}`
+          - if ef.from_exact.present?
+            .a <b>from_exact:</b> `#{ef.from_exact}`
+          - if ef.subject_regex.present?
+            .a <b>subject_regex:</b> `#{ef.subject_regex}`
+          - if ef.subject_exact.present?
+            .a <b>subject_exact:</b> `#{ef.subject_exact}`
+          - if ef.body_exact.present?
+            .a <b>body_exact:</b> `#{ef.body_exact}`
+
+        %td.action
+          - if ef.kind == EF::KIND_AUTORESPOND_TMPL
+            .a <b>#{EF::KIND_AUTORESPOND_TMPL}:</b> #{ef.email_template&.slug}
+          - if ef.kind == EF::KIND_AUTORESPOND_EACT
+            .a <b>#{EF::KIND_AUTORESPOND_EACT}:</b> #{ef.email_action_template&.slug}
+          - if ef.kind == EF::KIND_ADD_TAG
+            .a <b>#{EF::KIND_ADD_TAG}:</b> #{ef.tag&.slug}
+          - if ef.kind == EF::KIND_REMOVE_TAG
+            .a <b>#{EF::KIND_REMOVE_TAG}:</b> #{ef.tag&.slug}
+
+  -# = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
 
 

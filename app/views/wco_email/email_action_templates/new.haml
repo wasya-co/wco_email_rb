@@ -1,9 +1,7 @@
 
--# padded b/c eval(next_time_at) is long
-
-.email-actions-new.padded
+.email-action-templates-new.maxwidth
   .header
     %h2.title
-      New Email Action
+      New Email Action Template
 
-  = render 'form', email_action: @new_email_action
+  = render 'form', tmpl: @new_tmpl

@@ -1,0 +1,9 @@
+
+.email-filters-show.maxwidth
+  .header
+    %h5.title Email Filter `#{@email_filter.id}`
+
+  %h5 Convs (#{@email_filter.conversations.length})
+  %ul
+    - @email_filter.conversations.each do |conv|
+      %li= link_to conv, conversation_path(conv)

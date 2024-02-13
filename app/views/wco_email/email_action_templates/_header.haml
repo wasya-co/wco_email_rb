@@ -1,8 +1,18 @@
 
+- if defined? tmpls
+  - q       = params[:q]
+  - deleted = params[:deleted]
+- else
+  - tmpls = WcoEmail::EmailActionTemplate.all
 
-= link_to "Email Action Tmpls (#{WcoEmail::EmailActionTemplate.all.length})", email_action_templates_path
-.inline-search
+= link_to "Email Action Tmpls (#{tmpls.length})", email_action_templates_path
+.d-inline-block
   = form_tag email_action_templates_path, method: :get do
-    = text_field_tag :q
+    = text_field_tag :q, q
 = link_to '[+]', new_email_action_template_path
+- if deleted
+  %b
+    = link_to '[deleted]', email_action_templates_path(deleted: true)
+- else
+  = link_to '[deleted]', email_action_templates_path(deleted: true)
 

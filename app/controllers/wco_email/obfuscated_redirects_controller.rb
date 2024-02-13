@@ -3,8 +3,7 @@
 class WcoEmail::ObfuscatedRedirectsController < WcoEmail::ApplicationController
 
   def show
-    @obf = Office::ObfuscatedRedirect.find params[:id]
-    # puts! @obf, '@obf'
+    @obf = WcoEmail::ObfuscatedRedirect.find params[:id]
     authorize! :show, @obf
     visit_time = Time.now
     @obf.update_attributes({

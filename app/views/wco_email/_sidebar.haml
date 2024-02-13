@@ -1,10 +1,11 @@
 
 .application--sidebar
-  %ul{ style: 'border-right: 1px solid red;' }
+  %ul.tags-list
     - @tags.each do |tag|
       %li
-        = link_to tag.slug, email_conversations_in_path( tag.slug )
+        = link_to tag.slug, conversations_in_path( tag.slug )
         -# (#{tag.conversations.unread.length}, #{tag.conversations.length})
         (#{tag.conversations.unread.length})
         (#{tag.conversations.length})
+        = link_to "not", conversations_not_in_path( tag.slug )
 

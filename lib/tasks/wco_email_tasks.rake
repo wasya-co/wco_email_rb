@@ -1,34 +1,19 @@
 
 namespace :wco_email do
 
-  ## Not used until I revisit it. _vp_ 2023-04-02
-  desc 'wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> skip=0'
-  task mbox2stubs: :environment do
-
-    ## Usage
-    if !ENV['mbox_path'] || !ENV['tagname']
-      puts ""
-      puts "Usage: wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> "
-      puts ""
-      exit 22
-    end
-
-    WcoEmail::MessageStub.mbox2stubs ENV['mbox_path'], tagname: ENV['tagname'], skip: ENV['skip'].to_i
-
-    puts "ok"
-  end
-
   ##
   ## @stub = WcoEmail::MessageStub.find_by object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
   ##
-  desc 'churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>]'
+  desc 'churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] [status=<status>]'
   task churn_n_stubs: :environment do
+    puts! ENV, 'ENV'
 
     ## Usage
     if !ENV['n']
       puts ""
-      puts "Usage: churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] "
-      puts "DOES NOT PRCESS IMAGES BY DEFAULT"
+      puts "Usage: churn_n_stubs n=<num> [tagname=<some-new-slug>] [process_images=<false|true>] [status=<status>] "
+      puts "DOES NOT PROCESS IMAGES BY DEFAULT"
+      puts "status can be something other than STATUS_PENDING"
       puts ""
       exit 22
     end
@@ -38,18 +23,54 @@ namespace :wco_email do
     end
 
     process_images = ENV['process_images'] == 'true'
-    stub_config = { process_images: process_images }.to_json
+
+    status = ENV['status']
+    status ||= WcoEmail::MessageStub::STATUS_PENDING
 
     n = ENV['n'].to_i
-    stubs = WcoEmail::MessageStub.pending.limit n
+    stubs = WcoEmail::MessageStub.where( status: status ).limit(n)
     stubs.each_with_index do |stub, idx|
-      puts "+++ +++ churning ##{idx+1}"
+      puts "+++ +++ churning ##{idx+1} object_key: #{stub.object_key}"
 
       stub.tags.push( tag ) if tag
-      stub.config = stub_config
+      stub.config = JSON.parse( stub.config ).merge({ process_images: process_images, skip_notification: true }).to_json
       stub.save!
 
       WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
+
+      sleep 1 # second
+      print '.'
+    end
+  end
+
+  ##
+  ## 2024-01-10
+  ## WcoEmail::MessageStub.all.update_all({ bucket: 'ish-ses-2024' })
+  ## WcoEmail::MessageIntakeJob.perform_sync( stub.id.to_s )
+  ##
+  desc 'import objectkey list'
+  task import_objectkey_list: :environment do
+
+    # bucket = 'ish-ses'
+    bucket = 'ish-test-2024'
+    client ||= Aws::S3::Client.new({
+      region:            ::S3_CREDENTIALS[:region_ses],
+      access_key_id:     ::S3_CREDENTIALS[:access_key_id_ses],
+      secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
+    })
+
+    # lines = File.read( './data/20240110_ish-ses_objectkeys' )
+    lines = File.read( './data/out_head' )
+    lines.split("\n").each_with_index do |line, idx|
+
+        object_key = line.split.last
+        stub = WcoEmail::MessageStub.create( object_key: object_key, bucket: bucket )
+        if stub.persisted?
+          print "#{idx+1}."
+        else
+          puts! stub.errors.full_messages.join(", ")
+        end
+
     end
   end
 
@@ -72,8 +93,110 @@ namespace :wco_email do
     puts! count, 'count'
   end
 
+  ## Not used until I revisit it. _vp_ 2023-04-02
+  desc 'wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> skip=0'
+  task mbox2stubs: :environment do
+
+    ## Usage
+    if !ENV['mbox_path'] || !ENV['tagname']
+      puts ""
+      puts "Usage: wco_email:mbox2stubs mbox_path=<filepath> tagname=<some-new-slug> "
+      puts ""
+      exit 22
+    end
+
+    WcoEmail::MessageStub.mbox2stubs ENV['mbox_path'], tagname: ENV['tagname'], skip: ENV['skip'].to_i
+
+    puts "ok"
+  end
+
+  desc 'remove message duplicates'
+  task remove_message_duplicates: :environment do
+    outs = WcoEmail::Message.collection.aggregate([
+      {"$group" => { "_id" => "$message_id", "count" => { "$sum" => 1 } } },
+      {"$match": {"_id" => { "$ne" => nil } , "count" => {"$gt" => 1} } },
+      {"$project" => {"message_id" => "$_id", "_id" => 0} }
+    ])
+    outs = outs.to_a
+    outs.each do |out|
+      WcoEmail::Message.where( message_id: out['message_id'] )[1].destroy!
+      print '.'
+    end
+  end
+
+  desc 'remove duplicates of stubs'
+  task remove_stub_duplicates: :environment do
+    outs = WcoEmail::MessageStub.collection.aggregate([
+      {"$group" => { "_id" => "$object_key", "count" => { "$sum" => 1 } } },
+      {"$match": {"_id" => { "$ne" => nil } , "count" => {"$gt" => 1} } },
+      {"$project" => {"object_key" => "$_id", "_id" => 0} }
+    ])
+    outs = outs.to_a
+    outs.each do |out|
+      WcoEmail::MessageStub.where( object_key: out['object_key'] )[1].destroy!
+      print '.'
+    end
+  end
+
+  desc 'email actions, send and roll'
+  task run_email_actions: :environment do
+    puts! "Starting wco_email:run_email_actions..."
+    while true do
+
+      schs = WcoEmail::EmailAction.active.where({ :perform_at.lte => Time.now })
+      print "[#{schs.length}]" if schs.length != 0
+      schs.each do |sch|
+
+        sch.send_and_roll
+
+        print "[#{sch.id}]^"
+        sleep 15
+      end
+
+      print '.'
+      sleep 15
+    end
+  end
+
+
+
+  desc 'send contexts'
+  task send_contexts: :environment do
+    puts! "Starting wco_email:send_contexts..."
+    while true do
+
+      ctxs = WcoEmail::Context.scheduled.notsent
+      print "[#{ctxs.length}]" if ctxs.length != 0
+      ctxs.map do |ctx|
+
+        unsub = WcoEmail::Unsubscribe.where({ lead_id: ctx.lead_id, template_id: ctx.email_template_id }).first
+        if unsub
+          puts! 'This user is unsubscribed; the context cannot be sent.' if DEBUG
+          email_action_template_ids = WcoEmail::EmailActionTemplate.where({ email_template_id: ctx.email_template_id }).map(&:id)
+          schs = WcoEmail::EmailAction.active.where({
+            lead_id: ctx.lead_id,
+            :email_action_template_id.in => email_action_template_ids,
+          })
+          schs.update({ status: WcoEmail::EmailAction::STATUS_UNSUBSCRIBED })
+          ctx.update({
+            unsubscribed_at: Time.now.to_s,
+          })
+        else
+          ctx.update({
+            sent_at: Time.now.to_s,
+          })
+          out = WcoEmail::ApplicationMailer.send_context_email( ctx[:id].to_s )
+          Rails.env.production? ? out.deliver_later : out.deliver_now
+        end
+
+        print "[#{ctx.id}]^"
+        sleep 15
+      end
+
+      print '.'
+      sleep 15
+
+    end
+  end
+
 end
-
-
-
-

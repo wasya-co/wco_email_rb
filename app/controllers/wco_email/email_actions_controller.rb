@@ -1,12 +1,10 @@
 
-Sch = WcoEmail::EmailAction
-
 class WcoEmail::EmailActionsController < WcoEmail::ApplicationController
 
   before_action :set_lists
 
   def create
-    @sch = Sch.new( params[:sch].permit! )
+    @sch = Sch.new( params[:email_action].permit! )
     authorize! :create, @sch
 
     flag = @sch.save
@@ -29,7 +27,7 @@ class WcoEmail::EmailActionsController < WcoEmail::ApplicationController
   end
 
   def new
-    @sch = Sch.new
+    @email_action = WcoEmail::EmailAction.new
     authorize! :new, @sch
   end
 
@@ -42,13 +40,23 @@ class WcoEmail::EmailActionsController < WcoEmail::ApplicationController
   def update
     @sch = Sch.find params[:id]
     authorize! :update, @sch
-    flag = @sch.update_attributes( params[:sch].permit! )
+    flag = @sch.update_attributes( params[:email_action].permit! )
     if flag
       flash[:notice] = "Success."
     else
       flash[:alert] = "No luck: #{@sch.errors.full_messages.join(',')}."
     end
     render action: 'edit'
+  end
+
+  ##
+  ## private
+  ##
+  private
+
+  def set_lists
+    @email_action_templates_list = WcoEmail::EmailActionTemplate.list
+    @leads_list = Wco::Lead.list
   end
 
 end
