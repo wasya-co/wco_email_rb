@@ -45,18 +45,8 @@
     = render "/wco/main_header"
     = render "/wco_email/main_header"
 
-
-    -# notice #{notice.inspect} alert #{alert.inspect}
     = render '/wco/alerts_notices' if notice || alert
     %hr
-
-    -# .padded
-    -#   .row
-    -#     .col-md-2.border-right
-    -#       = yield :sidebar
-    -#     .col-md-10
-    -#       %span.absolute.collapse-expand#mainW
-    -#       = yield
 
     .padded.flex-row
       = yield :sidebar

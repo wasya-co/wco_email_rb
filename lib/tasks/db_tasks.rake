@@ -22,6 +22,8 @@ namespace :db do
   desc "seed"
   task seed: :environment do
 
+    Wco::Profile.find_or_create_by({ email: 'piousbox@gmail.com' })
+
     blank_email_template = WcoEmail::EmailTemplate.find_or_create_by({ slug: 'blank' })
 
     inbox = Wco::Tag.find_or_create_by({ slug: 'inbox' })
