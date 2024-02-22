@@ -100,6 +100,8 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     @messages     = @conversation.messages.order_by( date: :asc )
     @conversation.update_attributes({ status: Conv::STATUS_READ })
 
+    @conversation.messages.unread.update_all({ read_at: Time.now })
+
     @other_convs = WcoEmail::Message.where( :message_id.in => @messages.map( &:in_reply_to_id )
       ).where( :conversation_id.ne => @conversation.id
       ).map( &:conversation_id ).uniq
