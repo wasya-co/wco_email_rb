@@ -1,5 +1,4 @@
 //
-// trash: require rails-ujs
 //
 //= require ./contexts
 //= require ./conversations
