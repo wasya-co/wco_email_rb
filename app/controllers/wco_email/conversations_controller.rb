@@ -52,9 +52,21 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
       @conversations = @conversations.where( lead_ids: params[:lead_id] )
     end
 
-    @conversations = @conversations.includes( :leads, :messages, :tags
+    @conversations = @conversations.where(
+    # ).includes( :leads, :messages, :tags
     ).order_by( latest_at: :desc
     ).page( params[:conv_page] ).per( current_profile.per_page )
+
+    conversation_ids = @conversations.map &:id
+
+    @messages_hash = {}
+    messages = WcoEmail::Message.where(
+      :conversation_id.in => conversation_ids,
+      read_at: nil,
+    )
+    messages.map do |msg|
+      @messages_hash[msg.id.to_s] = msg
+    end
   end
 
   ## merge conv1 into conv2, and delete conv1
@@ -100,15 +112,15 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
 
     @conversation.messages.unread.update_all({ read_at: Time.now })
 
-    @other_convs = WcoEmail::Message.where( :message_id.in => @messages.map( &:in_reply_to_id )
-      ).where( :conversation_id.ne => @conversation.id
-      ).map( &:conversation_id ).uniq
-    other_convs_by_subj = WcoEmail::Conversation.where( subject: @conversation.subject
-      ).where( :conversation_id.ne => @conversation.id
-      ).map( &:id )
-    if @other_convs.present?
-      @other_convs = WcoEmail::Conversation.find( @other_convs + other_convs_by_subj )
-    end
+    # @other_convs = WcoEmail::Message.where( :message_id.in => @messages.map( &:in_reply_to_id )
+    #   ).where( :conversation_id.ne => @conversation.id
+    #   ).map( &:conversation_id ).uniq
+    # other_convs_by_subj = WcoEmail::Conversation.where( subject: @conversation.subject
+    #   ).where( :conversation_id.ne => @conversation.id
+    #   ).map( &:id )
+    # if @other_convs.present? || other_convs_by_subj.present?
+    #   @other_convs = WcoEmail::Conversation.find( @other_convs + other_convs_by_subj )
+    # end
   end
 
   def update
