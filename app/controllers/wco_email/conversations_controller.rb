@@ -52,11 +52,9 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
       @conversations = @conversations.where( lead_ids: params[:lead_id] )
     end
 
-    @conversations = @conversations.order_by( latest_at: :desc
-      ).includes( :leads, :messages
-      ).page( params[:conv_page]
-      ).per( current_profile.per_page
-      )
+    @conversations = @conversations.includes( :leads, :messages, :tags
+    ).order_by( latest_at: :desc
+    ).page( params[:conv_page] ).per( current_profile.per_page )
   end
 
   ## merge conv1 into conv2, and delete conv1

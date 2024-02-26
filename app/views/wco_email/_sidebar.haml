@@ -4,8 +4,7 @@
     - @tags.each do |tag|
       %li
         = link_to tag.slug, conversations_in_path( tag.slug )
-        -# (#{tag.conversations.unread.length}, #{tag.conversations.length})
-        (#{tag.conversations.unread.length})
-        (#{tag.conversations.length})
+        -# (#{tag.conversations.unread.length})
+        -# (#{tag.conversations.length})
         = link_to "not", conversations_not_in_path( tag.slug )
 
