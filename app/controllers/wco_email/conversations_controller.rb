@@ -53,7 +53,7 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     end
 
     @conversations = @conversations.where(
-    # ).includes( :leads, :messages, :tags
+    ).includes( :leads, :messages, :tags
     ).order_by( latest_at: :desc
     ).page( params[:conv_page] ).per( current_profile.per_page )
 
