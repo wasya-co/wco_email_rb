@@ -1,4 +1,10 @@
 
+.Context {
+  border: 1px solid var(--wco-color-2);
+  border-radius: .5em;
+  padding: 0.5em;
+}
+
 .email-contexts--form-reply {
   margin-bottom: 2em;
 }

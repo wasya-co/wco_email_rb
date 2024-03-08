@@ -115,7 +115,7 @@ $(".remove-tag-btn").click(function(e) {
   const emailtag = $("select[name='emailtag']").val()
   const out = []
 
-  $( $("input[type='checkbox'].i-sel:checked") ).each( idx => {
+  $( $(".conversations-list input[type='checkbox'].i-sel:checked") ).each( idx => {
     let val = $($("input[type='checkbox'].i-sel:checked")[idx]).val()
     out.push(val)
   })

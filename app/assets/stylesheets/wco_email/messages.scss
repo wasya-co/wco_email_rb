@@ -1,0 +1,21 @@
+
+.Message {
+  border: 1px solid var(--wco-color-1);
+  border-radius: .5em;
+  padding: 0.5em;
+}
+
+.Meta {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      border-left: 3px solid var(--wco-color-2);
+      padding-left: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+  }
+}

@@ -1,24 +1,14 @@
 
-.conversations--actions.bordered.d-flex
 
-  -# %a.btn.archive-btn{ href: "javascript: void(0)", data: { url: conversations_rmtag_path(Wco::Tag::INBOX) } }
-  -#   %i.material-icons archive
-  -#   archive
-  -# %a.btn.delete-btn{ href: "javascript: void(0)", data: { url: conversations_path } }
-  -#   %i.material-icons delete
-  -#   delete
-  -# %a.btn.reload-btn{ href: "javascript: location.reload()" }
-  -#   %i.material-icons refresh
-  -#   refresh
+.bordered.inline-block.mb-2
+  .d-inline-block
+    = select_tag :emailtag, options_for_select(@tags_list), class: 'select2'
+  = check_box_tag :is_move
+  %label move?
+  %a.btn.add-tag-btn{ href: "javascript: void(0)", data: { url: conversations_addtag_path } }
+    %i.material-icons add
+    Addtag
+  %a.btn.remove-tag-btn{ href: "javascript: void(0)", data: { url: conversations_rmtag_path } }
+    %i.material-icons remove
+    Rmtag
 
-  .bordered.inline-block
-    .d-inline-block
-      = select_tag :emailtag, options_for_select(@tags_list), class: 'select2'
-    = check_box_tag :is_move
-    %label move?
-    %a.btn.add-tag-btn{ href: "javascript: void(0)", data: { url: conversations_addtag_path } }
-      %i.material-icons add
-      Addtag
-    %a.btn.remove-tag-btn{ href: "javascript: void(0)", data: { url: conversations_rmtag_path } }
-      %i.material-icons remove
-      Rmtag

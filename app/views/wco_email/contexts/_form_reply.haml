@@ -1,29 +1,29 @@
 
 -# = ctx.inspect
 
-.email-contexts--form-reply.form-mini
+.Context.email-contexts--form-reply.form-mini
   = form_for ctx do |f|
 
     .flex-row
       .flex-row
-        %label from
+        %label from&nbsp;
         = f.select :from_email, options_for_select( WcoEmail::EmailTemplate.from_emails_list, selected: ctx.from_email ), {}, class: 'select2'
-        %label to (lead)
+        %label &nbsp;to&nbsp;
         = f.select :lead, options_for_select( @leads_list, selected: lead_id ), {}, class: 'select2', required: true
       .flex-row
-        = f.label :template
+        %label &nbsp;template&nbsp;
         = f.select :email_template_id, options_for_select( @email_templates_list, selected: ctx.email_template_id ), {}, class: 'select2', required: true
         = link_to '[+]', new_email_template_path, target: :_blank
-    .flex-row
-      %label Subject
-      = f.text_field :subject, class: 'w-100'
+    -# .flex-row
+    -#   %label Subject&nbsp;
+    -#   = f.text_field :subject, class: 'w-100', disabled: true
     .field
       = f.text_area :body, class: 'tinymce'
     .flex-row
       .flex-row
-        %label Respond inline?
+        %label Respond inline?&nbsp;
         = check_box_tag :respond_inline, message.id, checked: true
       .flex-row
-        = f.label :send_at
+        %label &nbsp;send_at&nbsp;
         = f.text_field :send_at, placeholder: 'YYYY-MM-DD', value: Time.now, size: 30, class: 'input-date'
       = f.submit 'Send/Schedule'
