@@ -7,7 +7,7 @@
 .conversations-show.maxwidth
   %h5
     = @conversation.subject
-    <b>(#{@conversation.messages.length})</b>
+    <b>(#{@messages.length})</b>
     = link_to '[~]', edit_conversation_path(@conversation)
     %span.gray.mini= @conversation.id
 
@@ -31,13 +31,15 @@
 
 
   .m-0.p-0
-    - @conversation.messages.each do |msg|
+    = paginate @messages, param_name: :messages_page
+    - @messages.each do |msg|
       .Message.mb-2
         = render '/wco_email/messages/meta', message: msg
         = link_to '[expand]', message_iframe_path(msg, expand_history: true), target: "iframe_#{msg.id}"
         = link_to '[collapse]', message_iframe_path(msg), target: "iframe_#{msg.id}"
         %span.collapse-expand{ id: "iframe_#{msg.id}" } [<>]
         %iframe.message-iframe{ src: message_iframe_path(msg), name: "iframe_#{msg.id}", onload: "resizeIframe(this)" }
+    = paginate @messages, param_name: :messages_page
 
-  - msg = @conversation.messages.last
+  - msg = @messages.last
   = render '/wco_email/contexts/form_reply', lead_id: msg.lead_id, message: msg, ctx: WcoEmail::Context.new({ from_email: msg.to&.downcase, subject: msg.subject, email_template_id: ET.find_by( slug: 'blank').id })

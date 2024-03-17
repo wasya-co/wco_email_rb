@@ -107,7 +107,11 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
   def show
     @conversation = ::WcoEmail::Conversation.find( params[:id] )
     authorize! :show, @conversation
-    @messages     = @conversation.messages.order_by( date: :asc )
+    @messages     = @conversation.messages(
+      ).order_by( date: :asc
+      ).page( params[:messages_page ] ).per( @current_profile.per_page
+      )
+
     @conversation.update_attributes({ status: Conv::STATUS_READ })
 
     @conversation.messages.unread.update_all({ read_at: Time.now })
