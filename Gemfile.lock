@@ -32,7 +32,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.66)
+    wco_email (0.1.1.67)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)

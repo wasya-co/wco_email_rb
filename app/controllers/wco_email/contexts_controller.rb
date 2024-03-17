@@ -46,7 +46,9 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
 
   def index
     authorize! :index, WcoEmail::Context
-    @ctxs = WcoEmail::Context.all.order_by( sent_at: :desc, send_at: :desc
+    @ctxs = WcoEmail::Context.where(
+      :send_at.ne => nil, sent_at: nil
+      ).order_by( sent_at: :desc, send_at: :desc
       ).page( params[:ctxs_page]
       ).per( current_profile.per_page )
 
