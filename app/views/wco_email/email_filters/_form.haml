@@ -2,6 +2,9 @@
 - url = email_filter.new_record? ? email_filters_path : email_filter_path( email_filter )
 .email-filters--from
   = form_for email_filter, url: url, as: :email_filter do |f|
+    .actions
+      = f.submit
+
     .row.maxwidth
       .col-md-6
         .field
@@ -36,5 +39,15 @@
         .field
           = f.label :tag
           = f.select :tag, options_for_select( @tags_list, selected: email_filter.tag_id ), {}, class: 'select2'
+
+      .col-md-6
+        .field
+          %label skip to exact
+          = f.text_field :skip_to_exact
+        .field
+          %label skip from regex
+          = f.text_field :skip_from_regex
+
+      .col-md-6
         .actions
           = f.submit

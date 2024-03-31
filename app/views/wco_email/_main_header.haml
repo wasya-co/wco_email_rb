@@ -2,7 +2,7 @@
 .application--main-header.main-header{ class: "#{ENV['RAILS_ENV']} #{ENV['RAILS_ENV'][0...3]=="dev" ? "development" : ''}" }
   .maxwidth
     %i.fa.fa-compress.collapse-expand#collapseHeaderEmail
-      Wco Email & CRM
+      Wco Email
     .flex-row
       %ul
         %li= link_to 'Inbox', conversations_in_path('inbox')
