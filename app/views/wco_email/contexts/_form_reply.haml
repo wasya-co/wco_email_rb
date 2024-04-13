@@ -6,17 +6,17 @@
 
     .flex-row
       .flex-row
-        %label from&nbsp;
+        %label From&nbsp;
         = f.select :from_email, options_for_select( WcoEmail::EmailTemplate.from_emails_list, selected: ctx.from_email ), {}, class: 'select2'
-        %label &nbsp;to&nbsp;
+        %label &nbsp;To&nbsp;
         = f.select :lead, options_for_select( @leads_list, selected: lead_id ), {}, class: 'select2', required: true
       .flex-row
-        %label &nbsp;template&nbsp;
+        %label &nbsp;Template&nbsp;
         = f.select :email_template_id, options_for_select( @email_templates_list, selected: ctx.email_template_id ), {}, class: 'select2', required: true
         = link_to '[+]', new_email_template_path, target: :_blank
-    -# .flex-row
-    -#   %label Subject&nbsp;
-    -#   = f.text_field :subject, class: 'w-100', disabled: true
+    .flex-row
+      %label Subject&nbsp;
+      = f.text_field :subject, class: 'w-100' # , disabled: true
     .field
       = f.text_area :body, class: 'tinymce'
     .flex-row
