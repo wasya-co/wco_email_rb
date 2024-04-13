@@ -11,8 +11,7 @@
     = link_to '[~]', edit_conversation_path(@conversation)
     %span.gray.mini= @conversation.id
 
-  = render 'wco/tags/list_mini', tags: @conversation.tags
-
+  = render '/wco/tags/index_chips', tags: @conversation.tags
 
   = render '/wco_email/conversations/actions'
 

@@ -13,6 +13,7 @@ describe WcoEmail::ContextsController do
     @ctx = create( :email_context, {
       lead: create(:lead),
       email_template: create(:email_template),
+      send_at: Time.now,
     })
     # @ctx_no_tmpl = create( :email_context, {
     #   lead: create(:lead),

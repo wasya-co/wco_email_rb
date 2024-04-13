@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: d1fd558d053cb856c4daa5024486772b463319a0
+  revision: b24f574915cb390bbc85211f4b0d062fb20935f6
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.108)
+    wco_models (3.1.0.154)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -32,7 +32,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.69)
+    wco_email (0.1.1.70)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -282,7 +282,7 @@ GEM
       net-ssh (>= 2.6.5, < 8.0.0)
     net-smtp (0.4.0.1)
       net-protocol
-    net-ssh (7.2.1)
+    net-ssh (7.2.3)
     nio4r (2.7.0)
     nokogiri (1.15.5-x86_64-darwin)
       racc (~> 1.4)
@@ -317,7 +317,7 @@ GEM
       prawn (>= 1.3.0, < 3.0.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.4)
+    public_suffix (5.0.5)
     racc (1.7.3)
     rack (2.2.8)
     rack-protection (3.1.0)

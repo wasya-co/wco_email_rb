@@ -47,10 +47,11 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
   def index
     authorize! :index, WcoEmail::Context
     @ctxs = WcoEmail::Context.where(
-      :send_at.ne => nil, sent_at: nil
-      ).order_by( sent_at: :desc, send_at: :desc
-      ).page( params[:ctxs_page]
-      ).per( current_profile.per_page )
+      :send_at.ne => nil,
+      sent_at:       nil,
+    ).order_by( sent_at: :desc, send_at: :desc
+    ).page( params[:ctxs_page]
+    ).per( current_profile.per_page )
 
     if params[:lead_id]
       @lead = Lead.find params[:lead_id]
