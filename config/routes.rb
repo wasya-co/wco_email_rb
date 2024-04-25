@@ -26,7 +26,11 @@ WcoEmail::Engine.routes.draw do
   get  'contexts/summary',            to: 'contexts#summary'
   post 'contexts/send_immediate/:id', to: 'contexts#send_immediate',   as: :send_context
   resources :contexts
+
+  get 'email_filters/new2', to: 'email_filters#new2'
   resources :email_filters
+  resources :email_filter_conditions
+
   get 'email_templates/:id/iframe', to: 'email_templates#show_iframe', as: :email_template_iframe
   resources :email_templates
 

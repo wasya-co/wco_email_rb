@@ -41,6 +41,12 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     @email_filter = WcoEmail::EmailFilter.new
     authorize! :new, @email_filter
   end
+  def new2
+    @email_filter = WcoEmail::EmailFilter.new
+    authorize! :new, @email_filter
+
+    @new_email_filter_condition = WcoEmail::EmailFilterCondition.new
+  end
 
   def show
     @email_filter = WcoEmail::EmailFilter.find params[:id]

@@ -1,4 +1,8 @@
 
+-##
+-## 2024-04-13 Before email_filter_condition was introduced
+-##
+
 - url = email_filter.new_record? ? email_filters_path : email_filter_path( email_filter )
 .email-filters--from
   = form_for email_filter, url: url, as: :email_filter do |f|

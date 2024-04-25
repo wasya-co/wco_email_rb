@@ -1,0 +1,12 @@
+
+.d-flex
+  .field
+    %label Field
+    = f.select :field, options_for_select(WcoEmail::EmailFilter::FIELD_OPTS)
+  .field
+    %label Matchtype
+    = f.select :matchtype, options_for_select(WcoEmail::EmailFilter::MATCHTYPE_OPTS)
+  .field
+    %label Value
+    = f.text_field :value
+  [-]

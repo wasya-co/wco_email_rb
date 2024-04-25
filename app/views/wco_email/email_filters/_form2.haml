@@ -1,0 +1,46 @@
+
+-##
+-## 2024-04-13 Introducing email_filter_condition
+-##
+
+- url = email_filter.new_record? ? email_filters_path : email_filter_path( email_filter )
+.email-filters--from.maxwidth
+  = form_for email_filter, url: url, as: :email_filter do |f|
+
+    %p If
+    - f.fields_for( :email_filter_conditions ) do |f_cond|
+      = render '/wco_email/email_filter_conditions/form', f: f_cond
+    = form_for @new_email_filter_condition do |ff|
+      = render '/wco_email/email_filter_conditions/form', f: ff
+
+    .d-flex [+]
+    %p Skip
+    - email_filter.email_filter_skip_conditions.each do |f_cond|
+      .d-flex
+        .field
+          %label Field
+          = f_cond.select :field, options_for_select(WcoEmail::EmailFilter::FIELD_OPTS, selected: f_cond.field)
+        .field
+          %label Matchtype
+          = f_cond.select :matchtype, options_for_select(WcoEmail::EmailFilter::MATCHTYPE_OPTS, selected: f_cond.matchtype)
+        .field
+          %label Value
+          = f_cond.text_field :value
+        [-]
+    .d-flex [+]
+    %p Then [test]
+    - email_filter.action_tmpls.each do |f_act_tmpl|
+      .d-flex
+        %label Office Action
+        .field
+          %label slug
+          = f_act_tmpl.slug
+        .field
+          %label config
+          = f_act_tmpl.text_area :config
+        [-]
+    .d-flex [+]
+    [perform]
+
+    .actions
+      = f.submit 'Go'
