@@ -4,15 +4,31 @@ describe WcoEmail::EmailActionsController do
   routes { WcoEmail::Engine.routes }
 
   before do
-    Wco::Lead.unscoped.map &:destroy!
-    WcoEmail::EmailTemplate.unscoped.map &:destroy!
-
+    destroy_every( Wco::Lead,
+      WcoEmail::EmailActionTemplate,
+      WcoEmail::EmailAction,
+      WcoEmail::EmailTemplate,
+    )
     setup_users
-
-    # @ctx = create( :email_context, {
-    #   lead: create(:lead),
-    #   email_template: create(:email_template),
-    # })
+    @ea = create( :email_action, {
+      email_action_template: create( :email_action_template,
+        slug: 'first',
+        email_template: create(:email_template) ),
+      lead: create(:lead),
+    })
+    @ea_2 = create( :email_action, {
+      email_action_template: create( :email_action_template,
+        slug: 'second',
+        email_template: create(:email_template,
+          slug: 'first') ),
+      lead: create(:lead),
+    })
+    @ea_3 = create( :email_action, {
+      email_action_template: create( :email_action_template,
+        slug: 'third',
+        email_template: create(:email_template) ),
+      lead: create(:lead),
+    })
   end
 
   it '#new' do
@@ -20,10 +36,19 @@ describe WcoEmail::EmailActionsController do
     response.code.should eql '200'
   end
 
-  # it '#show' do
-  #   get :show, params: { id: @ctx.id }
-  #   response.code.should eql '200'
-  # end
+
+  context '#index' do
+    it 'searchable' do
+      get :index, params: { q: 'First' }
+      assigns(:email_actions).length.should > 0
+      assigns(:email_actions).each do |ea|
+        out = "#{ea.email_action_template} #{ea.lead} #{ea.email_action_template.email_template}".downcase
+        out.include?( 'first' ).should eql true
+      end
+      assigns(:email_actions).map(&:id).include?( @ea.id   ).should eql true
+      assigns(:email_actions).map(&:id).include?( @ea_2.id ).should eql true
+    end
+  end
 
 end
 

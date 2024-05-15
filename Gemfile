@@ -16,25 +16,17 @@ gem "omniauth-rails_csrf_protection", "~> 1.0.1"
 gem 'jbuilder', '~> 2.11.5'
 
 group :development, :test do
+  gem 'ahoy_matey'
   gem 'byebug'
-
   gem 'factory_bot_rails'
-
   gem 'irb', '>= 1.2.8'
-
   gem 'kaminari-mongoid'
   gem 'kaminari-actionview'
-
   ## https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   # gem 'rack-mini-profiler', '~> 2.0'
-
   gem 'rspec-rails', "~> 6.1.0"
   gem 'rails-controller-testing', "~> 1.0.5"
-
   gem 'sass-rails', "~> 6.0"
-
   gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.1.0'
-
-
 end
 

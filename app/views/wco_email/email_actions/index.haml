@@ -3,7 +3,7 @@
   .header
     %h2
       Email Actions
-      (#{Sch.all.count})
+      (#{WcoEmail::EmailAction.all.length})
       = link_to '[+]', new_email_action_path
 
   %table.bordered.data-table
@@ -16,19 +16,19 @@
         %td.tmpl Email Template
         %td Perform at
     %tbody
-      - @schs.each do |sch|
+      - @email_actions.each do |ea|
         %tr
-          %td= link_to '[~]', edit_email_action_path(sch)
-          %td= sch.status == 'active' ? 'Y' : '-'
+          %td= link_to '[~]', edit_email_action_path(ea)
+          %td= ea.status == 'active' ? 'Y' : '-'
           %td.email_action_template
-            = render '/wco_email/email_action_templates/show_cell', tmpl: sch.tmpl
+            = render '/wco_email/email_action_templates/show_cell', tmpl: ea.tmpl
           %td.to
-            = link_to sch.lead.email, wco.lead_path(sch.lead)
+            = link_to ea.lead.email, wco.lead_path(ea.lead)
           %td.tmpl
-            = render '/wco_email/email_templates/show_cell', tmpl: sch.tmpl.email_template
+            = render '/wco_email/email_templates/show_cell', tmpl: ea.tmpl.email_template
           %td
-            = pp_date sch.perform_at.in_time_zone
-            = pp_time sch.perform_at.in_time_zone
+            = pp_date ea.perform_at.in_time_zone
+            = pp_time ea.perform_at.in_time_zone
 
 
 

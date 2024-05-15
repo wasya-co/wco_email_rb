@@ -22,8 +22,19 @@ class WcoEmail::EmailActionsController < WcoEmail::ApplicationController
   end
 
   def index
-    @schs = Sch.all
-    authorize! :index, @schs
+    @email_actions = WcoEmail::EmailAction.all
+    authorize! :index, @email_actions
+    if params[:q]
+      email_template_ids        = WcoEmail::EmailTemplate.where( slug: /#{params[:q]}/i ).map &:id
+      email_action_template_ids = WcoEmail::EmailActionTemplate.any_of(
+        { :email_template_id.in => email_template_ids },
+        { slug:                    /#{params[:q]}/i },
+      ).map &:id
+
+      @email_actions = @email_actions.where({
+        :email_action_template_id.in => email_action_template_ids,
+      })
+    end
   end
 
   def new
