@@ -3,7 +3,7 @@
   .header
     %h2
       Email Actions
-      (#{WcoEmail::EmailAction.all.length})
+      (#{@email_actions.length})
       = link_to '[+]', new_email_action_path
 
   %table.bordered.data-table

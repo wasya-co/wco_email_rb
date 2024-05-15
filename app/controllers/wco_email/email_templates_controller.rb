@@ -96,7 +96,9 @@ class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
       lead:           Wco::Lead.find_by({ email: 'poxlovi@gmail.com' }),
     })
 
+    eval( @tmpl.config_exe )
     @renderer = WcoEmail::ApplicationMailer.renderer ctx: @ctx
+
 
     render layout: false
   end

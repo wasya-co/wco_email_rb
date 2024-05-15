@@ -1,4 +1,6 @@
 
+Wco::Obf ||= Wco::ObfuscatedRedirect
+
 class WcoEmail::ApplicationController < Wco::ApplicationController
 
   layout 'wco_email/application'

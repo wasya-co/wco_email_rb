@@ -1,5 +1,5 @@
 
-.email-templates-show
+.email-templates-show.maxwidth
   .header
     %h2.title
       = @tmpl.slug
@@ -8,4 +8,4 @@
       -# = link_to '[preview ^]', '#'
       -# = link_to '[use]', '#'
 
-  %iframe{ src: email_template_iframe_path(@tmpl.slug), width: '100%', height: '100%' }
+  %iframe{ src: email_template_iframe_path(@tmpl.slug), width: '750px', height: '450px' }

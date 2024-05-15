@@ -14,12 +14,12 @@
     .field.field-subject
       = f.label :subject
       = f.text_field :subject
+      %label mangle_subject
+      = f.check_box :mangle_subject
     .field
       = f.label :preview_str
       = f.text_field :preview_str
-    .field
-      %label mangle_subject
-      = f.check_box :mangle_subject
+
 
     -# .field
     -#   = f.label :can_unsubscribe
