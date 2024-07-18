@@ -19,6 +19,10 @@
         <b>message_id:</b> #{message.message_id}
       %li
         <b>object_key:</b> #{message.object_key}
+      %li
+        <b>Stub:</b>
+        #{message.stub.id}
+        .d-inline-block= button_to 'reprocess', churn_message_stub_path(message.stub)
       %li <b>in_reply_to_id:</b> #{message.in_reply_to_id}
       %li
         <b>n_images:</b> #{message.photos.length}

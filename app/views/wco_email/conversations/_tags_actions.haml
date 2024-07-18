@@ -1,6 +1,7 @@
 
 
-.bordered.inline-block.mb-2
+.conversations--tags-actions.bordered.inline-block.mb-2
+  %h5 Add/Remove Tag
   .d-inline-block
     = select_tag :emailtag, options_for_select(@tags_list), class: 'select2'
   = check_box_tag :is_move

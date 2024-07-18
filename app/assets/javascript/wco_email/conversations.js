@@ -68,6 +68,42 @@ $(".add-tag-btn").click(function(e) {
 
 })
 
+
+$(".office-action-templates-perform-btn").click(function(e) {
+  if ( !confirm('Are you sure?') ) { return; }
+
+  const jwt_token = $("#Config").data('jwt-token')
+  const action_path = $(this).data('url')
+  const oat_id = $("select[name='office_action_template']").val()
+  const out = []
+
+  $( $("input[type='checkbox'].i-sel:checked") ).each( idx => {
+    let val = $($("input[type='checkbox'].i-sel:checked")[idx]).val()
+    out.push(val)
+  })
+
+  let data = {
+    conversation_ids: out,
+    jwt_token: jwt_token,
+    id: oat_id,
+  }
+  $.ajax({
+    url: action_path,
+    type: 'POST',
+    data: data,
+    success: e => {
+      logg((e||{}).responseText, 'Ok')
+      location.reload()
+    },
+    error: e => {
+      logg((e||{}).responseText, 'Err')
+      location.reload()
+    },
+  })
+
+})
+
+
 $(".remove-tag-btn").click(function(e) {
   if ( !confirm('Are you sure?') ) { return; }
 
