@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 7f1997ff9772badb13122f1d57885bf175138f53
+  revision: eea3c45c01166e70e0d3f6c24d76d5d73cd44ae7
   branch: 3.1.0
   specs:
-    wco_models (3.1.0.164)
+    wco_models (3.1.0.165)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.74)
+    wco_email (0.1.1.75)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -117,27 +117,27 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.8.6)
-      public_suffix (>= 2.0.2, < 6.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     ahoy_matey (4.2.1)
       activesupport (>= 5.2)
       device_detector
       safely_block (>= 0.2.1)
     aws-eventstream (1.3.0)
-    aws-partitions (1.919.0)
-    aws-sdk-core (3.192.1)
+    aws-partitions (1.956.0)
+    aws-sdk-core (3.201.1)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.8)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.79.0)
-      aws-sdk-core (~> 3, >= 3.191.0)
-      aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.147.0)
-      aws-sdk-core (~> 3, >= 3.192.0)
+    aws-sdk-kms (1.88.0)
+      aws-sdk-core (~> 3, >= 3.201.0)
+      aws-sigv4 (~> 1.5)
+    aws-sdk-s3 (1.156.0)
+      aws-sdk-core (~> 3, >= 3.201.0)
       aws-sdk-kms (~> 1)
-      aws-sigv4 (~> 1.8)
+      aws-sigv4 (~> 1.5)
     aws-sigv4 (1.8.0)
       aws-eventstream (~> 1, >= 1.0.2)
     axiom-types (0.1.1)
@@ -146,7 +146,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bigdecimal (3.1.7)
+    bigdecimal (3.1.8)
     bindata (2.4.15)
     bson (4.15.0)
     builder (3.2.4)
@@ -170,6 +170,7 @@ GEM
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.3.0)
     date (3.3.4)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -214,7 +215,8 @@ GEM
       thor
       tilt
     hashie (5.0.0)
-    httparty (0.21.0)
+    httparty (0.22.0)
+      csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     i18n (1.14.1)
@@ -279,7 +281,7 @@ GEM
     mongoid_paranoia (0.6.0)
       mongoid (>= 7.3)
     multi_xml (0.6.0)
-    net-imap (0.4.10)
+    net-imap (0.4.14)
       date
       net-protocol
     net-pop (0.1.2)
@@ -291,7 +293,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     net-ssh (7.2.3)
-    nio4r (2.7.1)
+    nio4r (2.7.3)
     nokogiri (1.15.5-x86_64-darwin)
       racc (~> 1.4)
     oauth2 (2.0.9)
@@ -326,7 +328,7 @@ GEM
       prawn (>= 1.3.0, < 3.0.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.5)
+    public_suffix (5.1.1)
     racc (1.7.3)
     rack (2.2.8)
     rack-protection (3.1.0)
@@ -368,9 +370,9 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis-client (0.22.1)
+    redis-client (0.22.2)
       connection_pool
-    regexp_parser (2.9.1)
+    regexp_parser (2.9.2)
     reline (0.4.1)
       io-console (~> 0.5)
     resource_kit (0.1.8)
@@ -378,7 +380,8 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.6)
+    rexml (3.3.2)
+      strscan
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -414,7 +417,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sidekiq (7.2.2)
+    sidekiq (7.2.4)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
@@ -431,6 +434,7 @@ GEM
       sprockets (>= 3.0.0)
     stringio (3.1.0)
     stripe (10.4.0)
+    strscan (3.1.0)
     temple (0.10.3)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
@@ -449,7 +453,7 @@ GEM
       descendants_tracker (~> 0.0, >= 0.0.3)
     warden (1.2.9)
       rack (>= 2.0.9)
-    websocket (1.2.10)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
