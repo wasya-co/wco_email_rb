@@ -1,15 +1,19 @@
 
-.d-inline-block.Meta
-  %i.fa.fa-compress.collapse-expand
+.d-inline-block
+  %i.fa.fa-compress.collapse-expand#messageMeta
     Meta
-  .messages--meta.flex-row{ style: 'display: none' }
+  .Meta.messages--meta.flex-row
 
     %ul
       %li <b>froms:</b> #{message.froms}
       %li <b>tos:</b> #{message.tos}
       %li <b>ccs:</b> #{message.ccs}
       %li <b>bccs:</b> #{message.bccs}
-      %li <b>logs:</b> #{message.logs}
+      %li
+        <b>logs:</b>
+        %ul.Logs
+          - message.logs.each do |log|
+            %li= log
     %ul
       %li
         <b>date:</b> #{message.date}

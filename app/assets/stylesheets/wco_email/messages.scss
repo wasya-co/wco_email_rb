@@ -6,16 +6,21 @@
 }
 
 .Meta {
+  > ul {
+    list-style-type: none;
+  }
   ul {
     margin: 0;
     padding: 0;
-    list-style-type: none;
+  }
+}
 
-    li {
+.messages--meta {
+  > ul {
+    > li {
       border-left: 3px solid var(--wco-color-2);
       padding-left: 0.5em;
       margin-bottom: 0.5em;
     }
-
   }
 }
