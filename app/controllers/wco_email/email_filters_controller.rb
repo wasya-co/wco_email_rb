@@ -11,7 +11,7 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     else
       flash[:alert] = "No luck: #{@email_filter.errors.full_messages.join(', ')}."
     end
-    redirect_to action: 'index'
+    redirect_to action: 'new'
   end
 
   def destroy
