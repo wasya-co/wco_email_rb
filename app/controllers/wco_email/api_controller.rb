@@ -1,8 +1,10 @@
 
 class WcoEmail::ApiController < ActionController::Base
 
-  before_action      :check_credentials
+  before_action      :check_credentials, only: [ :create_email_message ]
+  before_action      :decode_jwt,      except: [ :create_email_message ]
   skip_before_action :verify_authenticity_token
+  layout false
 
   def create_email_message
     # puts! params, 'params'
@@ -26,6 +28,20 @@ class WcoEmail::ApiController < ActionController::Base
       render status: 400, json: { status: 400, message: "#check_credentials says unauthorized." }
       return
     end
+  end
+
+  def decode_jwt
+    if Rails.env.test?
+      sign_in User.find_by({ email: 'victor@wasya.co' })
+      return
+    end
+
+    out = JWT.decode params[:jwt_token], nil, false
+    email = out[0]['email']
+    user = User.find_by({ email: email })
+    puts! user, 'user'
+
+    sign_in user
   end
 
 end
