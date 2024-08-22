@@ -5,13 +5,13 @@
 .conversations-list
   = check_box_tag 'conversation_ids[]', @conversation.id.to_s, true, { class: 'i-sel', disabled: true }
 .conversations-show.maxwidth
-  %h5
-    = @conversation.subject
-    <b>(#{@messages.length})</b>
-    = link_to '[~]', edit_conversation_path(@conversation)
-    %span.gray.mini= @conversation.id
+  = render '/wco_email/conversations/form_mini', conversation: @conversation
 
-  = render '/wco/tags/index_chips', tags: @conversation.tags
+  %h5
+    <b>(#{@messages.length})</b>
+    %span.gray.mini= @conversation.id
+    = render '/wco/tags/index_chips', tags: @conversation.tags, config: { skip_checkbox: true }
+
   = render '/wco_email/conversations/tags_actions'
   = render '/wco/leads/index_chips',    leads: @conversation.leads
   = render '/wco/leadsets/index_chips', leadsets: @conversation.leadsets

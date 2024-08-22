@@ -1,0 +1,10 @@
+
+-#
+-# only change the subject
+-#
+
+= form_for conversation do |f|
+  .d-flex
+    %label Subj
+    = f.text_field :subject, class: 'w-100'
+    = f.submit '~>'
