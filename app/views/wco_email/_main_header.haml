@@ -7,9 +7,10 @@
       %ul
         %li= link_to 'Inbox', conversations_in_path('inbox')
         %li
-          Stubs
+          = link_to 'Stubs', wco_email.message_stubs_path
           (#{WcoEmail::MessageStub.pending.length})
           (#{WcoEmail::MessageStub.all.length})
+          = link_to '[+]', wco_email.new_message_stub_path
         %li= render '/wco_email/email_templates/header'
         %li= render '/wco_email/email_campaigns/header'
         %li= render '/wco_email/email_filters/header'

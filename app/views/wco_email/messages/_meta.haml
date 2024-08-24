@@ -24,8 +24,8 @@
       %li
         <b>object_key:</b> #{message.object_key}
       %li
-        <b>Stub:</b>
-        #{message.stub.id}
+        <b>Stub id:</b>
+        #{link_to message.stub.id, message_stub_path(message.stub)}
         .d-inline-block= button_to 'reprocess', churn_message_stub_path(message.stub)
       %li <b>in_reply_to_id:</b> #{message.in_reply_to_id}
       %li

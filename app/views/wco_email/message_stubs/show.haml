@@ -1,0 +1,4 @@
+
+.message-stubs-show
+  = @stub.inspect
+  .d-inline-block= button_to 'churn', wco_email.churn_message_stub_path(@stub), data: { confirm: 'Are you sure?' }

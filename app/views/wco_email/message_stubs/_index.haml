@@ -1,10 +1,16 @@
 
+- stubs ||= @stubs
+
 .message-stubs--index
+  = paginate stubs, param_name: :stubs_page
   %ul
     - stubs.each do |stub|
       %li
+        .a <b>created_at:</b> #{stub.created_at}
         .a
+          <b>Status:</b>
           = stub.status
           .d-inline-block= button_to 'churn', wco_email.churn_message_stub_path(stub), data: { confirm: 'Are you sure?' }
-        .a= stub.object_key
-        .a= stub.tags.map &:slug
+        .a <b>object_key:</b> #{stub.object_key}
+        .a <b>tag slugs:</b> #{stub.tags.map &:slug}
+  = paginate stubs, param_name: :stubs_page

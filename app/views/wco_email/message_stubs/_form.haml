@@ -1,0 +1,12 @@
+
+= stub.inspect
+
+= form_for stub, as: :stub do |f|
+  .field
+    %label object_key
+    = f.text_field :object_key
+  .field
+    %label bucket
+    = f.text_field :bucket
+  .actions
+    = f.submit 'Go'

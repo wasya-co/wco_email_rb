@@ -1,0 +1,24 @@
+
+- stubs ||= @stubs
+
+.message-stubs--index
+  = paginate stubs, param_name: :stubs_page
+  %table.bordered.padded
+    %thead
+      %tr
+        %th created_at
+        %th status
+        %th object_key
+        %th tag slugs
+    %tbody
+      - stubs.each do |stub|
+        %tr
+          %td #{stub.created_at}
+          %td
+            = stub.status
+            = link_to '[view]', wco_email.message_stub_path(stub)
+            = link_to '[~]', wco_email.edit_message_stub_path(stub)
+            .d-inline-block= button_to 'churn', wco_email.churn_message_stub_path(stub), data: { confirm: 'Are you sure?' }
+          %td #{stub.object_key}
+          %td #{stub.tags.map &:slug}
+  = paginate stubs, param_name: :stubs_page

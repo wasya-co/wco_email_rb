@@ -21,6 +21,51 @@ class WcoEmail::MessageStubsController < WcoEmail::ApplicationController
     redirect_to request.referrer
   end
 
+  def create
+    @stub = WcoEmail::MessageStub.new params[:stub].permit!
+    authorize! :create, @stub
+    if @stub.save
+      flash_notice 'saved.'
+      redirect_to action: 'show'
+    else
+      flash_alert "Cannot save stub: #{@stub.errors.full_messages}"
+      render 'new'
+    end
+  end
+
+  def edit
+    @stub = WcoEmail::MessageStub.find params[:id]
+    authorize! :edit, @stub
+  end
+
+  def index
+    authorize! :index, WcoEmail::MessageStub
+    @stubs = WcoEmail::MessageStub.all.page( params[:stubs_page] )
+    render '_index_table'
+  end
+
+  def new
+    @stub = WcoEmail::MessageStub.new
+    authorize! :new, @stub
+  end
+
+  def show
+    @stub = WcoEmail::MessageStub.find params[:id]
+    authorize! :show, @stub
+  end
+
+  def update
+    @stub = WcoEmail::MessageStub.find params[:id]
+    authorize! :update, @stub
+    flag = @stub.update_attributes params[:stub].permit!
+    if flag
+      flash_notice 'success'
+      redirect_to action: 'show'
+    else
+      flash_alert "Cannot save stub: #{@stub.errors.full_messages}"
+      render 'edit'
+    end
+  end
 
 end
 

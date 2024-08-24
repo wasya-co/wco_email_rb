@@ -10,8 +10,9 @@
   %iframe.message-iframe{ src: message_iframe_path(@message) }
   = render '/wco_email/contexts/form_reply', lead_id: @message.lead_id, message: @message, ctx: WcoEmail::Context.new({ from_email: @message.to&.downcase, subject: @message.subject, email_template_id: ET.find_by( slug: 'blank').id })
 
-  = @message.inspect
-  %hr
   %pre
-    = raw @the_mail.body.decoded
+    = raw @the_mail.body.decoded.force_encoding('UTF-8')
+  %hr
+  = @message.inspect
+
 
