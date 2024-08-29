@@ -12,8 +12,8 @@
     = render 'form', email_filter: @email_filter
   %hr
 
-  -# = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
-  %table.bordered.data-table
+  = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
+  %table.bordered
     %thead
       %tr
         %th &nbsp;
@@ -64,6 +64,6 @@
           - if ef.kind == EF::KIND_REMOVE_TAG
             .a <b>#{EF::KIND_REMOVE_TAG}:</b> #{ef.tag&.slug}
 
-  -# = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
+  = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
 
 
