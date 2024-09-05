@@ -30,6 +30,10 @@ class WcoEmail::ApiController < ActionController::Base
     end
   end
 
+  def current_profile
+    Wco::Profile.find_by email: current_user.email
+  end
+
   def decode_jwt
     if Rails.env.test?
       sign_in User.find_by({ email: 'victor@wasya.co' })

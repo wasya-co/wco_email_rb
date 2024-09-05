@@ -36,14 +36,17 @@ describe WcoEmail::ConversationsController do
   end
 
   describe "#index" do
+    before do
+      destroy_every( WcoEmail::Conversation )
+      @conv = WcoEmail::Conversation.create( subject: 'test subj 1', tags: [ @inbox ] )
+    end
+
     it 'does' do
       get :index
       response.code.should eql '200'
     end
 
     it 'in tagname' do
-      conv = WcoEmail::Conversation.create( subject: 'test subj 1', tags: [ @inbox ] )
-
       get :index, params: { tagname: 'inbox' }
 
       convs = assigns( :conversations )
@@ -52,7 +55,6 @@ describe WcoEmail::ConversationsController do
         conv.tags.include?( @inbox ).should eql true
       end
     end
-
   end
 
   it '#rmtag' do

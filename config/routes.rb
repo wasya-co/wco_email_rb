@@ -7,6 +7,8 @@ WcoEmail::Engine.routes.draw do
   get 'tinymce',   to: 'application#tinymce', as: :application_tinymce
 
   get 'api/contexts/summary', to: '/wco_email/api/contexts#summary'
+  get 'api/conversations', to: '/wco_email/api/conversations#index'
+  get 'api/tags/:tagname/conversations', to: '/wco_email/api/conversations#index'
 
   get  'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :conversations_in
   get  'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :conversations_not_in
