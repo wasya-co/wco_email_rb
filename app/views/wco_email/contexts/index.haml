@@ -7,7 +7,7 @@
   .W0
     = render 'wco/paginate', resource: @ctxs, param_name: :ctxs_page, views_prefix: :wco
 
-    %table.bordered.data-table
+    %table.bordered
       %thead
         %tr
           %th.actions
@@ -39,11 +39,13 @@
                 = ctx.subject ? ctx.subject : "t| #{ctx.tmpl.subject}"
             %td= ctx.email_template.slug
             %td.send_at.padded
-              .datetime
+              .datetime.p-1
                 .date= pp_date ctx.send_at
                 .time= pp_time ctx.send_at
             %td
-              .datetime.padded= pp_date ctx.sent_at
+              .datetime.p-1
+                .date= pp_date ctx.sent_at
+                .time= pp_time ctx.sent_at
             %td
               .datetime.padded= pp_date ctx.unsubscribed_at
 

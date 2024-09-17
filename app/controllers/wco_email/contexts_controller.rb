@@ -46,23 +46,24 @@ class WcoEmail::ContextsController < WcoEmail::ApplicationController
 
   def index
     authorize! :index, WcoEmail::Context
-    @ctxs = WcoEmail::Context.where(
-      :send_at.ne => nil,
-      sent_at:       nil,
-    ).order_by( sent_at: :desc, send_at: :desc
-    ).page( params[:ctxs_page]
-    ).per( current_profile.per_page )
-
+    @ctxs = WcoEmail::Context.all
     if params[:lead_id]
       @lead = Lead.find params[:lead_id]
       @ctxs = @ctxs.where( lead_id: @lead.id )
-    else
-      if my_truthy? params[:sent]
-        @ctxs = @ctxs.or({ :sent_at.ne => nil }, { :unsubscribed_at.ne => nil })
-      else
-        @ctxs = @ctxs.where( sent_at: nil, unsubscribed_at: nil )
-      end
     end
+
+    if 'true' == params[:sent]
+      @ctxs = @ctxs.where( :sent_at.ne => nil )
+    elsif 'false' == params[:sent]
+      @ctxs = @ctxs.where( sent_at: nil )
+    else
+      ## default, show notsent.
+      @ctxs = @ctxs.where( :sent_at.ne => nil )
+    end
+
+    @ctxs = @ctxs.order_by( sent_at: :desc, send_at: :desc
+      ).page( params[:ctxs_page]
+      ).per( current_profile.per_page )
   end
 
   def new
