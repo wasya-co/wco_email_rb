@@ -2,16 +2,16 @@
 development:
   clients:
     default:
-      database: ish_mac13_import
+      database: micros_email_development
       hosts:
-        - localhost:27017
+        - localhost:27041
 
 test:
   clients:
     default:
       database: micros_email_test
       hosts:
-        - localhost:27017
+        - localhost:27041
       options:
         read:
           mode: :primary

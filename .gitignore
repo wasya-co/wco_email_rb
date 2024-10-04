@@ -5,6 +5,7 @@
 chromedriver
 /config/initializers/0*
 /config/initializers/00_s3.rb
+!/config/initializers/00_s3.rb-example
 /config/master.key
 
 # /data
@@ -46,7 +47,8 @@ yarn-debug.log*
 .yarn-integrity
 
 /vendor/bundle
-
+/volumes
+!/volumes/.keep
 
 w
 .DS_Store

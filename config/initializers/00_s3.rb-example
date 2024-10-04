@@ -1,0 +1,13 @@
+::S3_CREDENTIALS ||= {
+  ## user:
+  access_key_id: "",
+  secret_access_key: "",
+  bucket: "",
+  region: 'us-east-1',
+
+  ## user:
+  access_key_id_ses: "",
+  secret_access_key_ses: "",
+  bucket_ses: "",
+  region_ses: 'us-east-1',
+}

@@ -28,6 +28,8 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
   end
 
   def index
+    puts! current_profile, 'current_profile'
+
     authorize! :index, WcoEmail::Conversation
     @conversations, @messages, @tag = WcoEmail::Conversation.load_conversations_messages_tag_by_params_and_profile( params, current_profile )
   end
