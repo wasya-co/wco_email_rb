@@ -4,8 +4,8 @@
 
 chromedriver
 /config/initializers/0*
-/config/initializers/00_s3.rb
 !/config/initializers/00_s3.rb-example
+!/config/initializers/08_integrations.rb-example
 /config/master.key
 
 # /data
