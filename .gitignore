@@ -32,14 +32,15 @@ chromedriver
 /test/dummy/config/mongoid.yml
 /test/dummy/spec/factories/wco_factories.rb
 
-/tmp/*
-!/tmp/.keep
 /test/dummy/tmp/*
 !/test/dummy/tmp/.keep
-/tmp/pids/*
-!/tmp/pids/.keep
+/test/dummy/spec/factories/wco_models_factories.rb
 /test/dummy/tmp/pids/*
 !/test/dummy/tmp/pids/.keep
+/tmp/*
+!/tmp/.keep
+/tmp/pids/*
+!/tmp/pids/.keep
 *trash
 
 /yarn-error.log

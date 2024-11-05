@@ -49,9 +49,9 @@ end
 
 def setup_users
   User.all.destroy_all
-  user = User.create!( email: 'victor@wasya.co', password: 'test1234', provider: 'keycloakopenid' )
+  @current_user = User.create!( email: 'victor@wasya.co', password: 'test1234', provider: 'keycloakopenid' )
   Wco::Profile.unscoped.map &:destroy!
-  p = Wco::Profile.create!( email: user.email )
-  sign_in user
+  p = Wco::Profile.create!( email: @current_user.email )
+  sign_in @current_user
 end
 
