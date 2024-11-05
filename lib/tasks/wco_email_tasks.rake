@@ -159,6 +159,12 @@ namespace :wco_email do
   end
 
 
+  desc "seed"
+  task :seed => :environment do
+    inbox_tag = Wco::Tag.find_or_create_by({ slug: 'inbox' })
+  end
+
+
 
   desc 'send contexts'
   task send_contexts: :environment do
