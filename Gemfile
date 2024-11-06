@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
+gem 'ffi', '~> 1.16.3'
 gem 'mongoid',           '~> 7.3.0'
 gem 'mongoid_paranoia',  '~> 0.6.0'
 gem 'mongoid-autoinc',   '~> 6.0.3'
