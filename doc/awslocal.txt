@@ -1,3 +1,17 @@
 
+##
+## key: 2021-10-18T18_41_17Fanand_phoenixwebgroup_co
+##
+
   awslocal s3 mb s3://wco-email-development
+  awslocal s3 mb s3://wco-email-ses-development
   awslocal s3 list-buckets
+
+  awslocal s3api put-object \
+    --bucket sample-bucket \
+    --key image.jpg \
+    --body image.jpg
+
+  awslocal s3api put-object --bucket wco-email-ses-development --key 2021-10-18T18_41_17Fanand_phoenixwebgroup_co --body /opt/tmp/2021-10-18T18_41_17Fanand_phoenixwebgroup_co
+
+  awslocal s3api list-objects --bucket wco-email-ses-development

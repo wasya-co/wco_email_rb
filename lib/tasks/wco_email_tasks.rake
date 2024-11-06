@@ -162,6 +162,8 @@ namespace :wco_email do
   desc "seed"
   task :seed => :environment do
     inbox_tag = Wco::Tag.find_or_create_by({ slug: 'inbox' })
+    stub = WcoEmail::MessageStub.new({ bucket: 'wco-email-ses-development',
+      object_key: '2021-10-18T18_41_17Fanand_phoenixwebgroup_co' })
   end
 
 

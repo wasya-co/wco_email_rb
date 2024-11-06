@@ -16,6 +16,9 @@ services:
       - type: bind
         source: ./volumes/localstack_development_data
         target: /var/lib/localstack
+      - type: bind
+        source: ./tmp
+        target: /opt/tmp
       - "/var/run/docker.sock:/var/run/docker.sock"
       - ./aws:/etc/localstack/init/ready.d
     # environment:

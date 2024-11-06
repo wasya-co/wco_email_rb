@@ -1,13 +1,14 @@
+
 ::S3_CREDENTIALS ||= {
   ## user:
   access_key_id: "",
   secret_access_key: "",
-  bucket: "",
+  bucket: "wco-email-development",
   region: 'us-east-1',
-
-  ## user:
-  access_key_id_ses: "",
-  secret_access_key_ses: "",
-  bucket_ses: "",
-  region_ses: 'us-east-1',
 }
+
+::SES_S3_CREDENTIALS ||= {
+  endpoint: "http://localhost:4566/",
+  force_path_style: true,
+}
+::SES_S3_BUCKET ||= "wco-email-ses-development"

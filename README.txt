@@ -1,6 +1,7 @@
 
 = Install =
 
+    alias be='bundle exec '
     alias dc='docker-compose '
 
   Copy and edit the config file:
@@ -26,6 +27,7 @@
   You need a copy of wco_models.git locally ( default location is ~/projects/ruby/wco_models )
 
     awslocal s3api create-bucket --bucket wco-email-development
+    awslocal s3api create-bucket --bucket wco-email-ses-development
 
   == Troubleshooting ==
 
