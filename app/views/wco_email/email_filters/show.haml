@@ -3,6 +3,15 @@
   .header
     %h5.title Email Filter `#{@email_filter.id}`
 
+  = @email_filter.inspect
+  %h5 Conditions
+  = @email_filter.conditions.inspect
+  %h5 Skip conditions
+  = @email_filter.skip_conditions.inspect
+  %h5 Actions
+  = @email_filter.actions.inspect
+
+  %hr
   %h5 Convs (#{@email_filter.conversations.length})
   %ul
     - @email_filter.conversations.each do |conv|

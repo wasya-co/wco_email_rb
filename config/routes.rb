@@ -6,8 +6,11 @@ WcoEmail::Engine.routes.draw do
   get 'analytics', to: 'application#analytics'
   get 'tinymce',   to: 'application#tinymce', as: :application_tinymce
 
-  get 'api/contexts/summary', to: '/wco_email/api/contexts#summary'
-  get 'api/conversations', to: '/wco_email/api/conversations#index'
+  get 'api/contexts/summary',            to: '/wco_email/api/contexts#summary'
+  get 'api/conversations',               to: '/wco_email/api/conversations#index'
+  get 'api/email_action_templates',      to: '/wco_email/api/email_action_templates#index'
+  post 'api/email_filters', to: '/wco_email/api/email_filters#create'
+  get 'api/email_templates',             to: '/wco_email/api/email_templates#index'
   get 'api/tags/:tagname/conversations', to: '/wco_email/api/conversations#index'
 
   get  'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :conversations_in
