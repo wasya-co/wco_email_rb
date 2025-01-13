@@ -3,9 +3,12 @@
 ## key: 2021-10-18T18_41_17Fanand_phoenixwebgroup_co
 ##
 
+  dc up -d localstack_development
+  ./scripts/login_mac  localstack
   awslocal s3 mb s3://wco-email-development
   awslocal s3 mb s3://wco-email-ses-development
-  awslocal s3 list-buckets
+  ## @deprecated: awslocal s3 list-buckets
+  awslocal s3 ls
 
   awslocal s3api put-object \
     --bucket sample-bucket \

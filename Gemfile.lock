@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 4704ec4576c93601f31aacab1e44a18b2cd72b59
-  branch: 3.1.0
+  revision: 8fdc798837e272dd7a3d1a75a2b1159e9f279e32
+  branch: 3.2.0
   specs:
     wco_models (3.1.0.189)
       ahoy_matey
@@ -377,7 +377,7 @@ GEM
       psych (>= 4.0.0)
     redis-client (0.22.2)
       connection_pool
-    regexp_parser (2.9.3)
+    regexp_parser (2.10.0)
     reline (0.5.11)
       io-console (~> 0.5)
     resource_kit (0.1.8)
@@ -385,7 +385,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.9)
+    rexml (3.4.0)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
@@ -404,7 +404,7 @@ GEM
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
     ruby2_keywords (0.0.5)
-    rubyzip (2.3.2)
+    rubyzip (2.4.1)
     safely_block (0.3.0)
       errbase (>= 0.1.1)
     sass-rails (6.0.0)

@@ -8,7 +8,7 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
     if @item.save
       render json: { status: :ok }
     else
-      render json: { status: :not_ok }
+      render json: { messages: @item.errors.full_messages, status: :not_ok }
     end
   end
 

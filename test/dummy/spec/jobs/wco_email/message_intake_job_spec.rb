@@ -7,7 +7,6 @@ RSpec.describe WcoEmail::MessageIntakeJob do
     it 'creates the email_message' do
       object_key = '2021-10-18T18_41_17Fanand_phoenixwebgroup_co'
 
-
       WcoEmail::Message.unscoped.where({ object_key: object_key }).map &:destroy!
       WcoEmail::Message.unscoped.where({ object_key: object_key }).length.should eql 0
 
