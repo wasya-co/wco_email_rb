@@ -41,4 +41,12 @@ describe WcoEmail::Api::EmailFiltersController do
       WcoEmail::EmailFilter.all.count.should eql( n + 1 )
     end
   end
+
+  it '#index' do
+    get :index, format: :json
+    response.code.should eql '200'
+    outs = JSON.parse response.body
+    outs['items'].length.should > 0
+  end
+
 end
