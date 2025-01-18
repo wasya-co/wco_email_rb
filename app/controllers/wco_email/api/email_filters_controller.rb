@@ -16,6 +16,16 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
     end
   end
 
+  def destroy
+    @item = ::WcoEmail::EmailFilter.find params[:id]
+    authorize! :destroy, @item
+    if @item.delete
+      render json: {  }, status: :ok
+    else
+      render json: { messages: @item.errors.full_messages }, status: 400
+    end
+  end
+
   def index
     authorize! :index, WcoEmail::EmailFilter
     @items = ::WcoEmail::EmailFilter.all
