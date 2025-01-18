@@ -4,15 +4,15 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
   def create
     authorize! :create, WcoEmail::EmailFilter
     @item = ::WcoEmail::EmailFilter.new params[:email_filter].permit({
-      actions: [ :kind, :value ],
-      conditions: [ :field, :value ],
-      skip_conditions: [ :field, :value ],
+      actions_attributes:         [ :kind,              :value ],
+      conditions_attributes:      [ :field, :matchtype, :value ],
+      skip_conditions_attributes: [ :field, :matchtype, :value ],
     })
 
     if @item.save
-      render json: { status: :ok }
+      render json: { id: @item.id.to_s }, status: :ok
     else
-      render json: { messages: @item.errors.full_messages, status: :not_ok }
+      render json: { messages: @item.errors.full_messages }, status: 400
     end
   end
 
@@ -26,6 +26,10 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
     # end
   end
 
+  def show
+    @filter = WcoEmail::EmailFilter.find params[:id]
+    authorize! :show, @filter
+  end
 
 end
 
