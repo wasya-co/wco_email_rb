@@ -37,7 +37,7 @@ describe WcoEmail::Api::EmailFiltersController do
           { kind: 'autorespond-template', value: @email_template.id.to_s },
         ],
         conditions_attributes: [
-          { field: 'leadset', matchtype: 'not-has-tag', value: @not_spam.id.to_s },
+          { field: 'leadset', operator: WcoEmail::OPERATOR_NOT_HAS_TAG, value: @not_spam.id.to_s },
         ],
       }
     end
@@ -57,7 +57,7 @@ describe WcoEmail::Api::EmailFiltersController do
     end
 
     it 'condition operator must be present' do
-      @email_filter_params[:conditions_attributes][0][:matchtype] = nil
+      @email_filter_params[:conditions_attributes][0][:operator] = nil
       post :create, params: { email_filter: @email_filter_params }, format: :json
       response.code.should eql '400'
       result = JSON.parse response.body
@@ -75,10 +75,10 @@ describe WcoEmail::Api::EmailFiltersController do
         { kind: 'add-tag',              value: @spam.id.to_s },
       ],
       conditions_attributes: [
-        { field: 'leadset', matchtype: 'equals', value: @leadset_1.id.to_s },
+        { field: 'leadset', operator: 'equals', value: @leadset_1.id.to_s },
       ],
       skip_conditions_attributes: [
-        { field: 'from',    matchtype: 'equals', value: 'except@this-one.com' },
+        { field: 'from',    operator: 'equals', value: 'except@this-one.com' },
       ],
     }}, format: :json
     if response.code != '200'
@@ -93,19 +93,26 @@ describe WcoEmail::Api::EmailFiltersController do
     @filter.conditions[0].field.should eql 'leadset'
     @filter.skip_conditions[0].field.should eql 'from'
 
+    ##
+    ## show()
+    ##
     get :show, params: { id: id }, format: :json
 
     response.code.should eql '200'
     out = JSON.parse response.body
     out['actions'].length.should > 0
+    out['actions'][0]['id'].should_not eql nil
     out['actions'][0]['kind'].should eql 'autorespond-template'
     out['actions'][0]['value'].should eql @email_template.id.to_s
+
     out['conditions'].length.should > 0
+    out['conditions'][0]['id'].should_not eql nil
     out['conditions'][0]['field'].should eql 'leadset'
-    out['conditions'][0]['matchtype'].should eql ::WcoEmail::MATCHTYPE_EQUALS
+    out['conditions'][0]['operator'].should eql ::WcoEmail::OPERATOR_EQUALS
     out['conditions'][0]['value'].should eql @leadset_1.id.to_s
 
     out['skip_conditions'].length.should > 0
+    out['skip_conditions'][0]['id'].should_not eql nil
   end
 
   it '#index' do
@@ -119,10 +126,10 @@ describe WcoEmail::Api::EmailFiltersController do
   it '#update, remove a condition' do
     attrs = {
       conditions_attributes: @filter.conditions.map { |cond|
-        { id: cond.id, field: cond.field, matchtype: cond.matchtype, value: cond.value }
+        { id: cond.id, field: cond.field, operator: cond.operator, value: cond.value }
       },
     }
-    attrs[:conditions_attributes].push({ field: 'leadset', matchtype: 'equals', value: @leadset_2 })
+    attrs[:conditions_attributes].push({ field: 'leadset', operator: 'equals', value: @leadset_2 })
     post :update, params: { id: @filter.id, email_filter: attrs }
     @filter.reload
     @filter.conditions.length.should eql 2

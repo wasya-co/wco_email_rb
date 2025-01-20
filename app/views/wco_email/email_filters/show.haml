@@ -3,13 +3,20 @@
   .header
     %h5.title Email Filter `#{@email_filter.id}`
 
-  = @email_filter.inspect
+  %pre.descr
+    = @email_filter.to_s_full
   %h5 Conditions
-  = @email_filter.conditions.inspect
+  %ul
+    - @email_filter.conditions.each do |cond|
+      %li= cond.to_s_full
   %h5 Skip conditions
-  = @email_filter.skip_conditions.inspect
+  %ul
+    - @email_filter.skip_conditions.each do |item|
+      %li= item.to_s_full
   %h5 Actions
-  = @email_filter.actions.inspect
+  %ul
+    - @email_filter.actions.each do |item|
+      %li= item.to_s_full
 
   %hr
   %h5 Convs (#{@email_filter.conversations.length})

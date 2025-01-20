@@ -3,11 +3,7 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
 
   def create
     authorize! :create, WcoEmail::EmailFilter
-    @item = ::WcoEmail::EmailFilter.new params[:email_filter].permit({
-      actions_attributes:         [ :kind,              :value ],
-      conditions_attributes:      [ :field, :matchtype, :value ],
-      skip_conditions_attributes: [ :field, :matchtype, :value ],
-    })
+    @item = ::WcoEmail::EmailFilter.new email_filter_pparams
 
     if @item.save
       render json: { id: @item.id.to_s }, status: :ok
@@ -44,8 +40,31 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
   def update
     @filter = WcoEmail::EmailFilter.find params[:id]
     authorize! :update, @filter
-    @filter.update params[:email_filter].permit!
+
+    if @filter.update email_filter_pparams
+      render json: { messages: [ 'Updated the email filter.' ] }, status: :ok
+    else
+      render json: { messages: @filter.errors.full_messages +
+        @filter.actions.map { |k| k.errors.full_messages } +
+        @filter.conditions.map { |k| k.errors.full_messages } +
+        @filter.skip_conditions.map { |k| k.errors.full_messages }
+      }, status: 400
+    end
   end
+
+  ##
+  ## private
+  ##
+  private
+
+  def email_filter_pparams
+    params[:email_filter].permit({
+      actions_attributes:         [ :id,         :kind,            :value ],
+      conditions_attributes:      [ :id, :field,        :operator, :value ],
+      skip_conditions_attributes: [ :id, :field,        :operator, :value ],
+    })
+  end
+
 
 end
 
