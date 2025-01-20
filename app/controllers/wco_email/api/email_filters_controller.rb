@@ -59,9 +59,9 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
 
   def email_filter_pparams
     params[:email_filter].permit({
-      actions_attributes:         [ :id,         :kind,            :value ],
-      conditions_attributes:      [ :id, :field,        :operator, :value ],
-      skip_conditions_attributes: [ :id, :field,        :operator, :value ],
+      actions_attributes:         [ :id, :_destroy,         :kind,            :value ],
+      conditions_attributes:      [ :id, :_destroy, :field,        :operator, :value ],
+      skip_conditions_attributes: [ :id, :_destroy, :field,        :operator, :value ],
     })
   end
 
