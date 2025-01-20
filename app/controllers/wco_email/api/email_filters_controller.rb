@@ -41,5 +41,11 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
     authorize! :show, @filter
   end
 
+  def update
+    @filter = WcoEmail::EmailFilter.find params[:id]
+    authorize! :update, @filter
+    @filter.update params[:email_filter].permit!
+  end
+
 end
 

@@ -13,6 +13,7 @@ WcoEmail::Engine.routes.draw do
   get    'api/email_filters/:id', to: '/wco_email/api/email_filters#show'
   delete 'api/email_filters/:id', to: '/wco_email/api/email_filters#destroy'
   post   'api/email_filters',     to: '/wco_email/api/email_filters#create'
+  patch  'api/email_filters/:id', to: '/wco_email/api/email_filters#update'
   get 'api/email_templates',             to: '/wco_email/api/email_templates#index'
   get 'api/tags/:tagname/conversations', to: '/wco_email/api/conversations#index'
 

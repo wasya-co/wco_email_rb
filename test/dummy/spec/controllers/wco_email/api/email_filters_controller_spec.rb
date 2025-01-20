@@ -13,15 +13,20 @@ describe WcoEmail::Api::EmailFiltersController do
     destroy_every(
       Wco::Leadset,
       Wco::Tag,
+      WcoEmail::EmailFilter,
+      WcoEmail::EmailFilterCondition,
       WcoEmail::EmailTemplate,
     )
-    @inbox = Wco::Tag.inbox
-    @spam  = Wco::Tag.spam
-    @trash = Wco::Tag.trash
+    @inbox    = Wco::Tag.inbox
+    @spam     = Wco::Tag.spam
+    @trash    = Wco::Tag.trash
     @not_spam = create( :tag, slug: 'not-spam' )
 
     @email_template = create(:email_template)
-    @leadset = Wco::Leadset.create!({ company_url: 'abba.com' })
+    @leadset_1 = create( :leadset, { email: 'test-1@leadset-1.com' })
+    @leadset_2 = create( :leadset, { email: 'test-1@leadset-2.com' })
+
+    @filter = create( :email_filter )
   end
 
   describe '#create, negative' do
@@ -70,7 +75,7 @@ describe WcoEmail::Api::EmailFiltersController do
         { kind: 'add-tag',              value: @spam.id.to_s },
       ],
       conditions_attributes: [
-        { field: 'leadset', matchtype: 'equals', value: @leadset.id.to_s },
+        { field: 'leadset', matchtype: 'equals', value: @leadset_1.id.to_s },
       ],
       skip_conditions_attributes: [
         { field: 'from',    matchtype: 'equals', value: 'except@this-one.com' },
@@ -98,7 +103,7 @@ describe WcoEmail::Api::EmailFiltersController do
     out['conditions'].length.should > 0
     out['conditions'][0]['field'].should eql 'leadset'
     out['conditions'][0]['matchtype'].should eql ::WcoEmail::MATCHTYPE_EQUALS
-    out['conditions'][0]['value'].should eql @leadset.id.to_s
+    out['conditions'][0]['value'].should eql @leadset_1.id.to_s
 
     out['skip_conditions'].length.should > 0
   end
@@ -108,6 +113,31 @@ describe WcoEmail::Api::EmailFiltersController do
     response.code.should eql '200'
     outs = JSON.parse response.body
     outs['items'].length.should > 0
+  end
+
+  ## @TODO: I can validate A LOT that a faulty filter cannot be created...
+  it '#update, remove a condition' do
+    attrs = {
+      conditions_attributes: @filter.conditions.map { |cond|
+        { id: cond.id, field: cond.field, matchtype: cond.matchtype, value: cond.value }
+      },
+    }
+    attrs[:conditions_attributes].push({ field: 'leadset', matchtype: 'equals', value: @leadset_2 })
+    post :update, params: { id: @filter.id, email_filter: attrs }
+    @filter.reload
+    @filter.conditions.length.should eql 2
+
+    remaining_id = @filter.conditions[1].id
+    attrs = {
+      conditions_attributes: [
+        { id: @filter.conditions[0].id, _destroy: '1' },
+        { id: @filter.conditions[1].id, _destroy: '0' },
+      ],
+    }
+    post :update, params: { id: @filter.id, email_filter: attrs }
+    @filter.reload
+    @filter.conditions.length.should eql 1
+    @filter.conditions.first.id.should eql remaining_id
   end
 
 end
