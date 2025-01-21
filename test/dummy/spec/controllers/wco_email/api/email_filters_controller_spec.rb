@@ -64,6 +64,14 @@ describe WcoEmail::Api::EmailFiltersController do
       # puts! result, 'result zz1'
       WcoEmail::EmailFilter.all.count.should eql( @n )
     end
+
+    it 'action must be present' do
+      @email_filter_params[:actions_attributes] = []
+      post :create, params: { email_filter: @email_filter_params }, format: :json
+      response.code.should eql '400'
+      WcoEmail::EmailFilter.all.count.should eql( @n )
+    end
+
   end
 
   it '#create, #show' do
