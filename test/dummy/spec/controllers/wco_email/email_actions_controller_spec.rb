@@ -4,11 +4,12 @@ describe WcoEmail::EmailActionsController do
   routes { WcoEmail::Engine.routes }
 
   before do
-    destroy_every( Wco::Lead,
+    destroy_every(
+      Wco::Lead,
       WcoEmail::EmailActionTemplate,
       WcoEmail::EmailAction,
       WcoEmail::EmailTemplate,
-    )
+    );
     setup_users
     @ea = create( :email_action, {
       email_action_template: create( :email_action_template,
