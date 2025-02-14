@@ -18,6 +18,20 @@ class WcoEmail::ApiController < ActionController::Base
     render status: :ok, json: { status: :ok }
   end
 
+  def create_email_message_from_postal
+    puts! params, 'create_email_message_from_postal#params'
+
+    # stub = WcoEmail::MessageStub.find_or_create_by({
+    #   bucket:     params[:bucket],
+    #   object_key: params[:object_key],
+    # })
+
+    # WcoEmail::MessageIntakeJob.perform_async( stub.id.to_s )
+    # render status: :ok, json: { status: :ok }
+  end
+
+
+
   ##
   ## private
   ##
