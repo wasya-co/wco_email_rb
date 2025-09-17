@@ -50,8 +50,11 @@ end
 def setup_users
   User.all.destroy_all
   @current_user = User.create!( email: 'victor@wasya.co', password: 'test1234', provider: 'keycloakopenid' )
+
+  wasyaco  = Wco::Leadset.find_or_create_by!({ company_url: 'wasya.co' })
+
   Wco::Profile.unscoped.map &:destroy!
-  p = Wco::Profile.create!( email: @current_user.email )
+  p = Wco::Profile.create!( email: @current_user.email, leadset: wasyaco )
   sign_in @current_user
 end
 

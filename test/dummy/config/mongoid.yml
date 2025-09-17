@@ -2,14 +2,14 @@
 development:
   clients:
     default:
-      database: micros_email_development
+      database: wco_email_development
       hosts:
         - localhost:27041
 
 test:
   clients:
     default:
-      database: micros_email_test
+      database: wco_email_test
       hosts:
         - localhost:27041
       options:

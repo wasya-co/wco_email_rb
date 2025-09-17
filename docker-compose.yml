@@ -4,7 +4,7 @@ services:
 
   localstack_development:
     image: localstack/localstack:3.7.0
-    # container_name: localstack_development
+    container_name: localstack
     environment:
       - SERVICES=s3:5002
       - DEFAULT_REGION=us-east-1
@@ -24,18 +24,26 @@ services:
     # environment:
       ## LocalStack configuration: https://docs.localstack.cloud/references/configuration/
       # - DEBUG=${DEBUG:-0}
-    restart: never
+    restart: 'unless-stopped'
 
-  mongo_trash:
+  mongo_development:
     image: mongodb/mongodb-community-server:5.0.7-ubuntu2004
+    container_name: wco_email_mongo
     ports:
       - 27041:27017
     volumes:
       - type: bind
         source: ./volumes/mongo_development_data
         target: /data/db
-    restart: never
+    restart: 'unless-stopped'
 
-
-
+  # spec_runner:
+  #   image: piousbox/ruby275-nginx:0.0.14
+  #   # command: cd /opt/projects/wco_email_rb &&  pwd
+  #   container_name: wco_email_spec_runner
+  #   volumes:
+  #     - type: bind
+  #       source: ./
+  #       target: /opt/projects/wco_email_rb
+  #   restart: 'no'
 

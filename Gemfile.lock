@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 727f8a289e7280a577f04781fe9d6abd3a0d4ffb
-  branch: 3.2.0
+  revision: 6d5d279054035e2bd41d72162656156219309406
+  branch: 3.2.1
   specs:
-    wco_models (3.1.0.201)
+    wco_models (3.1.0.213)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.94)
+    wco_email (0.1.1.95)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -378,7 +378,7 @@ GEM
       psych (>= 4.0.0)
     redis-client (0.23.2)
       connection_pool
-    regexp_parser (2.10.0)
+    regexp_parser (2.11.3)
     reline (0.5.11)
       io-console (~> 0.5)
     resource_kit (0.1.8)
@@ -386,7 +386,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.4.0)
+    rexml (3.4.4)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)

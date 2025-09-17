@@ -16,7 +16,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0.1"
 
 gem 'jbuilder', '~> 2.11.5'
 
-gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.2.0'
+gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.2.1'
 
 group :development, :test do
   gem 'ahoy_matey'
