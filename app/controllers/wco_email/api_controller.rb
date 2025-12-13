@@ -7,7 +7,7 @@ class WcoEmail::ApiController < ActionController::Base
   layout false
 
   def create_email_message
-    # puts! params, 'params'
+    puts! params, 'params'
 
     stub = WcoEmail::MessageStub.find_or_create_by({
       bucket:     params[:bucket],
