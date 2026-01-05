@@ -14,8 +14,14 @@
     .field.field-subject
       = f.label :subject
       = f.text_field :subject
-      %label mangle_subject
-      = f.check_box :mangle_subject
+      .a
+        %label mangle_subject &nbsp;
+        = f.check_box :mangle_subject
+
+    .row
+      %label respond_inline &nbsp;
+      = f.check_box :respond_inline
+
     .field
       = f.label :preview_str
       = f.text_field :preview_str
