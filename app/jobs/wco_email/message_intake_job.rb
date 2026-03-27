@@ -38,7 +38,11 @@ class WcoEmail::MessageIntakeJob
     end
 
     begin
-      stub.do_process
+      if 'json' == stub.format
+        stub.do_process_json ## postal server
+      else
+        stub.do_process
+      end
     rescue => err
       stub.update({ status: WcoEmail::MessageStub::STATUS_FAILED })
       puts! err, "WcoEmail::MessageIntakeJob error"

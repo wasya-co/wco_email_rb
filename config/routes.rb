@@ -17,7 +17,7 @@ WcoEmail::Engine.routes.draw do
   get    'api/email_templates',             to: '/wco_email/api/email_templates#index'
   get    'api/tags/:tagname/conversations', to: '/wco_email/api/conversations#index'
 
-  post   'api/messages/from-postal',        to: '/wco_email/api#create_email_message'
+  post   'api/messages/from-postal/:secret', to: '/wco_email/api/messages#create_postal'
 
   get  'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :conversations_in
   get  'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :conversations_not_in

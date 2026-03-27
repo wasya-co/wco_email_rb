@@ -11,8 +11,9 @@ class WcoEmail::ApplicationController < Wco::ApplicationController
   ##
   private
 
-  ## Nothing should be here.
+
   def set_lists
+    @tags_list = Wco::Tag.list
   end
 
 end

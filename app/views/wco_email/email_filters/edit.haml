@@ -3,3 +3,19 @@
   .header
     %h2.title Edit Email Filter
   = render 'form', email_filter: @email_filter
+
+-#
+  %hr
+  <b>Conditions (#{@email_filter.conditions.length}):</b>
+  %ul
+    - @email_filter.conditions.each do |cond|
+      %li
+        = cond.inspect
+
+  %hr
+  <b>Skip Conditions (#{@email_filter.skip_conditions.length}):</b>
+  %ul
+    - @email_filter.skip_conditions.each do |cond|
+      %li
+        = cond.inspect
+

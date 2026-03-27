@@ -22,6 +22,8 @@
         %th Match
         %th Skip
         %th Action
+        %th Conditions
+        %th Skip Conditions
 
     - @email_filters.each_with_index do |ef, idx|
 
@@ -63,6 +65,11 @@
             .a <b>#{EF::KIND_ADD_TAG}:</b> #{ef.tag&.slug}
           - if ef.kind == EF::KIND_REMOVE_TAG
             .a <b>#{EF::KIND_REMOVE_TAG}:</b> #{ef.tag&.slug}
+
+        %td.conditions
+          = ef.conditions.length
+        %td.skip-conditions
+          = ef.skip_conditions.length
 
   = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
 

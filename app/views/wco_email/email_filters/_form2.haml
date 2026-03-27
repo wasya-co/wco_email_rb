@@ -28,19 +28,12 @@
           = f_cond.text_field :value
         [-]
     .d-flex [+]
-    %p Then [test]
-    - email_filter.action_tmpls.each do |f_act_tmpl|
-      .d-flex
-        %label Office Action
-        .field
-          %label slug
-          = f_act_tmpl.slug
-        .field
-          %label config
-          = f_act_tmpl.text_area :config
-        [-]
-    .d-flex [+]
-    [perform]
+    %p Then
+    .d-flex
+      %label OAT
+      = f.select :office_action_template, options_for_select(Wco::OfficeActionTemplate.list, selected: email_filter.office_action_template_id), {}, class: 'select2'
+
+    %p [perform]
 
     .actions
       = f.submit 'Go'

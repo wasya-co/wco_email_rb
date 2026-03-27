@@ -1,0 +1,7 @@
+- email_templates ||= @templates
+.email-templates--index.maxwidth
+  %ul
+    - email_templates.each do |tmpl|
+      %li
+        = link_to '[~]',   wco_email.edit_email_template_path({ id: tmpl })
+        = tmpl.to_s

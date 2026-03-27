@@ -1,11 +1,18 @@
 
 - url = email_template.new_record? ? email_templates_path : email_template_path(email_template.id)
 
-.email-templates--form
+.email-templates--form.container
   = form_for email_template, as: :template, url: url do |f|
-    .field
-      %label Slug
-      = f.text_field :slug
+    .actions
+      = f.submit 'Save'
+
+    .row
+      .field.flex-grow-1
+        %label Slug
+        = f.text_field :slug
+      .field
+        %label Tag
+        = f.select :tag, options_for_select(@tags_list, selected: email_template.tag_id), {}, class: 'select2'
     .flex-row
       %label Layout
       = f.select :layout, options_for_select(WcoEmail::EmailTemplate::LAYOUTS, selected: email_template.layout), {}, class: 'select2'

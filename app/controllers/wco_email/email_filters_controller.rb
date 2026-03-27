@@ -69,12 +69,15 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     end
 
     flag = @email_filter.update_attributes( params[:email_filter].permit! )
+
     if flag
       flash[:notice] = 'Success'
+      redirect_to action: 'index'
     else
       flash[:alert] = "No luck: #{@email_filter.errors.full_messages.join(', ')}."
+      redirect_to request.referrer
     end
-    redirect_to action: 'index'
+
   end
 
   ##
