@@ -7,12 +7,12 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
 
   ## 2026-03-27 payload is parsed json.
   def create_postal
-    puts! params, 'api/messages#create_postal'
+    # puts! params, 'api/messages#create_postal'
 
     ## save to bucket
     @client ||= Aws::S3::Client.new(::SES_S3_CREDENTIALS)
     @client.put_object({
-      body:          params.to_json,
+      body:          JSON.pretty_generate( params ),
       bucket:      ::SES_S3_BUCKET,
       content_type: 'application/json',
       key:           params['message_id'],

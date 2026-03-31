@@ -29,26 +29,26 @@ class WcoEmail::MessageIntakeJob
 
 =end
   def perform id
-    stub = WcoEmail::MessageStub.find id
-    puts "+++ +++ Performing WcoEmail::MessageIntakeJob for object_key `#{stub.object_key}`."
+    @stub = WcoEmail::MessageStub.find id
+    puts "+++ +++ Performing WcoEmail::MessageIntakeJob for object_key `#{@stub.object_key}`."
 
-    if [ WcoEmail::MessageStub::STATUS_PROCESSED, WcoEmail::MessageStub::STATUS_FAILED ].include?( stub.status )
-      raise "This stub has already been processed, or errored out: #{stub.id.to_s}."
+    if [ WcoEmail::MessageStub::STATUS_PROCESSED, WcoEmail::MessageStub::STATUS_FAILED ].include?( @stub.status )
+      raise "This stub has already been processed, or errored out: #{@stub.id.to_s}."
       return
     end
 
     begin
-      if 'json' == stub.format
-        stub.do_process_json ## postal server
+      if 'json' == @stub.format
+        @stub.do_process_json ## postal server
       else
-        stub.do_process
+        @stub.do_process
       end
     rescue => err
-      stub.update({ status: WcoEmail::MessageStub::STATUS_FAILED })
+      @stub.update({ status: WcoEmail::MessageStub::STATUS_FAILED })
       puts! err, "WcoEmail::MessageIntakeJob error"
       ::ExceptionNotifier.notify_exception(
         err,
-        data: { stub: stub }
+        data: { stub: @stub }
       )
     end
 

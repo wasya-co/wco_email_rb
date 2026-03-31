@@ -5,9 +5,20 @@ class WcoEmail::MessageStubsController < WcoEmail::ApplicationController
     @stub = WcoEmail::MessageStub.find params[:id]
     authorize! :churn, @stub
 
+    if 'json' == @stub.format
+      @stub.do_process_json ## postal server
+    else
+      @stub.do_process
+    end
+
+=begin
     # WcoEmail::MessageIntakeJob.perform_async( @stub.id.to_s )
     begin
-      @stub.do_process
+      if 'json' == @stub.format
+        @stub.do_process_json ## postal server
+      else
+        @stub.do_process
+      end
     rescue => err
       @stub.update({ status: WcoEmail::MessageStub::STATUS_FAILED })
       puts! err, "WcoEmail::MessageIntakeJob error"
@@ -16,6 +27,7 @@ class WcoEmail::MessageStubsController < WcoEmail::ApplicationController
         data: { stub: @stub }
       )
     end
+=end
 
     flash_notice "Churned 1 stub."
     redirect_to request.referrer
