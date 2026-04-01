@@ -2,7 +2,7 @@
 .email-actions-index.padded
   .header
     %h2
-      Email Actions
+      Email Actions `#{params[:status]}`
       (#{@email_actions.length})
       = link_to '[+]', new_email_action_path
 

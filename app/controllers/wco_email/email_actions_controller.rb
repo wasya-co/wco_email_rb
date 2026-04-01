@@ -35,6 +35,9 @@ class WcoEmail::EmailActionsController < WcoEmail::ApplicationController
         :email_action_template_id.in => email_action_template_ids,
       })
     end
+    if params[:status]
+      @email_actions = @email_actions.where( status: params[:status] )
+    end
   end
 
   def new

@@ -47,6 +47,7 @@ WcoEmail::Engine.routes.draw do
   get 'email_templates/:id/iframe', to: 'email_templates#show_iframe', as: :email_template_iframe
   resources :email_templates
 
+  ## hopefully there will be no such thing - use office_actions
   resources :lead_action_templates
   resources :lead_actions
 
