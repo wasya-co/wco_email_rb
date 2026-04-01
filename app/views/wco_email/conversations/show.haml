@@ -13,8 +13,8 @@
     = render '/wco/tags/index_chips', tags: @conversation.tags, config: { skip_checkbox: true }
 
   = render '/wco_email/conversations/tags_actions'
-  = render '/wco/leads/index',    leads: @conversation.leads
-  = render '/wco/leadsets/index', leadsets: @conversation.leadsets
+  = render '/wco/leads/index',      leads: @conversation.leads
+  = render '/wco/leadsets/list', leadsets: @conversation.leadsets
 
   - if @other_convs.present?
     %h5 Other convs:
