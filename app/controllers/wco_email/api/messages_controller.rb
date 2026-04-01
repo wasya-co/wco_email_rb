@@ -12,7 +12,8 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
     ## save to bucket
     @client ||= Aws::S3::Client.new(::SES_S3_CREDENTIALS)
     @client.put_object({
-      body:          JSON.pretty_generate( params ),
+      # body:          JSON.pretty_generate( params ),
+      body: params.to_unsafe_h.to_json,
       bucket:      ::SES_S3_BUCKET,
       content_type: 'application/json',
       key:           params['message_id'],
