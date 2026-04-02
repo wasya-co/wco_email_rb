@@ -41,6 +41,7 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
 
     @aject_options = {
       'none' => [ [nil,nil] ],
+      'Wco::Tag' => Wco::Tag.all.map { |t| [t.slug, "Wco::Tag #{t.id}" ] },
       'WcoEmail::EmailTemplate' => WcoEmail::EmailTemplate.all.map { |t| [ t.slug, "WcoEmail::EmailTemplate #{t.id}" ] },
     }
   end
@@ -79,15 +80,51 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     @email_filter = WcoEmail::EmailFilter.find params[:id]
     authorize! :update, @email_filter
 
-    if params[:email_filter][:tag].blank?
-      params[:email_filter].delete :tag
+=begin
+    params[:email_filter][:actions_attributes].each do |_key, attrs|
+      puts! attrs, 'attrs 1'
+
+      if '' == attrs[:kind] && '' == attrs[:aject]
+        next ## don't save new empty
+      end
+
+
+      if attrs[:id]
+        action = WcoEmail::EmailFilterAction.find attrs[:id]
+      else
+        action = WcoEmail::EmailFilterAction.new({ email_filter_id: params[:id] })
+      end
+
+      if '1' == attrs.delete( :_destroy )
+        action.destroy!
+      else
+        type, id = attrs.delete(:aject).split(' ')
+        attrs[:aject_type] = type
+        attrs[:aject_id] = id
+
+        puts! attrs, 'attrs 2'
+
+        action.update!(attrs.permit!)
+      end
+
     end
+=end
+
+    params[:email_filter][:actions_attributes].each do |_key, attrs|
+      type, id = attrs.delete(:aject).split(' ')
+      attrs[:aject_type] = type
+      attrs[:aject_id] = id
+    end
+
+    # if params[:email_filter][:tag].blank?
+    #   params[:email_filter].delete :tag
+    # end
 
     flag = @email_filter.update_attributes( params[:email_filter].permit! )
 
     if flag
       flash[:notice] = 'Success'
-      redirect_to action: 'index'
+      redirect_to request.referrer
     else
       flash[:alert] = "No luck: #{@email_filter.errors.full_messages.join(', ')}."
       redirect_to request.referrer

@@ -3,12 +3,15 @@
 
   .d-flex
     .field
+      %label [-]
+      = f.check_box :_destroy
+
       %label Kind
-      = f.select :kind, options_for_select( WcoEmail::EmailFilter::KINDS, selected: action.kind )
+      = f.select :kind, options_for_select( [[nil,nil]] + WcoEmail::EmailFilterAction::KINDS, selected: action.kind )
 
     .field.flex-grow
       %label aject
-      = f.select :aject, grouped_options_for_select( @abject_options, { selected: '_TODO' }), {}, { class: 'select2' }
+      = f.select :aject, grouped_options_for_select( @aject_options, { selected: "#{action.aject.class_name} #{}" }), {}, { class: 'select2' }
 
   -# .field
   -#   %label Email Template

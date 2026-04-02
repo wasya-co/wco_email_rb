@@ -1,9 +1,5 @@
 
 .emails-ns.email-filters-edit.maxwidth
-  .header
-    %h5.title
-      Edit Email Filter
-      = link_to '[edit2]', wco_email.edit2_email_filter_path( @email_filter )
+  = render 'header'
   = render 'form', email_filter: @email_filter
-
   = render 'show', email_filter: @email_filter

@@ -1,7 +1,6 @@
 
 .email-filters-show.maxwidth
-  .header
-    %h5.title Email Filter `#{@email_filter.id}`
+  = render 'header'
 
   %pre.descr
     = @email_filter.to_s_full
