@@ -8,32 +8,27 @@
   = form_for email_filter, url: url, as: :email_filter do |f|
 
     %p If
-    - f.fields_for( :email_filter_conditions ) do |f_cond|
-      = render '/wco_email/email_filter_conditions/form', f: f_cond
-    = form_for @new_email_filter_condition do |ff|
-      = render '/wco_email/email_filter_conditions/form', f: ff
+    = f.fields_for( :conditions ) do |f_cond|
+      = render '/wco_email/email_filter_conditions/form', f: f_cond, cond: f_cond.object
 
-    .d-flex [+]
+    -# .d-flex
+    -#   %label add
+    -#   = form_for @new_email_filter_condition do |f_cond|
+    -#     = render '/wco_email/email_filter_conditions/form', f: f_cond, cond: f_cond.object
+
     %p Skip
-    - email_filter.skip_conditions.each do |f_cond|
-      .d-flex
-        .field
-          %label Field
-          = f_cond.select :field, options_for_select(WcoEmail::EmailFilter::FIELD_OPTS, selected: f_cond.field)
-        .field
-          %label Matchtype
-          = f_cond.select :matchtype, options_for_select(WcoEmail::EmailFilter::MATCHTYPE_OPTS, selected: f_cond.matchtype)
-        .field
-          %label Value
-          = f_cond.text_field :value
-        [-]
-    .d-flex [+]
-    %p Then
-    .d-flex
-      %label OAT
-      = f.select :office_action_template, options_for_select(Wco::OfficeActionTemplate.list, selected: email_filter.office_action_template_id), {}, class: 'select2'
+    = f.fields_for( :skip_conditions ) do |f_cond|
+      = render '/wco_email/email_filter_conditions/form', f: f_cond, cond: f_cond.object
 
-    %p [perform]
+    -# .d-flex
+    -#   %label add
+    -#   = form_for @new_email_filter_condition do |f_cond|
+    -#     = render '/wco_email/email_filter_conditions/form', f: f_cond, cond: f_cond.object
+
+    %p Then
+    = f.fields_for( :actions ) do |f_action|
+      = render '/wco_email/email_filter_actions/form', f: f_action, action: f_action.object
 
     .actions
       = f.submit 'Go'
+

@@ -5,21 +5,27 @@
 
   %pre.descr
     = @email_filter.to_s_full
-  %h5 Conditions
-  %ul
-    - @email_filter.conditions.each do |cond|
-      %li= cond.to_s_full
-  %h5 Skip conditions
-  %ul
-    - @email_filter.skip_conditions.each do |item|
-      %li= item.to_s_full
-  %h5 Actions
-  %ul
-    - @email_filter.actions.each do |item|
-      %li= item.to_s_full
 
   %hr
-  %h5 Convs (#{@email_filter.conversations.length})
+  %h5 Conversations (#{@email_filter.conversations.length})
   %ul
     - @email_filter.conversations.each do |conv|
       %li= link_to conv, conversation_path(conv)
+
+
+  = render 'show', email_filter: @email_filter
+
+  -# %h5 Conditions
+  -# %ul
+  -#   - @email_filter.conditions.each do |cond|
+  -#     %li= cond.to_s_full
+
+  -# %h5 Skip conditions
+  -# %ul
+  -#   - @email_filter.skip_conditions.each do |item|
+  -#     %li= item.to_s_full
+
+  -# %h5 Actions
+  -# %ul
+  -#   - @email_filter.actions.each do |item|
+  -#     %li= item.to_s_full

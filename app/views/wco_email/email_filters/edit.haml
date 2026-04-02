@@ -1,20 +1,9 @@
 
 .emails-ns.email-filters-edit.maxwidth
   .header
-    %h2.title Edit Email Filter
+    %h5.title
+      Edit Email Filter
+      = link_to '[edit2]', wco_email.edit2_email_filter_path( @email_filter )
   = render 'form', email_filter: @email_filter
 
-  %hr
-  <b>Conditions (#{@email_filter.conditions.length}):</b>
-  %ul
-    - @email_filter.conditions.each do |cond|
-      %li
-        = cond.inspect
-
-  %hr
-  <b>Skip Conditions (#{@email_filter.skip_conditions.length}):</b>
-  %ul
-    - @email_filter.skip_conditions.each do |cond|
-      %li
-        = cond.inspect
-
+  = render 'show', email_filter: @email_filter

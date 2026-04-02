@@ -1,0 +1,13 @@
+
+.emails-ns.email-filters-edit.maxwidth
+  .header
+    %h5.title
+      Edit2
+      &nbsp;
+      = link_to '[~]',          wco_email.edit_email_filter_path( @email_filter )
+      &nbsp;
+      = link_to 'Email Filter', wco_email.email_filter_path( @email_filter )
+
+  = render 'form2', email_filter: @email_filter
+
+  = render 'show', email_filter: @email_filter

@@ -30,6 +30,21 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     @email_filter = WcoEmail::EmailFilter.find params[:id]
     authorize! :edit, @email_filter
   end
+  def edit2
+    @email_filter = WcoEmail::EmailFilter.find( params[:id] )
+    authorize! :edit, @email_filter
+
+    # @new_email_filter_condition = WcoEmail::EmailFilterCondition.new
+    @email_filter.conditions.build
+    @email_filter.skip_conditions.build
+    @email_filter.actions.build
+
+    @aject_options = {
+      'none' => [ [nil,nil] ],
+      'WcoEmail::EmailTemplate' => WcoEmail::EmailTemplate.all.map { |t| [ t.slug, "WcoEmail::EmailTemplate #{t.id}" ] },
+    }
+  end
+
 
   def index
     authorize! :index, WcoEmail::EmailFilter.new

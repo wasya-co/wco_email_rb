@@ -1,0 +1,32 @@
+
+.email-filter-actions--form
+
+  .d-flex
+    .field
+      %label Kind
+      = f.select :kind, options_for_select( WcoEmail::EmailFilter::KINDS, selected: action.kind )
+
+    .field.flex-grow
+      %label aject
+      = f.select :aject, grouped_options_for_select( @abject_options, { selected: '_TODO' }), {}, { class: 'select2' }
+
+  -# .field
+  -#   %label Email Template
+  -#   = f.select :email_template_id, options_for_select(@email_templates_list, selected: action.email_template_id ), {}, { class: 'select2' }
+
+  -# .field
+  -#   %label Email Action Template (EAT)
+  -#   = f.select :email_action_template_id, options_for_select( @email_action_templates_list, selected: action.email_action_template_id ), {}, class: 'select2'
+
+  -# .field
+  -#   %label Office Action Template (OAT)
+  -#   = f.select :office_action_template_id, options_for_select( ::Wco::OfficeActionTemplate.list, selected: action.office_action_template_id ), {}, class: 'select2'
+
+  -# .field
+  -#   = f.label :tag
+  -#   = f.select :tag, options_for_select( @tags_list, selected: email_filter.tag_id ), {}, class: 'select2'
+
+  -# .field
+  -#   %label value ( not used? )
+  -#   = f.text_area :value
+

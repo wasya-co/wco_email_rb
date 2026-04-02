@@ -34,6 +34,7 @@
         %td
           .flex-row
             = link_to '[~]',    edit_email_filter_path(ef)
+            = link_to '[~2]',   edit2_email_filter_path(ef)
             = link_to '[view]', email_filter_path(ef)
             .inline-block= button_to '[x]', email_filter_path(ef), method: :delete, data: { confirm: 'Are you sure?' }
         %td.n-convs

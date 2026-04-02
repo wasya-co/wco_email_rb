@@ -40,7 +40,8 @@ WcoEmail::Engine.routes.draw do
   post 'contexts/send_immediate/:id', to: 'contexts#send_immediate',   as: :send_context
   resources :contexts
 
-  get 'email_filters/new2', to: 'email_filters#new2', as: :new2_email_filter
+  get 'email_filters/new2',  to: 'email_filters#new2',  as: :new2_email_filter
+  get 'email_filters/:id/edit2', to: 'email_filters#edit2', as: :edit2_email_filter
   resources :email_filters
   resources :email_filter_conditions
 

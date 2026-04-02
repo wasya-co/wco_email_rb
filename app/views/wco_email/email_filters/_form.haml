@@ -56,21 +56,21 @@
           %label skip from regex
           = f.text_field :skip_from_regex
 
-      .col-12
-        Conditions:
-        %ul
-          - email_filter.conditions.each do |cond|
-            %li
-              = f.fields_for( :conditions ) do |f_cond|
-                = render '/wco_email/email_filter_conditions/form', cond: cond, f: f_cond
+      -# .col-12
+      -#   Conditions:
+      -#   %ul
+      -#     - email_filter.conditions.each do |cond|
+      -#       %li
+      -#         = f.fields_for( :conditions ) do |f_cond|
+      -#           = render '/wco_email/email_filter_conditions/form', cond: cond, f: f_cond
 
-      .col-12
-        skip conditions:
-        %ul
-          - email_filter.skip_conditions.each do |cond|
-            %li
-              = f.fields_for( :skip_conditions ) do |f_cond|
-                = render '/wco_email/email_filter_conditions/form', cond: cond, f: f_cond
+      -# .col-12
+      -#   skip conditions:
+      -#   %ul
+      -#     - email_filter.skip_conditions.each do |cond|
+      -#       %li
+      -#         = f.fields_for( :skip_conditions ) do |f_cond|
+      -#           = render '/wco_email/email_filter_conditions/form', cond: cond, f: f_cond
 
       .col-12
         .actions

@@ -1,0 +1,30 @@
+
+.email-filters--show
+  .row
+    .col-6
+
+      %hr
+      = email_filter.inspect
+
+    .col-6
+      %hr
+      <b>Conditions (#{email_filter.conditions.length}):</b>
+      %ul
+        - email_filter.conditions.each do |cond|
+          %li
+            -# %pre= cond.inspect.gsub(', ', ",\n")
+            = cond.inspect
+
+      %hr
+      <b>Skip Conditions (#{email_filter.skip_conditions.length}):</b>
+      %ul
+        - email_filter.skip_conditions.each do |cond|
+          %li
+            = cond.pretty_inspect
+
+      %hr
+      <b>Actions (#{email_filter.actions.length}):</b>
+      %ul
+        - email_filter.actions.each do |act|
+          %li
+            = act.pretty_inspect
