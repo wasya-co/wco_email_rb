@@ -12,19 +12,21 @@
       %ul
         - email_filter.conditions.each do |cond|
           %li
-            -# %pre= cond.inspect.gsub(', ', ",\n")
-            = cond.inspect
+            = cond.to_s
+            .gray= cond.inspect
 
       %hr
       <b>Skip Conditions (#{email_filter.skip_conditions.length}):</b>
       %ul
         - email_filter.skip_conditions.each do |cond|
           %li
-            = cond.pretty_inspect
+            = cond.to_s
+            .gray= cond.pretty_inspect
 
       %hr
       <b>Actions (#{email_filter.actions.length}):</b>
       %ul
         - email_filter.actions.each do |act|
           %li
-            = act.pretty_inspect
+            = act.to_s
+            .gray= act.pretty_inspect

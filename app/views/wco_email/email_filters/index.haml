@@ -6,39 +6,52 @@
       = link_to '[+]', new_email_filter_path
       = link_to '[2+]', new2_email_filter_path
 
-  .maxwidth
-    %hr
-    %h5.title.collapse-expand#newEmailFilter New Email Filter
-    = render 'form', email_filter: @email_filter
-  %hr
+  -# .maxwidth
+  -#   %hr
+  -#   %h5.title.collapse-expand#newEmailFilter New Email Filter
+  -#   = render 'form', email_filter: @email_filter
 
+  .actions.d-flex
+    .a.mr-2= button_tag 'Delete', method: :delete, class: 'delete-btn'
+    = render 'wco/tags/actions', resource: 'Wco::Leadset'
+
+
+  %hr
   = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
   %table.bordered
     %thead
       %tr
+        %th.select-all.nosort
+          = render '/wco/select_all'
         %th &nbsp;
-        %th &nbsp;
+        %th status
         %th n convs
+        %th to_s_full
         %th Match
         %th Skip
-        %th Action
-        %th Conditions
-        %th Skip Conditions
+        %th Kind
+        -# %th Conditions
+        -# %th Skip Conditions
 
     - @email_filters.each_with_index do |ef, idx|
 
       %tr
-        %td
+        %td.select-all
           .gray= idx+1
-          = check_box_tag 'checked'
+          = check_box_tag 'email_filter_ids[]', ef.id, nil, { class: 'i-sel' }
         %td
           .flex-row
             = link_to '[~]',    edit_email_filter_path(ef)
             = link_to '[~2]',   edit2_email_filter_path(ef)
             = link_to '[view]', email_filter_path(ef)
             .inline-block= button_to '[x]', email_filter_path(ef), method: :delete, data: { confirm: 'Are you sure?' }
+          .gray.small= ef.id
+        %td.status
+          = ef.status
         %td.n-convs
           = ef.conversations.length
+        %td.to_s_full
+          %pre= ef.to_s_full
         %td.match
           - if ef.from_regex.present?
             .a <b>from_regex:</b> `#{ef.from_regex}`
@@ -67,10 +80,10 @@
           - if ef.kind == EF::KIND_REMOVE_TAG
             .a <b>#{EF::KIND_REMOVE_TAG}:</b> #{ef.tag&.slug}
 
-        %td.conditions
-          = ef.conditions.length
-        %td.skip-conditions
-          = ef.skip_conditions.length
+        -# %td.conditions
+        -#   = ef.conditions.length
+        -# %td.skip-conditions
+        -#   = ef.skip_conditions.length
 
   = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
 

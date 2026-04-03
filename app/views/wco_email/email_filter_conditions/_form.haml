@@ -1,13 +1,15 @@
 
 .email-filter-conditions--form.descr
   .d-flex
-    .d-flex [-]
+    .field
+      %label [destroy]
+      = f.check_box :_destroy
     .field
       %label Field
-      = f.select :field, options_for_select([[nil,nil]] + WcoEmail::EmailFilter::FIELD_OPTS, selected: cond.field )
+      = f.select :field, options_for_select([[nil,nil]] + WcoEmail::EmailFilterCondition::FIELD_OPTS, selected: cond.field )
     .field
       %label Operator
-      = f.select :operator, options_for_select([[nil,nil]] + WcoEmail::EmailFilter::OPERATOR_OPTS, selected: cond.operator)
+      = f.select :operator, options_for_select([[nil,nil]] + WcoEmail::EmailFilterCondition::OPERATOR_OPTS, selected: cond.operator)
     .field
       %label Value
       = f.text_field :value, value: cond.value

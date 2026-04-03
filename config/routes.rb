@@ -42,6 +42,7 @@ WcoEmail::Engine.routes.draw do
 
   get 'email_filters/new2',  to: 'email_filters#new2',  as: :new2_email_filter
   get 'email_filters/:id/edit2', to: 'email_filters#edit2', as: :edit2_email_filter
+  delete 'email_filters',        to: '/wco_email/email_filters#destroy'
   resources :email_filters
   resources :email_filter_conditions
 
