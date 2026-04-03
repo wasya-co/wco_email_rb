@@ -7,7 +7,7 @@ class WcoEmail::MessagesController < WcoEmail::ApplicationController
     @message = WcoEmail::Message.find params[:id]
 
     @client ||= Aws::S3::Client.new({
-      region:            ::S3_CREDENTIALS[:region_ses],
+      region:            ::S3_CREDENTIALS[:region_ses] || 'us-east-1',
       access_key_id:     ::S3_CREDENTIALS[:access_key_id_ses],
       secret_access_key: ::S3_CREDENTIALS[:secret_access_key_ses],
     })

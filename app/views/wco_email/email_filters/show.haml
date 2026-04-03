@@ -6,23 +6,24 @@
     = @email_filter.to_s_full
 
   %hr
-  %h5 Conversations (#{@conversations.length})
-  = paginate @conversations, param_name: WcoEmail::Conversation::PAGE_PARAM_NAME, views_prefix: 'wco'
-  %table.bordered.padded
-    %thead
-      %tr
-        %th leadsets
-        %th leads
-        %th convo
-    %tbody
-      - @conversations.each do |conv|
+  %i.fa.fa-compress.collapse-expand#conversations Conversations (#{@conversations.length}):
+  .a
+    = paginate @conversations, param_name: WcoEmail::Conversation::PAGE_PARAM_NAME, views_prefix: 'wco'
+    %table.bordered.padded
+      %thead
         %tr
-          %td.leadsets
-            = conv.leadsets.map &:to_s
-          %td.leads
-            = conv.leads.map &:to_s
-          %td.convo
-            = link_to conv, conversation_path(conv)
+          %th leadsets
+          %th leads
+          %th convo
+      %tbody
+        - @conversations.each do |conv|
+          %tr
+            %td.leadsets
+              = conv.leadsets.map &:to_s
+            %td.leads
+              = conv.leads.map &:to_s
+            %td.convo
+              = link_to conv, conversation_path(conv)
 
 
   = render 'show', email_filter: @email_filter

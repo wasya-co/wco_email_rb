@@ -13,8 +13,12 @@
     = render '/wco/tags/index_chips', tags: @conversation.tags, config: { skip_checkbox: true }
 
   = render '/wco_email/conversations/tags_actions'
-  = render '/wco/leads/index',      leads: @conversation.leads
-  = render '/wco/leadsets/list', leadsets: @conversation.leadsets
+  .d-flex
+    %i.fa.fa-compress.collapse-expand#leads Leads (#{@conversation.leads.length}):
+    = render '/wco/leads/list',      leads: @conversation.leads
+  .d-flex
+    %i.fa.fa-compress.collapse-expand#leadsets Leadsets (#{@conversation.leadsets.length}):
+    = render '/wco/leadsets/list', leadsets: @conversation.leadsets
 
   - if @other_convs.present?
     %h5 Other convs:
