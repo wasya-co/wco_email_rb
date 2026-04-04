@@ -11,6 +11,7 @@ class WcoEmail::EmailCampaignsController < WcoEmail::ApplicationController
   def create
     @campaign = EmailCampaign.new params[:campaign].permit!
     authorize! :create, @campaign
+
     if @campaign.save
       flash[:notice] = "created campaign"
     else
@@ -23,6 +24,12 @@ class WcoEmail::EmailCampaignsController < WcoEmail::ApplicationController
     @campaign = EmailCampaign.find params[:id]
     authorize! :send, @campaign
     @campaign.do_send
+    @campaign.update_attributes({
+      status: 'inactive',
+      sent_at: Time.now,
+    })
+    flash[:notice] = 'Probably ok.'
+    redirect_to request.referrer
   end
 
   def edit
@@ -38,6 +45,8 @@ class WcoEmail::EmailCampaignsController < WcoEmail::ApplicationController
   def new
     @campaign = EmailCampaign.new
     authorize! :new, @campaign
+
+    @tags_list = Wco::Tag.list
   end
 
   def show

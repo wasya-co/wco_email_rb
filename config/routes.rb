@@ -32,6 +32,8 @@ WcoEmail::Engine.routes.draw do
   post 'email_action_templates', to: 'email_action_templates#update'
   resources :email_action_templates
   resources :email_actions
+
+  post 'email_campaigns/:id/do_send', to: 'email_campaigns#do_send', as: :send_email_campaign
   resources :email_campaigns
   resources :email_layouts
 
