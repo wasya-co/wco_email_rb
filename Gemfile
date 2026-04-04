@@ -15,6 +15,7 @@ gem "omniauth-keycloak",              "~> 1.5.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0.1"
 
 gem 'jbuilder', '~> 2.11.5'
+gem 'postal-ruby', '~> 1.0'
 
 gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.3.1'
 
