@@ -61,7 +61,7 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
       'Wco::Tag' => Wco::Tag.all.map { |t| [t.slug, "Wco::Tag #{t.id}" ] },
       'WcoEmail::EmailTemplate' => WcoEmail::EmailTemplate.all.map { |t| [ t.slug, "WcoEmail::EmailTemplate #{t.id}" ] },
       'WcoEmail::EmailActionTemplate' => WcoEmail::EmailActionTemplate.all.map { |t| [ t.slug, "WcoEmail::EmailActionTemplate #{t.id}" ] },
-      'Wco::OfficeActionTemplate' => Wco::OfficeActionTemplate.all.map { |t| [ t.slug, "WcoEmail::OfficeActionTemplate #{t.id}" ] },
+      'Wco::OfficeActionTemplate' => Wco::OfficeActionTemplate.all.map { |t| [ t.slug, "Wco::OfficeActionTemplate #{t.id}" ] },
     }
   end
 
@@ -97,6 +97,7 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
       'none' => [ [nil,nil] ],
       'Wco::Tag' => Wco::Tag.all.map { |t| [t.slug, "Wco::Tag #{t.id}" ] },
       'WcoEmail::EmailTemplate' => WcoEmail::EmailTemplate.all.map { |t| [ t.slug, "WcoEmail::EmailTemplate #{t.id}" ] },
+      'Wco::OfficeActionTemplate' => Wco::OfficeActionTemplate.all.map { |t| [ t.slug, "Wco::OfficeActionTemplate #{t.id}" ] },
     }
   end
 
