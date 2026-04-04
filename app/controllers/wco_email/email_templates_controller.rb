@@ -1,22 +1,35 @@
 
-
 class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
 
   def create
     authorize! :create, WcoEmail::EmailTemplate
-    @template = WcoEmail::EmailTemplate.create params[:template].permit!
-    if @template.persisted?
+
+    if params[:photo].present?
+      photo = Wco::Photo.create! params[:photo].permit!
+      params[:template][:photo_id] = photo.id
+    end
+
+    @tmpl = WcoEmail::EmailTemplate.create params[:template].permit!
+    if @tmpl.persisted?
       flash[:notice] = 'Success.'
+      if params[:template][:photo].present?
+        if @tmpl.photo.present?
+          @tmpl.photo.update(params[:template][:photo])
+        else
+          @tmpl.photo = Wco::Photo.create(params[:template][:photo])
+        end
+      end
+
     else
-      flash[:alert] = "Could not create an email template: #{@template.errors.full_messages.join(', ')}."
+      flash[:alert] = "Could not create an email template: #{@tmpl.errors.full_messages.join(', ')}."
     end
     redirect_to action: :index
   end
 
   def destroy
     authorize! :destroy, WcoEmail::EmailTemplate
-    @template = WcoEmail::EmailTemplate.where({ id: params[:id] }).first || WcoEmail::EmailTemplate.find_by({ slug: params[:id] })
-    if @template.destroy
+    @tmpl = WcoEmail::EmailTemplate.where({ id: params[:id] }).first || WcoEmail::EmailTemplate.find_by({ slug: params[:id] })
+    if @tmpl.destroy
       flash[:notice] = 'Success.'
     else
       flash[:alert] = 'Cannot destroy this template.'
@@ -27,6 +40,8 @@ class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
   def edit
     @tmpl = @email_template = WcoEmail::EmailTemplate.where({ id: params[:id] }).first
     authorize! :edit, @tmpl
+
+    @photo = @tmpl.photo || @tmpl.build_photo
   end
 
   def iframe_src
@@ -74,8 +89,10 @@ class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
   end
 
   def new
-    @new_email_template = WcoEmail::EmailTemplate.new
+    @tmpl = WcoEmail::EmailTemplate.new
     authorize! :new, WcoEmail::EmailTemplate
+
+    @photo = @tmpl.photo || @tmpl.build_photo
   end
 
   def show
@@ -104,13 +121,19 @@ class WcoEmail::EmailTemplatesController < WcoEmail::ApplicationController
   end
 
   def update
-    @template = WcoEmail::EmailTemplate.where({ id: params[:id] }).first
-    authorize! :update, @template
-    flag = @template.update_attributes( params[:template].permit! )
+    @tmpl = WcoEmail::EmailTemplate.where({ id: params[:id] }).first
+    authorize! :update, @tmpl
+
+    if params[:photo].present?
+      photo = Wco::Photo.create! params[:photo].permit!
+      params[:template][:photo_id] = photo.id
+    end
+
+    flag = @tmpl.update_attributes( params[:template].permit! )
     if flag
       flash[:notice] = 'Success.'
     else
-      flash[:alert] = "No luck. #{@template.errors.full_messages.join(', ')}"
+      flash[:alert] = "No luck. #{@tmpl.errors.full_messages.join(', ')}"
     end
     redirect_to action: :edit
   end

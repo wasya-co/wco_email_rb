@@ -2,7 +2,7 @@
 - url = email_template.new_record? ? email_templates_path : email_template_path(email_template.id)
 
 .email-templates--form.container
-  = form_for email_template, as: :template, url: url do |f|
+  = form_for email_template, as: :template, url: url, :html => { :multipart => true } do |f|
     .actions
       = f.submit 'Save'
 
@@ -65,6 +65,19 @@
         .field
           = f.label :config_exe
           = f.text_area :config_exe
+
+    .row
+      .col-6
+        .field
+          %label photo
+
+          %p Current photo:
+          = image_tag @tmpl.photo.photo.url(:thumb)
+
+          = fields_for :photo, @photo do |p|
+            %p
+              %label photo
+              = p.file_field :photo
 
     .actions
       = f.submit 'Save'
