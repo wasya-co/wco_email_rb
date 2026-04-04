@@ -64,6 +64,9 @@ class WcoEmail::MessageStubsController < WcoEmail::ApplicationController
   def show
     @stub = WcoEmail::MessageStub.find params[:id]
     authorize! :show, @stub
+
+    @client ||= Aws::S3::Client.new(::SES_S3_CREDENTIALS)
+    @json = JSON.parse( @client.get_object( bucket: @stub.bucket, key: @stub.object_key ).body.read )
   end
 
   def update
