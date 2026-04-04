@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 932c284ec573f2952ec7f996a6dcaff86c7f83b2
+  revision: 06e0d0e159b3611f0eedf0f05d6c7516483f72a2
   branch: 3.3.1
   specs:
-    wco_models (3.1.0.251)
+    wco_models (3.1.0.252)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.108)
+    wco_email (0.1.1.109)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -125,7 +125,7 @@ GEM
       device_detector
       safely_block (>= 0.2.1)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1233.0)
+    aws-partitions (1.1234.0)
     aws-sdk-core (3.244.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
@@ -149,7 +149,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.22)
-    bigdecimal (4.1.0)
+    bigdecimal (4.1.1)
     bindata (2.5.0)
     bson (5.0.1)
     builder (3.3.0)
@@ -379,7 +379,7 @@ GEM
       psych (>= 4.0.0)
     redis-client (0.28.0)
       connection_pool
-    regexp_parser (2.11.3)
+    regexp_parser (2.12.0)
     reline (0.5.11)
       io-console (~> 0.5)
     resource_kit (0.1.8)
