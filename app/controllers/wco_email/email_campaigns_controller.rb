@@ -23,12 +23,9 @@ class WcoEmail::EmailCampaignsController < WcoEmail::ApplicationController
   def do_send
     @campaign = EmailCampaign.find params[:id]
     authorize! :send, @campaign
-    @campaign.do_send
-    @campaign.update_attributes({
-      status: 'inactive',
-      sent_at: Time.now,
-    })
-    flash[:notice] = 'Probably ok.'
+    @campaign.update_attributes( status: 'scheduling' )
+    WcoEmail::EmailCampaignJob.perform_async( params[:id] )
+    flash[:notice] = 'Scheduled.'
     redirect_to request.referrer
   end
 
