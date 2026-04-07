@@ -8,26 +8,18 @@
         %li= link_to 'Inbox', conversations_in_path('inbox')
         %li
           = link_to 'Stubs', wco_email.message_stubs_path
-          (#{WcoEmail::MessageStub.pending.length})
+          (pending:#{WcoEmail::MessageStub.pending.length})
           (#{WcoEmail::MessageStub.all.length})
           = link_to '[+]', wco_email.new_message_stub_path
         %li= render '/wco_email/email_templates/header'
-        %li= render '/wco_email/email_campaigns/header'
         %li= render '/wco_email/email_filters/main_header'
         %li= render '/wco_email/contexts/header'
-        %li= render '/wco/unsubscribes/header'
-
-
+        -# %li= render '/wco/unsubscribes/header'
 
       %ul
         %li= render '/wco_email/email_action_templates/header'
         %li= render '/wco_email/email_actions/header'
-        %li= render '/wco/obfuscated_redirects/header'
+        %li= render '/wco_email/email_campaigns/header'
 
-        -# %li= render '/wco_email/lead_action_templates/header'
-        -# %li= render '/wco_email/lead_actions/header'
-
-        -# %li
-        -#   = link_to "OActions (#{Wco::OfficeAction.all.length})", office_actions_path
-        -#   = link_to '[+]', new_office_action_path
-
+      %ul
+        %li= link_to 'Email Config', wco_email.configs_path

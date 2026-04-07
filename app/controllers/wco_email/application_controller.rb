@@ -5,6 +5,9 @@ class WcoEmail::ApplicationController < Wco::ApplicationController
 
   layout 'wco_email/application'
 
+  def config_page
+    authorize! :config, WcoEmail
+  end
 
   ##
   ## private

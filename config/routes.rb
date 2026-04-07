@@ -19,6 +19,8 @@ WcoEmail::Engine.routes.draw do
 
   post   'api/messages/from-postal/:secret', to: '/wco_email/api/messages#create_postal'
 
+  resources :configs
+
   get  'conversations/in/:tagname',         to: '/wco_email/conversations#index', as: :conversations_in
   get  'conversations/not-in/:tagname_not', to: '/wco_email/conversations#index', as: :conversations_not_in
   get  'conversations/:id',                 to: '/wco_email/conversations#show',  as: :conversation

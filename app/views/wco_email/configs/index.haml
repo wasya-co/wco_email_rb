@@ -1,0 +1,24 @@
+
+.configs-index.maxwidth
+  %h5.text-center
+    Configurations
+
+  %table.bordered
+    %thead
+      %tr
+        %th Key
+        %th Value
+        %th Description
+
+    %tbody
+      - @configs.each do |config|
+        %tr
+          %td= config.key
+          %td= config.value
+          %td= config.descr
+          %td.actions
+            = link_to 'Show', wco_email.config_path(config)
+            = link_to 'Edit', wco_email.edit_config_path(config)
+            = link_to 'Destroy', wco_email.config_path(config), method: :delete, data: { confirm: 'Are you sure?' }
+
+  = link_to 'New Config', wco_email.new_config_path
