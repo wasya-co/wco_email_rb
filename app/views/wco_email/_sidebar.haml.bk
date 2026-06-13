@@ -1,5 +1,13 @@
 
 .application--sidebar
+  sidebar tags
+  = link_to '[+]', wco.new_sidebar_tag_path
+  (#{@sidebar_tags.length}):
+  %ul.mr-2
+    - @sidebar_tags.each do |si_tag|
+      %li.text-nowrap= link_to si_tag, wco.tag_show2_path(si_tag)
+
+  all tags:
   %ul.tags-list
     - @tags.each do |tag|
       %li

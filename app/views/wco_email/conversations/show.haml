@@ -1,6 +1,6 @@
 
 - content_for :sidebar do
-  = render 'wco_email/sidebar'
+  = render 'wco/sidebar'
 
 .conversations-list
   = check_box_tag 'conversation_ids[]', @conversation.id.to_s, true, { class: 'i-sel', disabled: true }
