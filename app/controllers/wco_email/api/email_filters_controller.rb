@@ -8,6 +8,7 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
     if @item.save
       render json: { id: @item.id.to_s }, status: :ok
     else
+      puts! @item.errors.full_messages, 'could not api-create EmailFilter'
       render json: { messages: @item.errors.full_messages }, status: 400
     end
   end
@@ -59,9 +60,9 @@ class WcoEmail::Api::EmailFiltersController < WcoEmail::ApiController
 
   def email_filter_pparams
     params[:email_filter].permit({
-      actions_attributes:         [ :id, :_destroy,         :kind,            :value ],
-      conditions_attributes:      [ :id, :_destroy, :field,        :operator, :value ],
-      skip_conditions_attributes: [ :id, :_destroy, :field,        :operator, :value ],
+      actions_attributes:         [ :aject_id, :aject_type, :id, :_destroy,         :kind,            :value ],
+      conditions_attributes:      [                         :id, :_destroy, :field,        :operator, :value ],
+      skip_conditions_attributes: [ :aject_id, :aject_type, :id, :_destroy, :field,        :operator, :value ],
     })
   end
 

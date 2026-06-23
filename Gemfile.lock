@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 2dcfda2d6ebf78274c48ad2102069db8b08a96c2
+  revision: f51c5793f328ab55987de2ac5b38b890d38d0326
   branch: 3.3.1
   specs:
-    wco_models (3.1.0.259)
+    wco_models (3.1.0.270)
       ahoy_matey
       aws-sdk-s3
       business_time
@@ -28,6 +28,7 @@ GIT
       sass-rails (~> 6.0)
       selenium-webdriver (~> 4.9.0)
       sidekiq (~> 7.2.0)
+      streamio-ffmpeg
       stripe (~> 10.4.0)
 
 PATH
@@ -117,7 +118,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.8.10)
+    addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
     ahoy_matey (4.2.1)
@@ -290,6 +291,7 @@ GEM
       mongoid (>= 7.3)
     moonrope-client (1.0.5)
       json
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     net-imap (0.4.23)
       date
@@ -443,6 +445,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    streamio-ffmpeg (3.0.2)
+      multi_json (~> 1.8)
     stringio (3.1.2)
     stripe (10.4.0)
     temple (0.10.4)
