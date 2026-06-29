@@ -7,15 +7,15 @@
 
   .header
     %h5.title
-      - if @tag
-        Tag `#{@tag}`
-      - if @tag_not
-        Tag-not `#{@tag_not}`
+      - if params[:tagname]
+        Tag `#{params[:tagname]}`
+      - if params[:tagname_not]
+        Tag-not `#{params[:tagname_not]}`
       (#{@conversations.length})
 
   = render '/wco_email/conversations/tags_actions'
   = render '/wco/office_actions/actions'
 
-  = render '/wco/paginate', resource: @conversations, param_name: :conv_page
+  = render '/wco/paginate', resource: @conversations, param_name: ::WcoEmail::Conversation::PAGE_PARAM_NAME
   = render '/wco_email/conversations/table', convs: @conversations
-  = render '/wco/paginate', resource: @conversations, param_name: :conv_page
+  = render '/wco/paginate', resource: @conversations, param_name: ::WcoEmail::Conversation::PAGE_PARAM_NAME
