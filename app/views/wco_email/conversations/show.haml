@@ -5,20 +5,24 @@
 .conversations-list
   = check_box_tag 'conversation_ids[]', @conversation.id.to_s, true, { class: 'i-sel', disabled: true }
 .conversations-show.maxwidth
-  = render '/wco_email/conversations/form_mini', conversation: @conversation
 
-  %h5
+
+  .d-flex
+    = render '/wco_email/conversations/form_mini', conversation: @conversation
     <b>(#{@messages.length})</b>
     %span.gray.mini= @conversation.id
+  .d-flex
     = render '/wco/tags/index_chips', tags: @conversation.tags, config: { skip_checkbox: true }
-
-  = render '/wco_email/conversations/tags_actions'
+    = render '/wco_email/conversations/tags_actions'
   .d-flex
     %i.fa.fa-compress.collapse-expand#leads Leads (#{@conversation.leads.length}):
     = render '/wco/leads/list',      leads: @conversation.leads
   .d-flex
     %i.fa.fa-compress.collapse-expand#leadsets Leadsets (#{@conversation.leadsets.length}):
     = render '/wco/leadsets/list', leadsets: @conversation.leadsets
+  .d-flex
+    %i.fa.fa-compress.collapse-expand#filters Filters (#{@conversation.filters.length}):
+    = render '/wco_email/email_filters/list', filters: @conversation.filters
 
   - if @other_convs.present?
     %h5 Other convs:

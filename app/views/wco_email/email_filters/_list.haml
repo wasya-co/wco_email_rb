@@ -1,0 +1,4 @@
+
+%ul.email-filters--list
+  - filters.each do |f|
+    %li= link_to f.to_s, wco_email.email_filter_path(f)

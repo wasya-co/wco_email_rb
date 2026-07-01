@@ -10,9 +10,9 @@
     .field
       %label Operator
       = f.select :operator, options_for_select([[nil,nil]] + WcoEmail::EmailFilterCondition::OPERATOR_OPTS, selected: cond.operator)
-    .field
+    .field.d-flex.w-100
       %label Value
-      = f.text_field :value, value: cond.value
+      = f.text_field :value, value: cond.value, class: 'flex-grow'
 
   -# .a= cond.inspect
 

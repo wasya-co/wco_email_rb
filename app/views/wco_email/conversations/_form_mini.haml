@@ -3,8 +3,8 @@
 -# only change the subject
 -#
 
-= form_for conversation do |f|
-  .d-flex
-    %label Subj
-    = f.text_field :subject, class: 'w-100'
-    = f.submit '~>'
+= form_for conversation, html: { class: 'd-flex flex-grow' } do |f|
+
+  %label Subj
+  = f.text_field :subject, class: 'w-100 flex-grow'
+  = f.submit '~>'
