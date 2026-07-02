@@ -6,11 +6,6 @@
       = link_to '[+]', new_email_filter_path
       = link_to '[2+]', new2_email_filter_path
 
-  -# .maxwidth
-  -#   %hr
-  -#   %h5.title.collapse-expand#newEmailFilter New Email Filter
-  -#   = render 'form', email_filter: @email_filter
-
   .actions.d-flex
     .a.mr-2= button_tag 'Delete', method: :delete, class: 'delete-btn'
     = render 'wco/tags/actions', resource: 'Wco::Leadset'
@@ -26,6 +21,7 @@
         %th &nbsp;
         %th status
         %th n convs
+        %th slug
         %th to_s_full
         %th Match
         %th Skip
@@ -50,6 +46,8 @@
           = ef.status
         %td.n-convs
           = ef.conversations.length
+        %td.slug.text-nowrap
+          = ef.slug
         %td.to_s_full
           %pre= ef.to_s_full
         %td.match

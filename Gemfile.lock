@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: cba693e7add9ffc53765712ffad50dfa13e650f6
+  revision: e82ff974add06c0f2db25b092f9092550c271476
   branch: 3.3.1
   specs:
-    wco_models (3.1.0.276)
+    wco_models (3.1.0.277)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.118)
+    wco_email (0.1.1.119)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -120,10 +120,6 @@ GEM
     addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
-    ahoy_matey (4.2.1)
-      activesupport (>= 5.2)
-      device_detector
-      safely_block (>= 0.2.1)
     aws-eventstream (1.4.0)
     aws-partitions (1.1264.0)
     aws-sdk-core (3.252.0)
@@ -177,7 +173,6 @@ GEM
     date (3.5.1)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    device_detector (1.1.3)
     devise (4.9.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -191,7 +186,6 @@ GEM
       kartograph (~> 0.2.8)
       resource_kit (~> 0.1.5)
       virtus (>= 1.0.3, <= 3)
-    errbase (0.2.2)
     erubi (1.13.0)
     exception_notification (4.5.0)
       actionmailer (>= 5.2, < 8)
@@ -413,8 +407,6 @@ GEM
     rspec-support (3.13.1)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
-    safely_block (0.3.0)
-      errbase (>= 0.1.1)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -478,7 +470,6 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
-  ahoy_matey
   byebug
   factory_bot_rails
   ffi (~> 1.16.3)

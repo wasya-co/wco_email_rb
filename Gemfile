@@ -20,7 +20,6 @@ gem 'postal-ruby', '~> 1.0'
 gem 'wco_models',  github: 'wasya-co/wco_models',     branch: '3.3.1'
 
 group :development, :test do
-  gem 'ahoy_matey'
   gem 'byebug'
   gem 'factory_bot_rails'
   gem 'irb', '>= 1.2.8'
