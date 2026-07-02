@@ -72,9 +72,8 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     @email_filters = WcoEmail::EmailFilter.all.includes( :email_template, :conversations )
 
     if params[:q]
-      @email_filters = @email_filters.where( from_exact: /#{params[:q]}/i )
-    else
-      @email_filters = @email_filters.active
+      filter_ids     = WcoEmail::EmailFilterCondition.where( value: /#{params[:q]}/i ).distinct(:email_filter_id)
+      @email_filters = @email_filters.where(:id.in => filter_ids)
     end
 
     @email_filters = @email_filters.page( params[WcoEmail::EmailFilter::PAGE_PARAM_NAME]
