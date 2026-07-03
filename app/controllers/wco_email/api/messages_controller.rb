@@ -28,24 +28,21 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
     render status: :ok, json: { status: :ok }
   end
 
-
-end
-
-
-
-  ## from aws ses
-  ## raw email
-  ## NEVER BEEN USED!
-=begin
-  def create
-    puts! params, 'params'
-
+  def create_ses
+    # puts! params, 'params'
     stub = WcoEmail::MessageStub.find_or_create_by({
       bucket:     params[:bucket],
+      format:    'raw',
       object_key: params[:object_key],
     })
 
     WcoEmail::MessageIntakeJob.perform_async( stub.id.to_s )
     render status: :ok, json: { status: :ok }
   end
-=end
+
+end
+
+
+
+
+

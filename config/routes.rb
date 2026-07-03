@@ -17,7 +17,8 @@ WcoEmail::Engine.routes.draw do
   get    'api/email_templates',             to: '/wco_email/api/email_templates#index'
   get    'api/tags/:tagname/conversations', to: '/wco_email/api/conversations#index'
 
-  post   'api/messages/from-postal/:secret', to: '/wco_email/api/messages#create_postal'
+  post   'api/messages/from-postal/:secret', to: '/wco_email/api/messages#create_postal' ## json
+  post   'api/messages/from-ses',            to: '/wco_email/api/messages#create_ses'    ## raw, and message already in bucket
 
   resources :configs
 
