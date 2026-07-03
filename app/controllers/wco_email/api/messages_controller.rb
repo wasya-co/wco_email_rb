@@ -1,8 +1,8 @@
 
 class WcoEmail::Api::MessagesController < WcoEmail::ApiController
 
-  before_action      :check_credentials, only: [ :create_postal ]
-  before_action      :decode_jwt,      except: [ :create_postal ]
+  before_action      :check_credentials, only: [ :create_postal, :create_ses ]
+  before_action      :decode_jwt,      except: [ :create_postal, :create_ses ]
 
 
   ## 2026-03-27 payload is parsed json.
