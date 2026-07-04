@@ -7,9 +7,12 @@
 .email-filters--from.maxwidth
   = form_for email_filter, url: url, as: :email_filter do |f|
 
-    .field
+    .d-flex
       %label slug
-      = f.text_field :slug
+      = f.text_field :slug, class: 'flex-grow'
+      %label status
+      = f.select :status, options_for_select([ 'active', 'inactive' ], selected: email_filter.status )
+
 
     %label.collapse-expand#if_ &lt;> If (any)
     %ol

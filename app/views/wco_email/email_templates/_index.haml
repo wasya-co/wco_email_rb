@@ -13,6 +13,7 @@
           %th &nbsp;
           %th photo
           %th Slug
+          %th Subject
           %th Created
           %th Updated
 
@@ -27,6 +28,7 @@
             - if tmpl.photo&.photo
               = image_tag tmpl.photo.photo.url(:thumb)
           %td= link_to tmpl.slug, wco_email.email_template_path({ id: tmpl })
+          %td= tmpl.subject
           %td= pp_date tmpl.created_at
           %td= pp_date tmpl.updated_at
   -# = paginate @templates, :param_name => :templates_page, :views_prefix => 'wco'
