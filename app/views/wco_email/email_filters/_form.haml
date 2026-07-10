@@ -1,77 +1,37 @@
 
 -##
--## 2024-04-13 Before email_filter_condition was introduced
+-## 2024-04-13 Introducing email_filter_condition
 -##
 
 - url = email_filter.new_record? ? email_filters_path : email_filter_path( email_filter )
-.email-filters--from
+.email-filters--from.maxwidth
   = form_for email_filter, url: url, as: :email_filter do |f|
+
+    .d-flex
+      %label slug
+      = f.text_field :slug, class: 'flex-grow'
+      %label status
+      = f.select :status, options_for_select([ 'active', 'inactive' ], selected: email_filter.status )
+
+
+    %label.collapse-expand#if_ &lt;> If (any)
+    %ol
+      = f.fields_for( :conditions ) do |f_cond|
+        %li= render '/wco_email/email_filter_conditions/form', f: f_cond, cond: f_cond.object
+    .c
+
+    %label.collapse-expand#skip_ &lt;> Skip (any)
+    %ol
+      = f.fields_for( :skip_conditions ) do |f_cond|
+        %li= render '/wco_email/email_filter_conditions/form', f: f_cond, cond: f_cond.object
+    .c
+
+    %label.collapse-expand#then_ &lt;> Then
+    %ol
+      = f.fields_for( :actions ) do |f_action|
+        %li= render '/wco_email/email_filter_actions/form', f: f_action, action: f_action.object
+    .c
+
     .actions
-      = f.submit
+      = f.submit 'Go'
 
-    .row.maxwidth
-      .col-md-6
-        .field
-          %label From Regex
-          = f.text_field :from_regex
-        .field
-          %label From Exact
-          = f.text_field :from_exact
-        .field
-          %label Subject Regex
-          = f.text_field :subject_regex
-        .field
-          %label Subject Exact
-          = f.text_field :subject_exact
-        -# .field
-        -#   %label Body Regex
-        -#   = f.text_field :body_regex
-        .field
-          %label Body Exact
-          = f.text_field :body_exact
-      .col-md-6
-
-        .field
-          %label Kind
-          = f.select :kind, options_for_select( WcoEmail::EmailFilter::KINDS, selected: email_filter.kind )
-        .field
-          %label Email Template
-          = f.select :email_template_id, options_for_select(@email_templates_list, selected: params[:email_template_id] || email_filter.email_template_id ), {}, { class: 'select2' }
-        .field
-          %label Email Action Template
-          = f.select :email_action_template_id, options_for_select( @email_action_templates_list, selected: email_filter.email_action_template_id ), {}, class: 'select2'
-        .field
-          %label Office Action Template
-          = f.select :office_action_template_id, options_for_select( ::Wco::OfficeActionTemplate.list, selected: email_filter.office_action_template_id ), {}, class: 'select2'
-
-        .field
-          = f.label :tag
-          = f.select :tag, options_for_select( @tags_list, selected: email_filter.tag_id ), {}, class: 'select2'
-
-      .col-md-6
-        .field
-          %label skip to exact
-          = f.text_field :skip_to_exact
-        .field
-          %label skip from regex
-          = f.text_field :skip_from_regex
-
-      -# .col-12
-      -#   Conditions:
-      -#   %ul
-      -#     - email_filter.conditions.each do |cond|
-      -#       %li
-      -#         = f.fields_for( :conditions ) do |f_cond|
-      -#           = render '/wco_email/email_filter_conditions/form', cond: cond, f: f_cond
-
-      -# .col-12
-      -#   skip conditions:
-      -#   %ul
-      -#     - email_filter.skip_conditions.each do |cond|
-      -#       %li
-      -#         = f.fields_for( :skip_conditions ) do |f_cond|
-      -#           = render '/wco_email/email_filter_conditions/form', cond: cond, f: f_cond
-
-      .col-12
-        .actions
-          = f.submit

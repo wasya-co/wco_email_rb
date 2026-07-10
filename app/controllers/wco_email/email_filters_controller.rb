@@ -45,10 +45,6 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
   end
 
   def edit
-    @email_filter = WcoEmail::EmailFilter.find params[:id]
-    authorize! :edit, @email_filter
-  end
-  def edit2
     @email_filter = WcoEmail::EmailFilter.find( params[:id] )
     authorize! :edit, @email_filter
 
@@ -65,7 +61,6 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
     }
   end
 
-
   def index
     authorize! :index, WcoEmail::EmailFilter.new
     @email_filter  = WcoEmail::EmailFilter.new
@@ -81,10 +76,6 @@ class WcoEmail::EmailFiltersController < WcoEmail::ApplicationController
   end
 
   def new
-    @email_filter = WcoEmail::EmailFilter.new
-    authorize! :new, @email_filter
-  end
-  def new2
     @email_filter = WcoEmail::EmailFilter.new
     authorize! :new, @email_filter
 

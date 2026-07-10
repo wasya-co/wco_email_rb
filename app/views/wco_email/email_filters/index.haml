@@ -4,7 +4,6 @@
     %h2.title
       Email Filters (#{@email_filters.length})
       = link_to '[+]', new_email_filter_path
-      = link_to '[2+]', new2_email_filter_path
 
   .actions.d-flex
     .a.mr-2= button_tag 'Delete', method: :delete, class: 'delete-btn'
@@ -32,8 +31,7 @@
           = check_box_tag 'email_filter_ids[]', ef.id, nil, { class: 'i-sel' }
         %td
           .flex-row
-            -# = link_to '[~]',    edit_email_filter_path(ef)
-            = link_to '[~2]',   edit2_email_filter_path(ef)
+            = link_to '[~]',    edit_email_filter_path(ef)
             = link_to '[view]', email_filter_path(ef)
             .inline-block= button_to '[x]', email_filter_path(ef), method: :delete, data: { confirm: 'Are you sure?' }
           .gray.small= ef.id
