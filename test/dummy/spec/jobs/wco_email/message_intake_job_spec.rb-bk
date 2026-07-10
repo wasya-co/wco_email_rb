@@ -1,4 +1,7 @@
 
+##
+## I no longer do this... _vp_ 2026-07-10
+##
 RSpec.describe WcoEmail::MessageIntakeJob do
   include ActiveJob::TestHelper
 

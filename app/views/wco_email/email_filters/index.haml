@@ -22,12 +22,7 @@
         %th status
         %th n convs
         %th slug
-        %th to_s_full
-        %th Match
-        %th Skip
-        %th Kind
-        -# %th Conditions
-        -# %th Skip Conditions
+        %th to_s_ful
 
     - @email_filters.each_with_index do |ef, idx|
 
@@ -50,38 +45,6 @@
           = ef.slug
         %td.to_s_full
           %pre= ef.to_s_full
-        %td.match
-          - if ef.from_regex.present?
-            .a <b>from_regex:</b> `#{ef.from_regex}`
-          - if ef.from_exact.present?
-            .a <b>from_exact:</b> `#{ef.from_exact}`
-          - if ef.subject_regex.present?
-            .a <b>subject_regex:</b> `#{ef.subject_regex}`
-          - if ef.subject_exact.present?
-            .a <b>subject_exact:</b> `#{ef.subject_exact}`
-          - if ef.body_exact.present?
-            .a <b>body_exact:</b> `#{ef.body_exact}`
-
-        %td.skip
-          - if ef.skip_to_exact.present?
-            .a <b>skip_to_exact:</b> `#{ef.skip_to_exact}`
-          - if ef.skip_from_regex.present?
-            .a <b>skip_from_regex:</b> `#{ef.skip_from_regex}`
-
-        %td.action
-          - if ef.kind == EF::KIND_AUTORESPOND_TMPL
-            .a <b>#{EF::KIND_AUTORESPOND_TMPL}:</b> #{ef.email_template&.slug}
-          - if ef.kind == EF::KIND_AUTORESPOND_EACT
-            .a <b>#{EF::KIND_AUTORESPOND_EACT}:</b> #{ef.email_action_template&.slug}
-          - if ef.kind == EF::KIND_ADD_TAG
-            .a <b>#{EF::KIND_ADD_TAG}:</b> #{ef.tag&.slug}
-          - if ef.kind == EF::KIND_REMOVE_TAG
-            .a <b>#{EF::KIND_REMOVE_TAG}:</b> #{ef.tag&.slug}
-
-        -# %td.conditions
-        -#   = ef.conditions.length
-        -# %td.skip-conditions
-        -#   = ef.skip_conditions.length
 
   = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
 
