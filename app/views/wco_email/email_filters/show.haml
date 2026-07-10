@@ -2,6 +2,8 @@
 .email-filters-show.maxwidth
   = render 'header'
 
+  slug `#{@email_filter.slug}`
+
   %pre.descr
     = @email_filter.to_s_full
 
