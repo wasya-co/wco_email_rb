@@ -66,7 +66,11 @@ class WcoEmail::MessageStubsController < WcoEmail::ApplicationController
     authorize! :show, @stub
 
     @client ||= Aws::S3::Client.new(::SES_S3_CREDENTIALS)
-    @json = JSON.parse( @client.get_object( bucket: @stub.bucket, key: @stub.object_key ).body.read )
+    if 'json' == @stub.format
+      @json = JSON.parse( @client.get_object( bucket: @stub.bucket, key: @stub.object_key ).body.read )
+    else
+      @json = @client.get_object( bucket: @stub.bucket, key: @stub.object_key ).body.read
+    end
   end
 
   def update

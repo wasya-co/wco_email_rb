@@ -1,8 +1,7 @@
 
 .email-filters--header
   %h5.title.text-center
-    = link_to '[~]',          wco_email.edit_email_filter_path( @email_filter )
-    &nbsp;
+    -# = link_to '[~]',          wco_email.edit_email_filter_path( @email_filter )
     = link_to '[~2]',          wco_email.edit2_email_filter_path( @email_filter )
     &nbsp;
     = link_to 'Email Filter', wco_email.email_filter_path( @email_filter )
