@@ -40,6 +40,12 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
     render status: :ok, json: { status: :ok }
   end
 
+  def postal_webhook
+    puts! params, 'params'
+    ExceptionNotifier.notify_exception( params )
+  end
+
+
 end
 
 
