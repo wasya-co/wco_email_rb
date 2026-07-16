@@ -18,7 +18,7 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
       key:           params['message_id'],
     })
 
-    stub = WcoEmail::MessageStub.create({
+    stub = WcoEmail::MessageStub.create!({
       bucket:   ::SES_S3_BUCKET,
       format:    'json',
       object_key: params['message_id'],
