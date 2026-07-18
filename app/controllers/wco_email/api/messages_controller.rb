@@ -86,11 +86,12 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
 
 =end
   def postal_webhook
-    if 'HardFail' == params['status']
-      lead = Wco::Lead.where( email: params['message']['to'].downcase ).first
+    payload = params['payload']
+    if 'HardFail' == payload['status']
+      lead = Wco::Lead.where( email: payload['message']['to'].downcase ).first
       if lead
         lead.tags.push Wco::Tag.bounce
-        lead.save
+        lead.save!
       end
     end
   end
