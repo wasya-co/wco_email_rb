@@ -20,10 +20,13 @@
     .field
       = f.text_area :body, class: 'tinymce'
     .flex-row
-      .flex-row
+      .field
         %label Respond inline?&nbsp;
         = check_box_tag :respond_inline, message.id, checked: true
-      .flex-row
+      .field
+        %label bcc self?&nbsp;
+        = f.check_box :bcc_self, checked: true
+      .field
         %label &nbsp;send_at&nbsp;
         = f.text_field :send_at, placeholder: 'YYYY-MM-DD', value: Time.now, size: 30, class: 'input-date'
-      = f.submit 'Send/Schedule'
+        = f.submit 'Send/Schedule'
