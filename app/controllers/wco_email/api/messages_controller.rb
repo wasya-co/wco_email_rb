@@ -85,15 +85,20 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
 }
 
 =end
+  ##
+  ## SoftFail , Sent
+  ##
   def postal_webhook
     payload = params['payload']
-    if 'HardFail' == payload['status']
+    if [ 'SoftFail', 'HardFail' ].include?( payload['status'] )
       lead = Wco::Lead.where( email: payload['message']['to'].downcase ).first
       if lead
         lead.tags.push Wco::Tag.bounce
         lead.save!
       end
     end
+
+    render status: :ok, json: { status: :ok }
   end
 
 
