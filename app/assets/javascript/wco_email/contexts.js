@@ -16,5 +16,12 @@ $(document).ready(() => {
     })
   }
 
-  logg('loaded wco_email/contexts.js')
+  $('.select2-leads-ajax').select2({
+    ajax: {
+        url: '/wco/api/leads',
+        dataType: 'json',
+    }
+  })
+
+  console.log('loaded wco_email/contexts.js')
 }) // END
