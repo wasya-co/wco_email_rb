@@ -60,7 +60,8 @@ WcoEmail::Engine.routes.draw do
   resources :lead_action_templates
   resources :lead_actions
 
-  get 'messages/:id/iframe', to: 'messages#show_iframe', as: :message_iframe
+  get  'messages/:id/iframe',      to: 'messages#show_iframe', as: :message_iframe
+  post 'messages/:id/autorespond', to: 'messages#autorespond', as: :message_autorespond
   resources :messages
 
   post 'message_stub/:id/churn', to: 'message_stubs#churn', as: :churn_message_stub

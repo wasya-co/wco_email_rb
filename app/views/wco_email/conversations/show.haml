@@ -47,3 +47,4 @@
 
   - msg = @messages.last
   = render '/wco_email/contexts/form_reply', lead_id: msg.lead_id, message: msg, ctx: WcoEmail::Context.new({ from_email: msg.to&.downcase, subject: msg.subject, email_template_id: ET.find_by( slug: 'blank').id })
+  = button_to 'autorespond', message_autorespond_path(msg), data: { confirm: 'Are you sure?' }
