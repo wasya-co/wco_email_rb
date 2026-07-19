@@ -16,6 +16,11 @@
   = render '/wco_email/conversations/tags_actions'
   = render '/wco/office_actions/actions'
 
+  .actions.d-flex
+    .a.mr-2= button_tag 'Delete', method: :delete, class: 'delete-btn', data: { url: '/email/api/conversations' }
+
+    = render 'wco/tags/actions', resource: 'WcoEmail::Conversation'
+
   = render '/wco/paginate', resource: @conversations, param_name: ::WcoEmail::Conversation::PAGE_PARAM_NAME
   = render '/wco_email/conversations/table', convs: @conversations
   = render '/wco/paginate', resource: @conversations, param_name: ::WcoEmail::Conversation::PAGE_PARAM_NAME

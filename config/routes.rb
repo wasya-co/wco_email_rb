@@ -8,6 +8,7 @@ WcoEmail::Engine.routes.draw do
 
   get    'api/contexts/summary',            to: '/wco_email/api/contexts#summary'
   get    'api/conversations',               to: '/wco_email/api/conversations#index'
+  delete 'api/conversations',               to: '/wco_email/api/conversations#destroy_many'
   get    'api/email_action_templates',      to: '/wco_email/api/email_action_templates#index'
   get    'api/email_filters',               to: '/wco_email/api/email_filters#index', defaults: { format: :json }
   get    'api/email_filters/:id',           to: '/wco_email/api/email_filters#show'
