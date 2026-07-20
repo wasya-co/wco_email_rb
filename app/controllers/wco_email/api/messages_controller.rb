@@ -93,7 +93,7 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
     if [ 'SoftFail', 'HardFail' ].include?( payload['status'] )
       lead = Wco::Lead.where( email: payload['message']['to'].downcase ).first
       if lead
-        lead.tags.push Wco::Tag.bounce
+        lead.tags.push Wco::Tag.bounced
         lead.save!
       end
     end
