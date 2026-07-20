@@ -6,10 +6,11 @@
 
     %ul
       %li <b>from:</b> #{message.from}
+      %li <b>mail_from:</b> #{message.mail_from}
       %li <b>to:</b> #{message.to}
       -# %li <b>tos:</b> #{message.tos}
       %li <b>cc:</b> #{message.cc}
-      -# %li <b>ccs:</b> #{message.ccs}
+      %li <b>spam_status:</b> #{message.spam_status}
       %li
         <b>logs:</b>
         %ul.Logs
