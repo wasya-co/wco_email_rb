@@ -1,6 +1,4 @@
 
--# = ctx.inspect
-
 .Context.email-contexts--form-reply.form-mini
   = form_for ctx do |f|
 
@@ -9,7 +7,8 @@
         %label From&nbsp;
         = f.select :from_email, options_for_select( WcoEmail::EmailTemplate.from_emails_list, selected: ctx.from_email ), {}, class: 'select2'
         %label &nbsp;To&nbsp;
-        = f.select :lead, options_for_select( @leads_list, selected: lead_id ), {}, class: 'select2', required: true
+        = f.select :lead, options_for_select( @leads_list, selected: lead_id ), {}, class: 'select2-leads-ajax', required: true
+
       .flex-row
         %label &nbsp;Template&nbsp;
         = f.select :email_template_id, options_for_select( @email_templates_list, selected: ctx.email_template_id ), {}, class: 'select2', required: true
