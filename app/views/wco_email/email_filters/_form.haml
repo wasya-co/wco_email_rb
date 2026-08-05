@@ -11,7 +11,7 @@
       %label slug
       = f.text_field :slug, class: 'flex-grow'
       %label status
-      = f.select :status, options_for_select([ 'active', 'inactive' ], selected: email_filter.status )
+      = f.select :status, options_for_select([ WcoEmail::EmailFilter::STATUS_ACTIVE, WcoEmail::EmailFilter::STATUS_DISABLED ], selected: email_filter.status )
 
 
     %label.collapse-expand#if_ &lt;> If (any)

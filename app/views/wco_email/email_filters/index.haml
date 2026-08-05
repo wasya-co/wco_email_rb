@@ -12,7 +12,7 @@
 
   %hr
   = paginate @email_filters, param_name: WcoEmail::EmailFilter::PAGE_PARAM_NAME, views_prefix: 'wco'
-  %table.bordered
+  %table.bordered.data-table
     %thead
       %tr
         %th.select-all.nosort
