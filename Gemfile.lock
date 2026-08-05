@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: 41bc2c0a9d75626401544e81ce53927544a359aa
+  revision: f6faa39947aaf00148883173951b7bd6fcf6771b
   branch: 3.3.1
   specs:
-    wco_models (3.1.0.304)
+    wco_models (3.1.0.305)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)

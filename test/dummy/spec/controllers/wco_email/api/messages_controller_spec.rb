@@ -12,11 +12,11 @@ describe WcoEmail::Api::MessagesController do
       lead = create(:lead, email: 'pax@gmail.com' )
 
       ( lead.tags & [ Wco::Tag.bounce ]).length.should eql 0
-      post :postal_webhook, params: { secret: 'secret', status: 'HardFail', message: { to: 'pax@gmail.com' } }
+      post :postal_webhook, params: { secret: 'secret', payload: { secret: 'secret', status: 'HardFail', message: { to: 'pax@gmail.com' } } }
 
 
       lead.reload
-      ( lead.tags & [ Wco::Tag.bounce ]).length.should eql 1
+      ( lead.tags & [ Wco::Tag.bounced ]).length.should eql 1
     end
   end
 end

@@ -6,7 +6,7 @@ describe WcoEmail::Api::ConversationsController do
 
   describe 'routes' do
     it 'does' do
-      expect(get: '/api/conversations').to              route_to(controller: 'wco_email/api/conversations', action: 'index')
+      expect(get: '/api/conversations').to route_to(controller: 'wco_email/api/conversations', action: 'index')
     end
   end
 
@@ -15,12 +15,14 @@ describe WcoEmail::Api::ConversationsController do
 
     destroy_every(
       Wco::Tag,
+      WcoEmail::Conversation,
     )
     @inbox = Wco::Tag.inbox
   end
 
   describe '#index' do
     it 'json api' do
+      @conv = create(:email_conversation, tags: [ @inbox ])
       get :index, format: :json
       response.code.should eql '200'
       assigns(:conversations).length.should > 0
