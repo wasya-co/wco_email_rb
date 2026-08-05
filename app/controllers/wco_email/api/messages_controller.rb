@@ -9,7 +9,7 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
   def create_postal
     # puts! params, 'api/messages#create_postal'
 
-    generated_message_id = "<#{SecureRandom.uuid}@wasya-generated>"
+    params['message_id'] ||= "<#{SecureRandom.uuid}@wasya-generated>"
 
     ## save to bucket
     @client ||= Aws::S3::Client.new(::SES_S3_CREDENTIALS)
@@ -17,13 +17,13 @@ class WcoEmail::Api::MessagesController < WcoEmail::ApiController
       body:          params.to_unsafe_h.to_json,
       bucket:      ::SES_S3_BUCKET,
       content_type: 'application/json',
-      key:           params['message_id'] || generated_message_id,
+      key:           params['message_id'],
     })
 
     stub = WcoEmail::MessageStub.create!({
       bucket:   ::SES_S3_BUCKET,
       format:    'json',
-      object_key: params['message_id'] || generated_message_id,
+      object_key: params['message_id'],
     })
 
     WcoEmail::MessageIntakeJob.perform_async( stub.id.to_s )
