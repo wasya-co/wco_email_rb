@@ -13,6 +13,9 @@
     .field.d-flex.w-100
       %label Value
       = f.text_field :value, value: cond.value, class: 'flex-grow'
+    .field.d-flex
+      %label comment
+      = f.text_field :comment, valud: cond.comment
 
   -# .a= cond.inspect
 
