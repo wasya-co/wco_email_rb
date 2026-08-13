@@ -24,27 +24,20 @@
     %i.fa.fa-compress.collapse-expand#filters Filters (#{@conversation.filters.length}):
     = render '/wco_email/email_filters/list', filters: @conversation.filters
 
-  - if @other_convs.present?
-    %h5 Other convs:
-    - @other_convs.each do |conv|
-      .d-flex
-        = button_to "Merge", merge_conversations_path( @conversation, conv ), data: { confirm: 'Are you sure?' }
-        = conv.subject
-        (#{conv.messages.length})
-        %span.gray.mini= conv.id
-
 
   .m-0.p-0
     = paginate @messages, param_name: :messages_page
     - @messages.each do |msg|
       .Message.mb-2
         = render '/wco_email/messages/meta', message: msg
-        = link_to '[expand]', message_iframe_path(msg, expand_history: true), target: "iframe_#{msg.id}"
-        = link_to '[collapse]', message_iframe_path(msg), target: "iframe_#{msg.id}"
+        %hr
+        = link_to '[show history]', message_iframe_path(msg, expand_history: true), target: "iframe_#{msg.id}"
+        = link_to '[hide]', message_iframe_path(msg), target: "iframe_#{msg.id}"
         %span.collapse-expand{ id: "iframe_#{msg.id}" } [<>]
         %iframe.message-iframe{ src: message_iframe_path(msg), name: "iframe_#{msg.id}", onload: "resizeIframe(this)" }
     = paginate @messages, param_name: :messages_page
 
-  - msg = @messages.last
-  = render '/wco_email/contexts/form_reply', lead_id: msg.lead_id, message: msg, ctx: WcoEmail::Context.new({ from_email: msg.to&.downcase, subject: msg.subject, email_template_id: ET.find_by( slug: 'blank').id })
-  = button_to 'autorespond', message_autorespond_path(msg), data: { confirm: 'Are you sure?' }
+  = render '/wco_email/contexts/form', ctx: @new_ctx
+  %hr
+  .align-right
+    = button_to 'autorespond', message_autorespond_path(@new_ctx.reply_to_message_id), data: { confirm: 'Are you sure?' }

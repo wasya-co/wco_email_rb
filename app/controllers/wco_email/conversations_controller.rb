@@ -73,21 +73,19 @@ class WcoEmail::ConversationsController < WcoEmail::ApplicationController
     @messages     = @conversation.messages(
       ).order_by( date: :asc
       ).page( params[:messages_page ] ).per( @current_profile.per_page
-      )
+      );
+    last_message = @messages.last
+    @new_ctx      = WcoEmail::Context.new({
+                      email_template_id: ET.find_by( slug: 'blank').id,
+                      from_email:       last_message.to&.downcase,
+                      lead_id:          last_message.lead_id,
+                      reply_to_message: last_message,
+                      subject:          last_message.subject,
+                    })
 
     @conversation.update_attributes({ status: Conv::STATUS_READ })
 
     @conversation.messages.unread.update_all({ read_at: Time.now })
-
-    # @other_convs = WcoEmail::Message.where( :message_id.in => @messages.map( &:in_reply_to_id )
-    #   ).where( :conversation_id.ne => @conversation.id
-    #   ).map( &:conversation_id ).uniq
-    # other_convs_by_subj = WcoEmail::Conversation.where( subject: @conversation.subject
-    #   ).where( :conversation_id.ne => @conversation.id
-    #   ).map( &:id )
-    # if @other_convs.present? || other_convs_by_subj.present?
-    #   @other_convs = WcoEmail::Conversation.find( @other_convs + other_convs_by_subj )
-    # end
   end
 
   def update

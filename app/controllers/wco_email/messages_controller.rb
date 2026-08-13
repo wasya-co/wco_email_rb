@@ -46,7 +46,7 @@ class WcoEmail::MessagesController < WcoEmail::ApplicationController
   def show_iframe
     @message = WcoEmail::Message.find params[:id]
     authorize! :show, @message
-    render layout: false
+    render layout: 'wco_email/iframe_bootstrap' # false
   end
 
   ##

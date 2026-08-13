@@ -7,8 +7,17 @@
       display: none;
     }
 
+%ul.nav.nav-tabs
+  %li.nav-item
+    %a.nav-link.active{ 'data-target': "#part_html", "data-toggle": "tab"} part_html
+  %li.nav-item
+    %a.nav-link{ 'data-target': "#part_txt", "data-toggle": "tab"} part_txt
 
-= raw @message.part_html_sanitized
+.tab-content
+  .tab-pane.fade.show.active#part_html
+    = raw @message.part_html_sanitized
+  .tab-pane.fade#part_txt
+    %pre= @message.part_txt
 
-%hr{ style: 'border-top: 1px solid red;' }
-%pre= @message.part_txt
+
+
