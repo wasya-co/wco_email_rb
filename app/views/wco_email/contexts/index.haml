@@ -37,7 +37,7 @@
             %td
               = link_to context_path(ctx) do
                 = ctx.subject ? ctx.subject : "t| #{ctx.tmpl.subject}"
-            %td= ctx.email_template.slug
+            %td= ctx.email_template.slug rescue '<no-template!>
             %td.send_at.padded
               .datetime.p-1
                 .date= pp_date ctx.send_at
