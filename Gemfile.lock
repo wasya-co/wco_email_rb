@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/wasya-co/wco_models.git
-  revision: a4fa239769e95cfc308ebd8768d2da1252346b79
-  branch: 3.3.1
+  revision: 990ecc98b339f42407e5920c1cda957757d529bf
+  branch: 3.4.0
   specs:
-    wco_models (3.1.0.315)
+    wco_models (3.4.0.4)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -35,7 +35,7 @@ GIT
 PATH
   remote: .
   specs:
-    wco_email (0.1.1.149)
+    wco_email (0.1.1.150)
       aws-sdk-s3
       business_time
       cancancan (~> 3.5.0)
@@ -55,7 +55,7 @@ PATH
       prawn-table
       rails (~> 6.1.7)
       sidekiq
-      wco_models (~> 3.1.0)
+      wco_models (~> 3.4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -119,24 +119,25 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.9.0)
+    addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
-    aws-eventstream (1.4.0)
-    aws-partitions (1.1280.0)
-    aws-sdk-core (3.254.1)
-      aws-eventstream (~> 1, >= 1.3.0)
+    aws-eventstream (1.4.1)
+    aws-partitions (1.1303.0)
+    aws-sdk-core (3.265.0)
+      aws-eventstream (~> 1, >= 1.4.1)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
       base64
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.130.0)
-      aws-sdk-core (~> 3, >= 3.254.0)
+      rexml (~> 3.4, >= 3.4.2)
+    aws-sdk-kms (1.140.0)
+      aws-sdk-core (~> 3, >= 3.265.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.229.0)
-      aws-sdk-core (~> 3, >= 3.254.1)
+    aws-sdk-s3 (1.239.0)
+      aws-sdk-core (~> 3, >= 3.265.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
@@ -147,7 +148,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     base64 (0.2.0)
     bcrypt (3.1.22)
-    bigdecimal (4.1.2)
+    bigdecimal (4.1.3)
     bindata (2.5.0)
     bson (5.0.1)
     builder (3.3.0)
@@ -172,8 +173,8 @@ GEM
     concurrent-ruby (1.3.4)
     connection_pool (2.5.5)
     crass (1.0.6)
-    csv (3.3.6)
-    date (3.5.1)
+    csv (3.3.7)
+    date (3.6.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     devise (4.9.4)
@@ -215,7 +216,7 @@ GEM
       thor
       tilt
     hashie (5.0.0)
-    httparty (0.24.2)
+    httparty (0.24.3)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -294,11 +295,11 @@ GEM
       net-protocol
     net-pop (0.1.2)
       net-protocol
-    net-protocol (0.2.2)
+    net-protocol (0.4.0)
       timeout
     net-scp (4.0.0)
       net-ssh (>= 2.6.5, < 8.0.0)
-    net-smtp (0.5.1)
+    net-smtp (0.5.2)
       net-protocol
     net-ssh (7.2.3)
     nio4r (2.7.5)
@@ -380,9 +381,9 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    redis-client (0.30.1)
+    redis-client (0.31.0)
       connection_pool
-    regexp_parser (2.12.0)
+    regexp_parser (2.13.1)
     reline (0.5.11)
       io-console (~> 0.5)
     resource_kit (0.1.8)
@@ -443,7 +444,7 @@ GEM
       multi_json (~> 1.8)
     stringio (3.1.2)
     stripe (10.4.0)
-    temple (0.10.6)
+    temple (0.10.7)
     terrapin (1.0.1)
       climate_control
     thor (1.3.2)
