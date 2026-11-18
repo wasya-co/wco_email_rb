@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = "wco_email"
-  spec.version     = "0.1.1.151"
+  spec.version     = "0.1.1.152"
   spec.authors     = [ "Victor Pudeyev" ]
   spec.email       = ["victor@wasya.co"]
   spec.homepage    = "https://wasya.co"
@@ -49,6 +49,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "sidekiq"
 
-  spec.add_dependency 'wco_models', "~> 3.4.0"
+  spec.add_dependency 'wco_models', "~> 3.5.0"
 
 end
